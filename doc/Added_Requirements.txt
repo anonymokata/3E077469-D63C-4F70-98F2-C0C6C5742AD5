@@ -1,0 +1,13 @@
+
+
+Must Have:
+● Ubuntu Linux (14.04)
+● C programming language
+● GNU GCC compiler tool chain
+● GNU Make
+● 'check' unit testing framework
+○ https://libcheck.github.io/check/
+● Lightweight Communications and Marshalling (LCM)
+○ message passing and data marshalling, targeted at real time systems where highbandwidth and low latency are critical
+○ https://lcmproj.github.io/
+● Python programming language
