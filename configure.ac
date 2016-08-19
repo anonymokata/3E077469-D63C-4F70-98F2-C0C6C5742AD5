@@ -38,6 +38,13 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h])
 ##PKG_CHECK_MODULES([CHECK], [check],[have_check=yes], [have_check=no])
 
+AM_PATH_PYTHON(2.7.0)
+PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
+PYTHON_LIBS="-lpython$PYTHON_VERSION"
+PYTHON_CFLAGS="-I$PY_PREFIX/include/python$PYTHON_VERSION"
+AC_SUBST([PYTHON_LIBS])
+AC_SUBST([PYTHON_CFLAGS])
+
 # Checks for typedefs, structures, and compiler characteristics.
 
 # Checks for library functions.

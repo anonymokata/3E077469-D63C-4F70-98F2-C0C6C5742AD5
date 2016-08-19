@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <Python.h>
 #include "../src/romancalc.h"
 
 void
@@ -32,7 +33,7 @@ romancalc_suite_core (void)
 
 START_TEST (test_valid_numeral_str)
 {// ADD to create subtracted values
-	ck_assert_int_eq(rnum_valid_numeral_str("MDCLXVI"), RNUM_ERR_NONE);
+	ck_assert_str_eq(rnum_valid_numeral_str("MDCLXVI"), RNUM_ERR_NONE);
 }
 END_TEST
 
@@ -50,12 +51,19 @@ romancalc_suite_process_text_io(void)
 int
 main (void)
 {
-  int number_failed;
+	int number_failed;
+	Py_Initialize();
+	PyRun_SimpleString("import sys; sys.path.append('.')");
+	PyRun_SimpleString("sys.path.append('../src')");
+	PyRun_SimpleString("import romancalc");
 	
-  SRunner *sr = srunner_create (romancalc_suite_core ());
+	SRunner *sr = srunner_create (romancalc_suite_core ());
 
-  srunner_run_all (sr, CK_VERBOSE);
-  number_failed = srunner_ntests_failed (sr);
-  srunner_free (sr);
+	srunner_run_all (sr, CK_VERBOSE);
+	number_failed = srunner_ntests_failed (sr);
+	srunner_free (sr);
+	
+	Py_Finalize();
+
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }

@@ -88,7 +88,7 @@ extern const char *rdigits;
 
 typedef enum {
 	RNUM_ERR_NONE               = 0,
-\} rnum_err_enum ;
+} rnum_err_enum ;
 
 
 int rnum_valid_numeral_str(char *rn_exp_str);

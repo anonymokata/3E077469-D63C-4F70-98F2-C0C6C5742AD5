@@ -28,6 +28,7 @@ rm -R src/.deps
 rm -R src/.libs
 rm    src/*.o
 rm    src/*.lo
+rm    src/*.pyc
 rm    src/libromancalc.la
 rm    src/main
 rm    src/Makefile
