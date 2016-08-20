@@ -53,6 +53,19 @@ PyObject* pyfunc_setup(PyObject *arg_pModule, char *arg_funcname){
 	pyfunc_teardown(lcl_pFunc);								// free unneeded object
 	return NULL;											// failure
 }
+
+// MARK: python string input string output call
+char* pycall__in_str__out_str(PyObject* arg_pFunc, int argc, ... ){
+	char *lcl_string = "";
+	va_list args;											// arguments
+	char * lcl_arg_str = NULL;								// local argument string from argument list
+	va_start( args, argc );									// start argument iterating
+	lcl_arg_str = va_arg( args, char*);					// pull next value and
+	va_end( args );											// close out argument iterating
+	lcl_string = strdup(lcl_arg_str);						// create copy of string, 
+	return lcl_string;
+}
+
 }
 
 

@@ -1,3 +1,7 @@
 Running suite(s): 
-Roman Calc Suite
-100%: Checks: 0, Failures: 0, Errors: 0
+Roman Calc Suite Test the "Test Suite" Python interface
+100%: Checks: 2, Failures: 0, Errors: 0
+check_romancalc.c:114:P:TestPythonCallIO__In_String__Out_String 
+:test_pycall__in_str__out_str:0: Passed
+check_romancalc.c:120:P:TestPythonCallIO__In_String__Out_Int 
+:test_pycall__in_str__out_int:0: Passed
