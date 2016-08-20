@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdarg.h>
 #include <time.h>
 #include <check.h>
 #include <stdio.h>
@@ -7,33 +8,63 @@
 #include <Python.h>
 #include "../src/romancalc.h"
 
-void
-setup (void)
-{
-//	ptr_tst_pair = rnum_pair_create();
-}
+// MARK: global objects for use by python modules
+PyObject *glbl_pFunc;
 
-void
-teardown (void)
-{
-//	rnum_str_free (ptr_tst_pair);
-}
-
-Suite *
-romancalc_suite_core (void)
-{
-	Suite *s = suite_create ("\nRoman Calc Suite");
+// MARK:  python module setup *********
+PyObject *pymodule_setup(char * arg_modulename){
+	PyObject *lcl_pName = NULL, *lcl_pModule = NULL;
 	
-	/* Core test case */
-	TCase *tc_core = tcase_create ("Core\n");
-	tcase_add_checked_fixture (tc_core, setup, teardown);
-	suite_add_tcase (s, tc_core);
-	return s;
+	/* setup python library paths */
+	PyRun_SimpleString("import sys; sys.path.append('.')");
+	PyRun_SimpleString("sys.path.append('../src')");
+	
+	/* setup python module for testing */
+	lcl_pName = PyString_FromString(arg_modulename);		// setup python moule name string
+	
+	/* Error checking of pName left out */
+	lcl_pModule = PyImport_Import(lcl_pName);				// import the module
+	Py_DECREF(lcl_pName);									// no longer needed, so dump
+	
+	return lcl_pModule;
 }
 
-START_TEST (test_valid_numeral_str)
-{// ADD to create subtracted values
-	ck_assert_str_eq(rnum_valid_numeral_str("MDCLXVI"), RNUM_ERR_NONE);
+// MARK:  python module teardown *********
+void pymodule_teardown(PyObject* arg_pModule){
+	Py_DECREF(arg_pModule);
+	Py_Finalize();
+}
+
+void pyfunc_teardown(PyObject *arg_pFunc){
+	if(arg_pFunc)
+		Py_DECREF(arg_pFunc);
+}
+	
+PyObject* pyfunc_setup(PyObject *arg_pModule, char *arg_funcname){
+	PyObject *lcl_pFunc = NULL;
+	
+	// check to see if function exists and is callable
+	lcl_pFunc = PyObject_GetAttrString(arg_pModule, arg_funcname);
+	
+	if(lcl_pFunc && PyCallable_Check(lcl_pFunc)){
+		return lcl_pFunc;									// return new module
+	}
+	
+	pyfunc_teardown(lcl_pFunc);								// free unneeded object
+	return NULL;											// failure
+}
+}
+
+
+START_TEST (test_pycall__in_str__out_str)
+{
+	ck_assert_int_eq(1,1);
+}
+END_TEST
+
+START_TEST (test_pycall__in_str__out_int)
+{
+	ck_assert_int_eq(1,1);
 }
 END_TEST
 
@@ -44,6 +75,21 @@ romancalc_suite_process_text_io(void)
 	TCase *tc_full_subtraction = tcase_create ("Test Roman Sub/ADD In Text Out \n");
 	tcase_add_test (tc_full_subtraction, test_valid_numeral_str);
 	suite_add_tcase (s, tc_full_subtraction);
+	// check to see if function exists and is callable
+	glbl_pFunc = pyfunc_setup(arg_pModule, "TestRoutineCheck__in_str__out_str");
+	if(glbl_pFunc != NULL){
+		TCase *tc_check_test_suite_str_str = tcase_create ("TestPythonCallIO__In_String__Out_String \n");
+		tcase_add_test (tc_check_test_suite_str_str, test_pycall__in_str__out_str);
+		suite_add_tcase (s, tc_check_test_suite_str_str);
+	}
+	glbl_pFunc = pyfunc_setup(arg_pModule, "TestRoutineCheck__in_str__out_int");
+	if(glbl_pFunc != NULL){
+		TCase *tc_check_test_suite_str_int = tcase_create ("TestPythonCallIO__In_String__Out_Int \n");
+		tcase_add_test (tc_check_test_suite_str_int, test_pycall__in_str__out_int);
+		suite_add_tcase (s, tc_check_test_suite_str_int);
+	}
+	pyfunc_teardown(glbl_pFunc);
+	
 	return s;
 }
 
@@ -52,18 +98,26 @@ int
 main (void)
 {
 	int number_failed;
-	Py_Initialize();
-	PyRun_SimpleString("import sys; sys.path.append('.')");
-	PyRun_SimpleString("sys.path.append('../src')");
-	PyRun_SimpleString("import romancalc");
+	PyObject *pModule;										// module name for global use
 	
-	SRunner *sr = srunner_create (romancalc_suite_core ());
+	number_failed = 1;										// start assumption no tests passed
+	
+	Py_Initialize();										// initialize py in main scope
+	pModule = pymodule_setup("romancalc");					// setup module and
+
+	if(pModule != NULL){
+	
+		SRunner *sr = srunner_create (romancalc_suite_test_pycall_io (pModule));
 
 	srunner_run_all (sr, CK_VERBOSE);
 	number_failed = srunner_ntests_failed (sr);
 	srunner_free (sr);
 	
-	Py_Finalize();
+	} else {												// could not create module, failure
+		printf("\n Unable to create Python Module \n");
+		number_failed = 1;									// force failure return
+	}
+	pymodule_teardown(pModule);								// shutdown python
 
   return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
