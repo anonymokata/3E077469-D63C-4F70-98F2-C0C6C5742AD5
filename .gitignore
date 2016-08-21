@@ -20,6 +20,7 @@ src/libromancalc.la
 src/main
 src/Makefile
 src/Makefile.in
+src/*.pyc
 stamp-h1
 tests/.deps
 tests/.libs
