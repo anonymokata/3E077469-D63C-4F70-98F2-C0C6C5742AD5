@@ -374,19 +374,17 @@ romancalc_suite_test_pycall_io(void)
 
 // MARK: romancalc_suite_test_pycall_io
 /**************************************************************************
- * romancalc_suite_test_pycall_io
- * START_TEST (test_pycall__in_str__out_str)
- * START_TEST (test_pycall__in_str__out_int)
- * START_TEST (test_pycall__in_str__out_bool)
+ * romancalc_suite_rn_numeral_validate_bool
+ *  testing validation of roman numeral individual digits and whoe digits
+ * START_TEST (test_rn_numeral_validate_bool_digits)
+ * START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
  *
- * NOTE: this tests the tester to ensure the python to C api does not get
- * borken
  **************************************************************************/
-START_TEST (test_rn_numeral_validate_bool)
+START_TEST (test_rn_numeral_validate_bool_digits)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_numeral_validate_bool";	
+	char *lcl_NameFnc = "rn_numeral_validate_bool";
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X"), 1);
@@ -397,6 +395,21 @@ START_TEST (test_rn_numeral_validate_bool)
 }
 END_TEST
 
+START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_validate_bool";
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "i"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "v"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "x"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "l"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "c"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "d"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "m"), 1);
+}
+END_TEST
+
 Suite *
 romancalc_suite_rn_numeral_validate_bool(void)
 {
@@ -404,7 +417,8 @@ romancalc_suite_rn_numeral_validate_bool(void)
 	
 	/*********** test python call string arg with string return *****************/
 	TCase *tc_check_rn_numeral_validate_bool = tcase_create ("Test Roman Numeral Validation \n");
-	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool);
+	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits);
+	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits_lower_case);
 	suite_add_tcase (s, tc_check_rn_numeral_validate_bool);
 	
 	return s;

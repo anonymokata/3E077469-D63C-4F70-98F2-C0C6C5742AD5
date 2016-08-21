@@ -9,5 +9,5 @@ check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int
 :test_pycall__in_str__out_int:0: Passed
 check_romancalc.c:346:P:TestPythonCallIO__In_String__Out_Bool 
 :test_pycall__in_str__out_bool:0: Passed
-check_romancalc.c:396:P:Test Roman Numeral Validation 
+check_romancalc.c:404:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool:0: Passed
