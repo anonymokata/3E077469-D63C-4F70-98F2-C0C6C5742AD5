@@ -38,8 +38,21 @@ AC_HEADER_STDC
 AC_CHECK_HEADERS([stdlib.h])
 ##PKG_CHECK_MODULES([CHECK], [check],[have_check=yes], [have_check=no])
 
+
+###################################################
+### NOTE: You MUST ALSO ADD SYMBOLIC LINK IN
+### /usr/bin from the python 3 to 2 or vice versa
+#### I.E. 
+#### /usr/bin/python->/usr/bin/python2.7
+#### /usr/bin/python->/usr/bin/python3.4
+######## These 2 lines used for compiling with python 2.7.0 **********
 AM_PATH_PYTHON(2.7.0)
 PY_PREFIX=`$PYTHON -c 'import sys ; print sys.prefix'`
+######## These 2 lines used for compiling with python 3.4.0 **********
+####    AM_PATH_PYTHON(3.4)
+####    PY_PREFIX=`$PYTHON -c 'import sys ; print( sys.prefix )'`
+###################################################
+
 PYTHON_LIBS="-lpython$PYTHON_VERSION"
 PYTHON_CFLAGS="-I$PY_PREFIX/include/python$PYTHON_VERSION"
 AC_SUBST([PYTHON_LIBS])

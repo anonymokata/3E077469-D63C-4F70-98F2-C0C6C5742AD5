@@ -1,4 +1,5 @@
 #!/bin/bash
+rm src/*.pyc
 sleep 2
 make
 sleep 2
