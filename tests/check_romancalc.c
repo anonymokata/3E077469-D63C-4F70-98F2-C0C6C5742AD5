@@ -55,6 +55,71 @@ PyObject* pyfunc_setup(PyObject *arg_pModule, char *arg_funcname){
 }
 
 // MARK: python string input string output call
+/**************************************************************************
+ * pycall__in_strargs__out_pyobj
+ * multi argument call interface to python routines
+ * Inputs:
+ *	arg_pFunc           module interface built by PyObject_GetAttrString
+ *                      this is setup using PyObject_GetAttrString
+ *  argc                interger count of arguments being sent to python
+ *                      function
+ *  ...                 argument list of strings, which will be packed
+ *                      into tuple
+ *  NOTE: argc and the number of arguments MUST BE EQUAL or this will crash
+ *
+ * Returns:
+ *  PyObject*           Output return from python routine
+ *                      This is interpreted/converted into whatever type
+ *                      is used externally, this allows more a more useful
+ *                      interface, and will avoid code duplication for different
+ *                      return types
+ *
+ **************************************************************************/
+PyObject* tuple__in_strargs(int argc, ... ){
+	va_list args;											// arguments
+	char * lcl_arg_str = NULL;								// local argument string from argument list
+	int idx_arg;											// argument list indexer
+	PyObject *lcl_pArgs = NULL;								// python argument list
+	PyObject *lcl_pString = NULL;							// local string for creating arg list
+	PyObject *lcl_pValue = NULL;							// local returned value from the python routine
+	char *cResult_str = NULL;								// C string result from py routine
+	
+	if(argc > 0){											// build argument list only if
+		// we ar sending the args
+		// else lcl_pArgs is preloaded with NULL
+		
+		lcl_pArgs = PyTuple_New(argc);							// create python argument list
+		
+		va_start( args, argc );								// start argument iterating
+		
+		for(idx_arg = 0; idx_arg < argc; idx_arg++){
+			lcl_arg_str = va_arg( args, char*);				// pull next value and
+			if(lcl_arg_str) {
+				lcl_pString	= PyString_FromString( lcl_arg_str );// stuff it into the Python arg list
+				PyTuple_SetItem(lcl_pArgs, idx_arg, lcl_pString);// add the string to the argument list
+			} else {										// null string, can't process
+				Py_DECREF(lcl_pArgs);						// dump the arg list
+				lcl_pArgs = NULL;							// NULL to signify error, and abortof process
+			}
+		}
+		
+		va_end( args );										// close out argument iterating
+	}// if(argc > 0)
+	
+	lcl_pValue = PyObject_CallObject(arg_pFunc, lcl_pArgs);	// call routine
+	
+	if(lcl_pValue){
+		cResult_str = PyString_AsString(lcl_pValue);		// if bytes value returned
+	}
+	
+	if(lcl_pArgs)
+	Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
+	
+	if(cResult_str == NULL)									// protective programming
+	return strdup("");									// avoid
+	
+	return strdup(cResult_str);
+}
 char* pycall__in_str__out_str(PyObject* arg_pFunc, int argc, ... ){
 	char *lcl_string = "";
 	va_list args;											// arguments
