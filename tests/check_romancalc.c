@@ -372,6 +372,45 @@ romancalc_suite_test_pycall_io(void)
 	return s;
 }
 
+// MARK: romancalc_suite_test_pycall_io
+/**************************************************************************
+ * romancalc_suite_test_pycall_io
+ * START_TEST (test_pycall__in_str__out_str)
+ * START_TEST (test_pycall__in_str__out_int)
+ * START_TEST (test_pycall__in_str__out_bool)
+ *
+ * NOTE: this tests the tester to ensure the python to C api does not get
+ * borken
+ **************************************************************************/
+START_TEST (test_rn_numeral_validate_bool)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_validate_bool";	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D"), 1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M"), 1);
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_numeral_validate_bool(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test roman Numeral Validation");
+	
+	/*********** test python call string arg with string return *****************/
+	TCase *tc_check_rn_numeral_validate_bool = tcase_create ("Test Roman Numeral Validation \n");
+	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool);
+	suite_add_tcase (s, tc_check_rn_numeral_validate_bool);
+	
+	return s;
+}
+
+
 // MARK: Main routine
 int
 main (void)
@@ -381,7 +420,9 @@ main (void)
 
 	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
 
-	SRunner *sr = srunner_create (romancalc_suite_test_pycall_io ());// build first test
+	SRunner *sr = srunner_create (romancalc_suite_test_pycall_io ());	// validate test routines
+																		// test the tester
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool());	// test validate roman numerals
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
