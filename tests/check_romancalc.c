@@ -282,6 +282,16 @@ int pycall__in_str__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... 
 	return cResult_int;										// result
 }
 
+// MARK: romancalc_suite_test_pycall_io
+/**************************************************************************
+ * romancalc_suite_test_pycall_io
+ * START_TEST (test_pycall__in_str__out_str)
+ * START_TEST (test_pycall__in_str__out_int)
+ * START_TEST (test_pycall__in_str__out_bool)
+ *
+ * NOTE: this tests the tester to ensure the python to C api does not get
+ * borken
+ **************************************************************************/
 START_TEST (test_pycall__in_str__out_str)
 {
 	// setup python module and function interface for this test
