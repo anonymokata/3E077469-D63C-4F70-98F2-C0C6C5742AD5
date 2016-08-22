@@ -535,7 +535,47 @@ romancalc_suite_rn_numeral_validate_bool_digits_multi(void)
 	return s;
 }
 
+// MARK: romancalc_suite_rn_numeral_digit_unmix
+/**************************************************************************
+ * romancalc_suite_rn_numeral_digit_unmix
+ *  testing unmixing of roman numeral pairs into improper values for
+ *  making addition and subtraction of roman numerals easier
+ * START_TEST (test_rn_numeral_digit_unmix)
+ *
+ **************************************************************************/
+START_TEST (test_rn_numeral_digit_unmix)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_digit_unmix";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IV"), "IIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IX"), "VIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XL"), "XXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XC"), "LXXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CD"), "CCCC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CM"), "DCCCC");
+}
+END_TEST
 
+Suite *
+romancalc_suite_rn_numeral_digit_unmix(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	
+	/*********** test unmixing digits *****************/
+	/*
+		mid process routine to unmix subractions from within the roman numerals
+	 this take mixed digit pairs into improper values, making adding and subtracting
+	 easier
+	 i.e. IV -> IIII, IX -> VIIII, XL -> XXXX, XC -> LXXXX, CD -> CCCC, CM -> DCCCC
+	 */
+	TCase *tc_check_rn_numeral_digit_unmix = tcase_create ("Test unroll \n");
+	tcase_add_test (tc_check_rn_numeral_digit_unmix, test_rn_numeral_digit_unmix);
+	suite_add_tcase (s, tc_check_rn_numeral_digit_unmix);
+	
+	return s;
+}
 
 // MARK: Main routine
 int
@@ -550,6 +590,7 @@ main (void)
 																		// test the tester
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_single());	// test validate roman numerals
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_multi());	// test validate roman numerals
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_unmix());	// test validate roman numerals
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
