@@ -217,7 +217,7 @@ char* pycall__in_str__out_str(char* arg_NameMod, char* arg_NameFnc, int argc, ..
 }
 
 /**************************************************************************
- * pycall__in_str__out_in
+ * pycall__in_str__out_int
  *   multi argument call interface to python routines
  *   calls python routine that returns integer value
  *   with arguments, (none to many)
@@ -565,7 +565,7 @@ END_TEST
 Suite *
 romancalc_suite_rn_numeral_digit_unmix(void)
 {
-	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	Suite *s = suite_create ("\nRoman Calc Suite Test Digit Unmix");
 	
 	/*********** test unmixing digits *****************/
 	/*
@@ -700,7 +700,7 @@ END_TEST
 Suite *
 romancalc_suite_rn_numeral_digit_remix(void)
 {
-	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	Suite *s = suite_create ("\nRoman Calc Suite Numeral Digit Remix Improper Multi-Digit to Mixed Proper Digit Pair");
 	
 	/*********** test remixing digits *****************/
 	/*
