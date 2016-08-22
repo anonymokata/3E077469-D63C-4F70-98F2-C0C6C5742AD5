@@ -257,6 +257,14 @@ def rn_addition_full(rn_A, rn_B):
 	rn_B = rn_B.upper() # work in upper case
 
 	rslt_out = ""
+	rn_A = rn_numeral_digit_unmix(rn_A)					# unroll for simplified math
+	rn_B = rn_numeral_digit_unmix(rn_B)					# unroll for simplified math
+	
+	rslt_out = rn_A + rn_B								# combine input digits, simple form of add
+	
+	rslt_out = rn_numeral_digit_sort(rslt_out)			# sort digits for addition,
+	rslt_out = rn_numeral_digit_reduction(rslt_out)		# reduce any multi digits to next higher digit
+	rslt_out = rn_numeral_digit_remix(rslt_out)			# mix back in any proper numerals IIII->IV etc
 	
 	return rslt_out
 
