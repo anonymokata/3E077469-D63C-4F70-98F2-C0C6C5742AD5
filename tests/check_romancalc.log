@@ -24,7 +24,9 @@ Roman Calc Suite Test Unmixed Roman Numeral Comparison
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
  
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
-100%: Checks: 23, Failures: 0, Errors: 0
+ 
+Roman Calc Suite Test full subtraction
+100%: Checks: 24, Failures: 0, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -71,3 +73,5 @@ check_romancalc.c:1177:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
 check_romancalc.c:1195:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
+check_romancalc.c:1304:P:TestPython_full_subtraction
+:test_rn_subtraction_full_single:0: Passed

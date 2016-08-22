@@ -227,6 +227,21 @@ def rn_subtraction_full(rn_A, rn_B):
 	
 	rslt_out = ""
 	
+	rn_A = rn_numeral_digit_unmix(rn_A)					# unroll for simplified math
+	rn_B = rn_numeral_digit_unmix(rn_B)					# unroll for simplified math
+	
+	rslt_cmp = rn_unmixed_compare(rn_A, rn_B)			# see if result is zero pos or neg
+	if rslt_cmp == 0:									# if values equal the result will be zero
+		rslt_out = ""									# or empty string (re-inforce this concept
+	else:
+		if rslt_cmp > 0:								# if A>B result will be positive
+			rslt_out = rn_unmixed_subt_LG_SML(rn_A, rn_B)# perform subtraction
+		else:											# else A< B result will be negative
+			rslt_out = '-' + rn_unmixed_subt_LG_SML(rn_B, rn_A)# perform subtraction
+
+		rslt_out = rn_numeral_digit_reduction(rslt_out) # reduce any multi digits to next higher digit
+		rslt_out = rn_numeral_digit_remix(rslt_out)     # mix back in any proper numerals IIII->IV etc
+
 	return rslt_out
 
 
