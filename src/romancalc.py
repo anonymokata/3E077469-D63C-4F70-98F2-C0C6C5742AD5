@@ -181,9 +181,28 @@ def rn_unmixed_borrow(rn_A, rn_B):
 	#         if exists then split
 	#         return, and split again
 	#         until done
+	rn_brw = [('I', 'V', 'IIIII'),
+			  ('V', 'X', 'VV'),
+			  ('X', 'L', 'XXXXX'),
+			  ('L', 'C', 'LL'),
+			  ('C', 'D', 'CCCCC'),
+			  ('D', 'M', 'DD')]
+	rn_A = rn_A.upper() # work in upper case
+	rn_B = rn_B.upper() # work in upper case
+	
 	rslt_out = ""
+
+	idx_brw = [x[0] for x in rn_brw].index(rn_B)
+	idx_c = rn_A.rfind(rn_brw[idx_brw][1])
+	
+	if idx_c >= 0:			# if found a value we can borrow from,
+		rslt_out = rn_A[:idx_c]
+		rslt_out += rn_brw[idx_brw][2]
+		rslt_out += rn_A[idx_c+1:]
+
+	rslt_out = rn_numeral_digit_sort(rslt_out)						# keep digits in proper numerical magnitude order
 	return rslt_out
-	return rslt_out
+
 
 if __name__ == "__main__":
 
