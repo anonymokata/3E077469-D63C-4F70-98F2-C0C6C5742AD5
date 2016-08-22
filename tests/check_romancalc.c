@@ -372,15 +372,16 @@ romancalc_suite_test_pycall_io(void)
 	return s;
 }
 
-// MARK: romancalc_suite_test_pycall_io
+// MARK: romancalc_suite_rn_numeral_validate_bool_digits_single
 /**************************************************************************
- * romancalc_suite_rn_numeral_validate_bool
+ * romancalc_suite_rn_numeral_validate_bool_digits_single
  *  testing validation of roman numeral individual digits and whoe digits
- * START_TEST (test_rn_numeral_validate_bool_digits)
- * START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
+ * START_TEST (test_rn_numeral_validate_bool_digits_single_upper_case)
+ * START_TEST (test_rn_numeral_validate_bool_digits_single_lower_case)
+ * START_TEST (test_rn_numeral_validate_bool_digits_single_error)
  *
  **************************************************************************/
-START_TEST (test_rn_numeral_validate_bool_digits)
+START_TEST (test_rn_numeral_validate_bool_digits_single_upper_case)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
@@ -395,7 +396,7 @@ START_TEST (test_rn_numeral_validate_bool_digits)
 }
 END_TEST
 
-START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
+START_TEST (test_rn_numeral_validate_bool_digits_single_lower_case)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
@@ -410,7 +411,7 @@ START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
 }
 END_TEST
 
-START_TEST (test_rn_numeral_validate_bool_digits_error)
+START_TEST (test_rn_numeral_validate_bool_digits_single_error)
 {
 	// ensure that the roman numeral check throws out all invalid characters
 	// setup python module and function interface for this test
@@ -445,11 +446,11 @@ romancalc_suite_rn_numeral_validate_bool_digits_single(void)
 	Suite *s = suite_create ("\nRoman Calc Suite Test roman Numeral Validation");
 	
 	/*********** test python call string arg with string return *****************/
-	TCase *tc_check_rn_numeral_validate_bool = tcase_create ("Test Roman Numeral Validation \n");
-	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits);
-	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits_lower_case);
-	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits_error);
-	suite_add_tcase (s, tc_check_rn_numeral_validate_bool);
+	TCase *tc_check_rn_numeral_validate_bool_single = tcase_create ("Test Roman Numeral Validation \n");
+	tcase_add_test (tc_check_rn_numeral_validate_bool_single, test_rn_numeral_validate_bool_digits_single_upper_case);
+	tcase_add_test (tc_check_rn_numeral_validate_bool_single, test_rn_numeral_validate_bool_digits_single_lower_case);
+	tcase_add_test (tc_check_rn_numeral_validate_bool_single, test_rn_numeral_validate_bool_digits_single_error);
+	suite_add_tcase (s, tc_check_rn_numeral_validate_bool_single);
 	
 	return s;
 }
