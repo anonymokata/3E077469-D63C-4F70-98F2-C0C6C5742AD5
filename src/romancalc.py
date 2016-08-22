@@ -142,6 +142,24 @@ def rn_unmixed_subt_LG_SML(rn_A, rn_B):
 	
 	rslt_out = ""
 	
+	idx_b_range = range(0, len(rn_B))		# iterating backwards through b
+	
+	# perform the quick dirty subtraction of digits that we can do without borrowing
+	# this does straight digit subtraction, on digits that it can
+	# by this I mean if a digit from the rn_B is als in rn_A, then it removes
+	# the digit from both rn_A and rn_B, ie subtracts the digit from bot
+	
+	for idx_b in reversed(idx_b_range):			# loop from smallest numeral to larges(right to left)
+		idx_c = rn_A.rfind(rn_B[idx_b])			# look for each char
+		if idx_c >= 0:							# did we find smaller value within
+			rn_A = rn_A[:idx_c]+rn_A[idx_c+1:]	# slice out(subtract) that Numeral digit
+			rn_B = rn_B[:idx_b]+rn_B[idx_b+1:]	# slice out(subtract) that Numeral digit
+
+	rslt_out = rn_A								#return teh mid point result
+
+	# still need to do borrowing portion of subtraction
+
+	return rslt_out
 	return rslt_out
 
 if __name__ == "__main__":

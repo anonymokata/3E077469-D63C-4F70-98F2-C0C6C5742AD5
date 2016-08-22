@@ -901,11 +901,11 @@ romancalc_suite_rn_compare(void)
  *   result will always be positive 
  *   result will NEVER BE ZERO
  *   result will be unmixed romannumeral
- * START_TEST (test_rn_unmixed_subt_LG_SML_single)
+ # START_TEST (test_rn_unmixed_subt_LG_SML_single_noBorrow)
  * START_TEST (test_rn_unmixed_subt_LG_SML_multi)
  *
  **************************************************************************/
-START_TEST (test_rn_unmixed_subt_LG_SML_single)
+START_TEST (test_rn_unmixed_subt_LG_SML_single_noBorrow)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
@@ -942,7 +942,38 @@ START_TEST (test_rn_unmixed_subt_LG_SML_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MC",  "C"), "M");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MM",  "M"), "M");
-	
+
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "I"), "MDCLXV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "V"), "MDCLXI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "X"), "MDCLVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "L"), "MDCXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "C"), "MDLXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "D"), "MCLXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXVI", "M"), "DCLXVI");
+
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "I"), "MMDDCCLLXXVVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "V"), "MMDDCCLLXXVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "X"), "MMDDCCLLXVVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "L"), "MMDDCCLXXVVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "C"), "MMDDCLLXXVVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "D"), "MMDCCLLXXVVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMDDCCLLXXVVII", "M"), "MDDCCLLXXVVII");
+
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "I"),
+					 "MMMDDDCCCLLLXXXVVVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "V"),
+					 "MMMDDDCCCLLLXXXVVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "X"),
+					 "MMMDDDCCCLLLXXVVVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "L"),
+					 "MMMDDDCCCLLXXXVVVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "C"),
+					 "MMMDDDCCLLLXXXVVVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "D"),
+					 "MMMDDCCCLLLXXXVVVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "M"),
+					 "MMDDDCCCLLLXXXVVVIII");
+
 }
 END_TEST
 
@@ -972,7 +1003,7 @@ romancalc_suite_rn_unmixed_subt_LG_SML(void)
 	 **************************************************************************/
 	
 	TCase *tc_check_rn_unmixed_subt_LG_SML_single = tcase_create ("TestPython_Subtraction_single\n");
-	tcase_add_test (tc_check_rn_unmixed_subt_LG_SML_single, test_rn_unmixed_subt_LG_SML_single);
+	tcase_add_test (tc_check_rn_unmixed_subt_LG_SML_single, test_rn_unmixed_subt_LG_SML_single_noBorrow);
 	suite_add_tcase (s, tc_check_rn_unmixed_subt_LG_SML_single);
 	
 	return s;
