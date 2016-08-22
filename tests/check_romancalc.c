@@ -1038,6 +1038,34 @@ START_TEST (test_rn_unmixed_borrow_Simple)
 }
 END_TEST
 
+START_TEST (test_rn_unmixed_borrow_Complex_single_single)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_unmixed_borrow";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X",  "I"), "VIIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L",  "I"), "XXXXVIIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C",  "I"), "LXXXXVIIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "I"), "CCCCLXXXXVIIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "I"), "DCCCCLXXXXVIIIII");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L",  "V"), "XXXXVV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C",  "V"), "LXXXXVV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "V"), "CCCCLXXXXVV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "V"), "DCCCCLXXXXVV");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C",  "X"), "LXXXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "X"), "CCCCLXXXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "X"), "DCCCCLXXXXX");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "L"), "CCCCLL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "L"), "DCCCCLL");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "C"), "DCCCCC");
+}
+END_TEST
+
 Suite *
 romancalc_suite_rn_unmixed_borrow(void)
 {
@@ -1057,6 +1085,7 @@ romancalc_suite_rn_unmixed_borrow(void)
 	
 	TCase *tc_check_rn_unmixed_borrow = tcase_create ("TestPython_borow calculation\n");
 	tcase_add_test (tc_check_rn_unmixed_borrow, test_rn_unmixed_borrow_Simple);
+	tcase_add_test (tc_check_rn_unmixed_borrow, test_rn_unmixed_borrow_Complex_single_single);
 	suite_add_tcase (s, tc_check_rn_unmixed_borrow);
 	
 	return s;
