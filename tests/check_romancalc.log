@@ -11,16 +11,16 @@ Testing 1001 to 2000
 Testing 2001 to 3000
 Testing 3001 to 3999
  
-Roman Calc Suite Test Multi-Digit Roman Numeral Validation
+Roman Calc Suite Test Digit Unmix
  
 Roman Calc Suite Test Digit Sort According to magnitude
  
 Roman Calc Suite Test Multi-digit numeral reduction
  
-Roman Calc Suite Test Multi-Digit Roman Numeral Validation
+Roman Calc Suite Numeral Digit Remix Improper Multi-Digit to Mixed Proper Digit Pair
  
-Roman Calc Suite Test Multi-Digit Roman Numeral Validation
-92%: Checks: 13, Failures: 1, Errors: 0
+Roman Calc Suite Test Unmixed Roman Numeral Comparison
+100%: Checks: 13, Failures: 0, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -45,5 +45,5 @@ check_romancalc.c:657:P:Test digit numeral reduction
 :test_rn_numeral_digit_reduction:0: Passed
 check_romancalc.c:696:P:Test remix of digits 
 :test_rn_numeral_digit_remix:0: Passed
-check_romancalc.c:741:F:Test unroll 
-:test_rn_compare_digit_single:0: Assertion 'pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "V")==-1' failed: pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "V")==0, -1==-1
+check_romancalc.c:795:P:TestPython_Compare_Single_Digits
+:test_rn_compare_digit_single:0: Passed
