@@ -670,6 +670,52 @@ romancalc_suite_rn_numeral_digit_reduction(void)
 	return s;
 }
 
+// MARK: romancalc_suite_rn_numeral_digit_remix
+/**************************************************************************
+ * romancalc_suite_rn_numeral_digit_remix
+ *  testing remixing of roman numeral pairs into proper values from
+ * improper values
+ * START_TEST (test_rn_numeral_digit_remix)
+ *
+ **************************************************************************/
+START_TEST (test_rn_numeral_digit_remix)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_digit_remix";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IIII"), "IV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "VIIII"), "IX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XXXX"), "XL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "LXXXX"), "XC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CCCC"), "CD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DCCCC"), "CM");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MDCCCCLXXXXVIIII"), "MCMXCIX"); // 1999
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,
+					 "DCCCCCCCCLXXXXXXXXVIIIIIIII"), "CMCDXCXLIXIV");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_numeral_digit_remix(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	
+	/*********** test remixing digits *****************/
+	/*
+		mid process routine to remix subractions from within the roman numerals
+	 this take mixed digit pairs into improper values, making adding and subtracting
+	 easier
+	 i.e. IV -> IIII, IX -> VIIII, XL -> XXXX, XC -> LXXXX, CD -> CCCC, CM -> DCCCC
+	 */
+	TCase *tc_check_rn_numeral_digit_remix = tcase_create ("Test unroll \n");
+	tcase_add_test (tc_check_rn_numeral_digit_remix, test_rn_numeral_digit_remix);
+	suite_add_tcase (s, tc_check_rn_numeral_digit_remix);
+	
+	return s;
+}
+
 // MARK: Main routine
 int
 main (void)
@@ -686,6 +732,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_unmix());	//unmix mid-numeral digits
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_sort());	// digit magnitude sort
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_reduction());	// digit reduction
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_remix());	//remix mid-numeral digits
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
