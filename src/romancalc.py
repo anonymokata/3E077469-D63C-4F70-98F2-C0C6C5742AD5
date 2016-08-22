@@ -41,6 +41,15 @@ def rn_numeral_digit_unmix(rn_str):
 	
 	return rn_str
 
+#  rn_numeral_digit_sort
+#*  ensure digits with roman numeral string are sorted in value order
+# *  Since M = 1000, D = 500, C = 100, L = 50, X = 10, V = 5, I = 1
+# *  then the order from left to right is MDCLVI within any numeral string
+
+def rn_numeral_digit_sort(rn_str):
+
+	return rn_str
+
 if __name__ == "__main__":
 
 

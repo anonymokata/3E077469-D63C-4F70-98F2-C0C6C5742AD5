@@ -556,7 +556,7 @@ START_TEST (test_rn_numeral_digit_unmix)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CD"), "CCCC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CM"), "DCCCC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MCMXCIX"), "MDCCCCLXXXXVIIII"); // 1999 good value
-
+	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CMCDXCXLIXIV"),
 					 "DCCCCCCCCLXXXXXXXXVIIIIIIII");
 }
@@ -581,6 +581,38 @@ romancalc_suite_rn_numeral_digit_unmix(void)
 	return s;
 }
 
+
+// MARK: romancalc_suite_rn_numeral_digit_sort
+/**************************************************************************
+ * romancalc_suite_rn_numeral_digit_sort
+ *  ensure digits with roman numeral string are sorted in value order
+ *  Since M = 1000, D = 500, C = 100, L = 50, X = 10, V = 5, I = 1
+ *  then the order from left to right is MDCLVI within any numeral string
+ * START_TEST (test_rn_numeral_digit_sort)
+ *
+ **************************************************************************/
+START_TEST (test_rn_numeral_digit_sort)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_digit_sort";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IVXLCDM"), "MDCLXVI");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_numeral_digit_sort(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	
+	TCase *tc_check_rn_numeral_digit_sort = tcase_create ("Test Digit Sort \n");
+	tcase_add_test (tc_check_rn_numeral_digit_sort, test_rn_numeral_digit_sort);
+	suite_add_tcase (s, tc_check_rn_numeral_digit_sort);
+	
+	return s;
+}
+
 // MARK: Main routine
 int
 main (void)
@@ -595,6 +627,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_single());	// test validate roman numerals
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_multi());	// test validate roman numerals
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_unmix());	// test validate roman numerals
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_sort());	// test validate roman numerals
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
