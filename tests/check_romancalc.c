@@ -729,7 +729,8 @@ romancalc_suite_rn_numeral_digit_remix(void)
  * A > B = 1
  * A == B = 0
  * A < B = -1
- * START_TEST (test_rn_compare)
+ * START_TEST (test_rn_compare_digit_single)
+ * START_TEST (test_rn_compare_digit_multi)
  *
  **************************************************************************/
 START_TEST (test_rn_compare_digit_single)
@@ -797,6 +798,68 @@ START_TEST (test_rn_compare_digit_single)
 }
 END_TEST
 
+START_TEST (test_rn_compare_digit_multi)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_compare";
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VV",  "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "XX",  "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LL",  "L"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CC",  "C"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DD",  "D"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "MM",  "M"),  1);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "I", "II"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "V", "VV"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "X", "XX"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "L", "LL"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "C", "CC"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "D", "DD"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "M", "MM"), -1);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VI",  "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "XI",  "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LI",  "L"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CI",  "C"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DI",  "D"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "MI",  "M"),  1);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "I", "II"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "V", "VI"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "X", "XI"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "L", "LI"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "C", "CI"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "D", "DI"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  "M", "MI"), -1);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "II", "II"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VV", "VV"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "XX", "XX"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LL", "LL"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CC", "CC"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DD", "DD"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "MM", "MM"),  0);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VV", "II"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "XX", "VV"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LL", "XX"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CC", "LL"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DD", "CC"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "MM", "DD"),  1);
+	
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "II", "VV"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VV", "XX"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "XX", "LL"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LL", "CC"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CC", "DD"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DD", "MM"), -1);
+}
+END_TEST
+
 Suite *
 romancalc_suite_rn_compare(void)
 {
@@ -811,9 +874,13 @@ romancalc_suite_rn_compare(void)
 	 * A < B = -1
 	 */
 
-	TCase *tc_check_rn_compare = tcase_create ("TestPython_Compare_Single_Digits\n");
-	tcase_add_test (tc_check_rn_compare, test_rn_compare_digit_single);
-	suite_add_tcase (s, tc_check_rn_compare);
+	TCase *tc_check_rn_compare_single = tcase_create ("TestPython_Compare_Single_Digits\n");
+	tcase_add_test (tc_check_rn_compare_single, test_rn_compare_digit_single);
+	suite_add_tcase (s, tc_check_rn_compare_single);
+	
+	TCase *tc_check_rn_compare_multi = tcase_create ("TestPython_Compare_Multi_Digits\n");
+	tcase_add_test (tc_check_rn_compare_multi, test_rn_compare_digit_multi);
+	suite_add_tcase (s, tc_check_rn_compare_multi);
 	
 	return s;
 }
