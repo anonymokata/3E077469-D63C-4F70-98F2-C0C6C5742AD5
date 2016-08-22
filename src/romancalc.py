@@ -22,6 +22,7 @@ def TestRoutineCheck__in_str__out_bool(check_str):
 def rn_numeral_validate_bool(check_str):
 
 # use regalar expression pattern to validate
+	check_str = check_str.upper() # work in upper case
 	rslt_out = re.match("^(?=[MDCLXVI])M*(C[MD]|D?C{0,3})(X[CL]|L?X{0,3})(I[XV]|V?I{0,3})$", check_str, re.IGNORECASE)
 
 	return rslt_out != None
@@ -32,6 +33,7 @@ def rn_numeral_validate_bool(check_str):
 # XC -> LXXXX, CD -> CCCC, CM -> DCCCC
 
 def rn_numeral_digit_unmix(rn_str):
+	rn_str = rn_str.upper() # work in upper case
 	rn_str = rn_str.replace("IV", "IIII")
 	rn_str = rn_str.replace("IX", "VIIII")
 	rn_str = rn_str.replace("XL", "XXXX")
