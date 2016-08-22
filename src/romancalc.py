@@ -49,8 +49,21 @@ def rn_numeral_digit_unmix(rn_str):
 # *  then the order from left to right is MDCLVI within any numeral string
 
 def rn_numeral_digit_sort(rn_str):
+	
+	out_str = ""
+	# method is to add in each digit time the number of occurrences in the
+	# original string, in magnitude order
+	# order from left to right is MDCLXVI
+	rn_str = rn_str.upper() # work in upper case
+	out_str += 'M' * rn_str.count('M')
+	out_str += 'D' * rn_str.count('D')
+	out_str += 'C' * rn_str.count('C')
+	out_str += 'L' * rn_str.count('L')
+	out_str += 'X' * rn_str.count('X')
+	out_str += 'V' * rn_str.count('V')
+	out_str += 'I' * rn_str.count('I')
 
-	return rn_str
+	return out_str
 
 if __name__ == "__main__":
 

@@ -598,6 +598,8 @@ START_TEST (test_rn_numeral_digit_sort)
 	char *lcl_NameFnc = "rn_numeral_digit_sort";
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IVXLCDM"), "MDCLXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MDCLXVIMDCLXVIMDCLXVI"),
+					 "MMMDDDCCCLLLXXXVVVIII");
 }
 END_TEST
 
