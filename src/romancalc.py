@@ -135,12 +135,12 @@ def rn_compare(rn_A, rn_B):
 #    result will always be positive
 #    result will NEVER BE ZERO
 #    result will be unmixed romannumeral
+# NOTE: terminology for subtraction
+# Difference = Minuend - Subtrahend
 
 def rn_unmixed_subt_LG_SML(rn_A, rn_B):
 	rn_A = rn_A.upper() # work in upper case
 	rn_B = rn_B.upper() # work in upper case
-	
-	rslt_out = ""
 	
 	idx_b_range = range(0, len(rn_B))		# iterating backwards through b
 	
@@ -154,12 +154,12 @@ def rn_unmixed_subt_LG_SML(rn_A, rn_B):
 		if idx_c >= 0:							# did we find smaller value within
 			rn_A = rn_A[:idx_c]+rn_A[idx_c+1:]	# slice out(subtract) that Numeral digit
 			rn_B = rn_B[:idx_b]+rn_B[idx_b+1:]	# slice out(subtract) that Numeral digit
+		else:									# else we need to borrow
+			rn_A = rn_unmixed_borrow(rn_A, rn_B)# calculate a Minuend that is borrowable
+			rn_A = rn_unmixed_subt_LG_SML(rn_A, rn_B)	# finish the subtraction recursively
+			break
 
-	rslt_out = rn_A								#return teh mid point result
-
-	# still need to do borrowing portion of subtraction
-
-	return rslt_out
+	return rn_A
 
 #  romancalc_suite_rn_unmixed_borrow
 #    will borrow appropriate value

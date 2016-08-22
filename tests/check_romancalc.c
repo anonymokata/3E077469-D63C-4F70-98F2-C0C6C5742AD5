@@ -981,7 +981,7 @@ START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Simple)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_unmixed_borrow";
+	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V",  "I"), "IIII");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X",  "V"), "V"   );
