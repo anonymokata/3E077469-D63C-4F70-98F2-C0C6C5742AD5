@@ -1697,6 +1697,36 @@ romancalc_suite_rn_addition_full(void)
 	return s;
 }
 
+// MARK: romancalc_suite_rn_process_expression
+/**************************************************************************
+ *  romancalc_suite_rn_process_expression
+ *  rn_process_expression
+ *  see python file for information on routine
+ **************************************************************************/
+START_TEST (test_rn_process_expression)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_process_expression";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CMLXIX"), "MMXXVI");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_process_expression(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test expression processing");
+	
+	TCase *tc_check_rn_addition_full_digit_single = tcase_create ("TestPython_Process_expression_Addition\n");
+	tcase_add_test (tc_check_rn_addition_full_digit_single, test_rn_addition_full_);
+	suite_add_tcase (s, tc_check_rn_addition_full_digit_single);
+	
+
+	
+	return s;
+}
+
+
 // MARK: Main routine
 int
 main (void)
@@ -1719,7 +1749,8 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_borrow());	// check to see if can figure out borrow
 	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
 	srunner_add_suite(sr, romancalc_suite_rn_addition_full());	// full addition pos results
-
+	srunner_add_suite(sr, romancalc_suite_rn_process_expression());
+	
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
 	number_failed = srunner_ntests_failed (sr);

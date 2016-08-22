@@ -268,6 +268,50 @@ def rn_addition_full(rn_A, rn_B):
 	
 	return rslt_out
 
+#     rn_expression_process
+#          this adds or subtracts 2 roman numerals
+#
+#          process the mathemeatical espression
+#          this is a single operator expression only 1 operator per expression
+#               either a '+' or '-'
+#          report back simple errors
+#               excessive opperators (more than 1)
+#               proper roman numerals only checked
+#               empty input report back as zero
+#          expression    value1 +- value2
+#               either no or 1 operator, if no operator the numeral is reported
+#                  back, if the expression is a proper roman numeral or error
+#                  is reported
+#               if either side of a correct operator is blank it
+#                    is treated as zero and the expression is still calculated
+#                    giving  the mathematical result
+#          results will be a tuple,
+#                    index 0 of the tuple will be the ascii result representation
+#                        index 0 is type string value and will never be null
+#                    index 1 of the tuple will be the integer error/result code
+#                        index 1 is type int and will be one of the following
+#                            0 = no errors/warnings
+#                           information value
+#                           -1 = result is zero
+#                           error value
+#                           -2 = multiple operators
+#                           -3 = invalid values
+#                           -4 = invalid expression
+#                                   (characters not allowed either not numerals
+#                                      not allowed operators '+' or '-')
+#               positive results have no preceding sign
+#               negative results will be preceeded by a '-'
+#               for addition results will be always positive
+#               for subtraction the result is calculated
+#                    value1 >  value2    positive result
+#                    value2 == value2    empty result (zero value)
+#                    value1 <  value2    negative result
+#
+def rn_process_expression(rn_exp):
+	rn_exp = rn_exp.upper() # work in upper case
+	
+	return rn_tp_rslt_out
+
 if __name__ == "__main__":
 
 
