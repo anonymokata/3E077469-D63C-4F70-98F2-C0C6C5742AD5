@@ -555,6 +555,10 @@ START_TEST (test_rn_numeral_digit_unmix)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XC"), "LXXXX");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CD"), "CCCC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CM"), "DCCCC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MCMXCIX"), "MDCCCCLXXXXVIIII"); // 1999 good value
+
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CMCDXCXLIXIV"),
+					 "DCCCCCCCCLXXXXXXXXVIIIIIIII");
 }
 END_TEST
 

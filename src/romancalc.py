@@ -32,6 +32,12 @@ def rn_numeral_validate_bool(check_str):
 # XC -> LXXXX, CD -> CCCC, CM -> DCCCC
 
 def rn_numeral_digit_unmix(rn_str):
+	rn_str = rn_str.replace("IV", "IIII")
+	rn_str = rn_str.replace("IX", "VIIII")
+	rn_str = rn_str.replace("XL", "XXXX")
+	rn_str = rn_str.replace("XC", "LXXXX")
+	rn_str = rn_str.replace("CD", "CCCC")
+	rn_str = rn_str.replace("CM", "DCCCC")
 	
 	return rn_str
 

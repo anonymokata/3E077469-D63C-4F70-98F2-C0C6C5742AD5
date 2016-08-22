@@ -12,7 +12,7 @@ Testing 2001 to 3000
 Testing 3001 to 3999
  
 Roman Calc Suite Test Multi-Digit Roman Numeral Validation
-88%: Checks: 9, Failures: 1, Errors: 0
+100%: Checks: 9, Failures: 0, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -29,5 +29,5 @@ check_romancalc.c:501:P:Test Multi-Digit Roman Numeral Validation
 :test_rn_numeral_validate_bool_digits_multi:0: Passed
 check_romancalc.c:520:P:Test Multi-Digit Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_multi_error:0: Passed
-check_romancalc.c:552:F:Test unroll 
-:test_rn_numeral_digit_unmix:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IV")=="IIII"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IV")=="IV", "IIII"=="IIII"
+check_romancalc.c:561:P:Test unroll 
+:test_rn_numeral_digit_unmix:0: Passed
