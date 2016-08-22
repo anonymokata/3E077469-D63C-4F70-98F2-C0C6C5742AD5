@@ -461,6 +461,7 @@ romancalc_suite_rn_numeral_validate_bool_digits_single(void)
  * romancalc_suite_rn_numeral_validate_bool_digits_multi
  *  testing validation of roman numeral multi digits
  * START_TEST (test_rn_numeral_validate_bool_digits_multi)
+ * START_TEST (test_rn_numeral_validate_bool_digits_multi_error)
  *
  **************************************************************************/
 START_TEST (test_rn_numeral_validate_bool_digits_multi)
@@ -491,14 +492,32 @@ START_TEST (test_rn_numeral_validate_bool_digits_multi)
 		hund = (cntr % 1000)/100;
 		tens = (cntr %  100)/ 10;
 		ones = (cntr %   10);
-//		printf(" ->%i<-->%i<-->%i<-->%i<-", thou, hund, tens, ones);
+
 		strcat(lcl_str_rnum, str_thou[ thou ]);	// add in thousands
 		strcat(lcl_str_rnum, str_hund[ hund ]);	// add in hundreds
 		strcat(lcl_str_rnum, str_tens[ tens ]);	// add in tens
 		strcat(lcl_str_rnum, str_ones[ ones ]);	// add in ones
-//		printf("-->%15s<-\n", lcl_str_rnum);
+
 		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 1);
 	}
+}
+END_TEST
+
+START_TEST (test_rn_numeral_validate_bool_digits_multi_error)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_validate_bool";
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "IIII"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "VV"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "XXXX"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "LL"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "CCCC"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "DD"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "MCCCCV"), 0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "MCMXCIX"), 1); // 1999 good value
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "MCM XCIX"), 0); // invalid character
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, ""), 0);
 }
 END_TEST
 
@@ -510,6 +529,7 @@ romancalc_suite_rn_numeral_validate_bool_digits_multi(void)
 	/*********** test python call string arg with string return *****************/
 	TCase *tc_check_rn_numeral_validate_bool_multi = tcase_create ("Test Multi-Digit Roman Numeral Validation \n");
 	tcase_add_test (tc_check_rn_numeral_validate_bool_multi, test_rn_numeral_validate_bool_digits_multi);
+	tcase_add_test (tc_check_rn_numeral_validate_bool_multi, test_rn_numeral_validate_bool_digits_multi_error);
 	suite_add_tcase (s, tc_check_rn_numeral_validate_bool_multi);
 	
 	return s;
