@@ -2,7 +2,15 @@ Running suite(s):
 Roman Calc Suite Test the "Test Suite" Python interface
  
 Roman Calc Suite Test roman Numeral Validation
-100%: Checks: 6, Failures: 0, Errors: 0
+ 
+Roman Calc Suite Test Multi-Digit Roman Numeral Validation
+
+ test_rn_numeral_validate_bool_digits_multi 
+Testing    1 to 1000
+Testing 1001 to 2000
+Testing 2001 to 3000
+Testing 3001 to 3999
+100%: Checks: 7, Failures: 0, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -15,3 +23,5 @@ check_romancalc.c:410:P:Test Roman Numeral Validation
 :test_rn_numeral_validate_bool_digits_single_lower_case:0: Passed
 check_romancalc.c:439:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_error:0: Passed
+check_romancalc.c:500:P:Test Multi-Digit Roman Numeral Validation 
+:test_rn_numeral_validate_bool_digits_multi:0: Passed

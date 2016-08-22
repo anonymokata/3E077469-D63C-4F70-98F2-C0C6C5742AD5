@@ -253,7 +253,7 @@ int pycall__in_str__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... 
 		// we ar sending the args
 		// else lcl_pArgs is preloaded with NULL
 		
-		lcl_pArgs = PyTuple_New(argc);							// create python argument list
+		lcl_pArgs = PyTuple_New(argc);						// create python argument list
 		
 		va_start( args, argc );								// start argument iterating
 		
@@ -456,6 +456,67 @@ romancalc_suite_rn_numeral_validate_bool_digits_single(void)
 }
 
 
+// MARK: romancalc_suite_rn_numeral_validate_bool_digits_multi
+/**************************************************************************
+ * romancalc_suite_rn_numeral_validate_bool_digits_multi
+ *  testing validation of roman numeral multi digits
+ * START_TEST (test_rn_numeral_validate_bool_digits_multi)
+ *
+ **************************************************************************/
+START_TEST (test_rn_numeral_validate_bool_digits_multi)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_validate_bool";
+	char *str_thou[] = {"", "M", "MM", "MMM"};
+	char *str_hund[] = {"", "C", "CC", "CCC", "CD", "D", "DC", "DCC", "DCCC", "CM"};
+	char *str_tens[] = {"", "X", "XX", "XXX", "XL", "L", "LX", "LXX", "LXXX", "XC"};
+	char *str_ones[] = {"", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"};
+	char lcl_str_rnum[20];
+	int thou, hund, tens, ones;								// used to calcualte digits
+	
+	int cntr;												// counter
+	int val;												// working value
+	int mod;												// modulus
+	int rem;												// remainder
+	printf("\n test_rn_numeral_validate_bool_digits_multi \n");
+	for(cntr = 1; cntr <= 3999; cntr++){
+		if(cntr == 1){			printf("Testing    1 to 1000\n"); }
+		else if(cntr == 1001){	printf("Testing 1001 to 2000\n"); }
+		else if(cntr == 2001){	printf("Testing 2001 to 3000\n"); }
+		else if(cntr == 3001){	printf("Testing 3001 to 3999\n"); }
+		
+		memset(lcl_str_rnum, 0, 20);		// clear output string
+		thou = cntr/1000;
+		hund = (cntr % 1000)/100;
+		tens = (cntr %  100)/ 10;
+		ones = (cntr %   10);
+//		printf(" ->%i<-->%i<-->%i<-->%i<-", thou, hund, tens, ones);
+		strcat(lcl_str_rnum, str_thou[ thou ]);	// add in thousands
+		strcat(lcl_str_rnum, str_hund[ hund ]);	// add in hundreds
+		strcat(lcl_str_rnum, str_tens[ tens ]);	// add in tens
+		strcat(lcl_str_rnum, str_ones[ ones ]);	// add in ones
+//		printf("-->%15s<-\n", lcl_str_rnum);
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 1);
+	}
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_numeral_validate_bool_digits_multi(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	
+	/*********** test python call string arg with string return *****************/
+	TCase *tc_check_rn_numeral_validate_bool_multi = tcase_create ("Test Multi-Digit Roman Numeral Validation \n");
+	tcase_add_test (tc_check_rn_numeral_validate_bool_multi, test_rn_numeral_validate_bool_digits_multi);
+	suite_add_tcase (s, tc_check_rn_numeral_validate_bool_multi);
+	
+	return s;
+}
+
+
+
 // MARK: Main routine
 int
 main (void)
@@ -468,6 +529,7 @@ main (void)
 	SRunner *sr = srunner_create (romancalc_suite_test_pycall_io ());	// validate test routines
 																		// test the tester
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_single());	// test validate roman numerals
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_multi());	// test validate roman numerals
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
