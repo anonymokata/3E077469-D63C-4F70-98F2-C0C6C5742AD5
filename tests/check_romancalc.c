@@ -1097,7 +1097,6 @@ romancalc_suite_rn_unmixed_subt_LG_SML(void)
 	return s;
 }
 
-// MARK: @micah
 // MARK: romancalc_suite_rn_unmixed_borrow
 /**************************************************************************
  * romancalc_suite_rn_unmixed_borrow
@@ -1224,6 +1223,102 @@ romancalc_suite_rn_unmixed_borrow(void)
 	return s;
 }
 
+// MARK: @micah
+// MARK: romancalc_suite_rn_subtraction_full
+/**************************************************************************
+ *  romancalc_suite_rn_subtraction_full
+ *  rn_subtraction_full
+ *     full subtraction of two numerals
+ *     conditions  A > B, or A < B or A == B
+ *     A == "" or B = "" which represents zero
+ *  RESULTS:
+ *     if A >  B then POSITIVE RESULT
+ *     if A == B then ZERO   returning empty string
+ *     if A <  B then NEGATIVE RESULT
+ *          and the result will be preceeded by negative sign
+ *
+ * NOTE: terminology for subtraction
+ * Difference = Minuend - Subtrahend
+ **************************************************************************/
+
+START_TEST (test_rn_subtraction_full_single)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_subtraction_full";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "I"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I"), "IV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "I"), "IX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "I"), "XLIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "I"), "XCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "I"), "CDXCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "I"), "DCDXCIX");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "V"), "-IV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "V"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "V"), "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "V"), "XLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "V"), "LXLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "V"), "CDLXLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "V"), "DCDLXLV");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "X"), "-IX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "X"), "-V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "X"), "0");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "X"), "XL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "X"), "LXL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "X"), "CDLXL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "X"), "DCDLXL");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "L"), "-XLIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "L"), "-XLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "L"), "-XL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "L"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "L"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "L"), "CDL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "L"), "DCDL");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "C"), "-XLIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "C"), "-LXLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "C"), "-XC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "C"), "-L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "C"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "C"), "CD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "C"), "CM");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "D"), "-CDXCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "D"), "-CDXCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "D"), "-CDXC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "D"), "-CDL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "D"), "-CD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "D"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "D"), "DM");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "M"), "-DCDXCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "M"), "-DCDLXLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "M"), "-DCDLXL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "M"), "-DCDL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "M"), "-CM");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "M"), "-D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "M"), "");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_subtraction_full(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test full subtraction");
+	
+	TCase *tc_check_rn_subtraction_full = tcase_create ("TestPython_full_subtraction\n");
+	tcase_add_test (tc_check_rn_subtraction_full, test_rn_subtraction_full_single);
+	suite_add_tcase (s, tc_check_rn_subtraction_full);
+	
+	return s;
+}
+
+
+
 
 // MARK: Main routine
 int
@@ -1245,6 +1340,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_compare());	// roman numeral comparison
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_subt_LG_SML());	// subtraction unmixed larger - smaller
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_borrow());	// check to see if can figure out borrow
+	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

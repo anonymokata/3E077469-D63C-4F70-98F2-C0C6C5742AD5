@@ -208,6 +208,27 @@ def rn_unmixed_borrow(rn_A, rn_B):
 	rslt_out = rn_numeral_digit_sort(rslt_out)						# keep digits in proper numerical magnitude order
 	return rslt_out
 
+#  rn_subtraction_full
+#	  full subtraction of two numerals
+#     conditions  A > B, or A < B or A == B
+#     A == "" or B = "" which represents zero
+#  RESULTS:
+#     if A >  B then POSITIVE RESULT
+#     if A == B then ZERO   returning empty string
+#     if A <  B then NEGATIVE RESULT
+#          and the result will be preceeded by negative sign
+#
+# NOTE: terminology for subtraction
+# Difference = Minuend - Subtrahend
+
+def rn_subtraction_full(rn_A, rn_B):
+	rn_A = rn_A.upper() # work in upper case
+	rn_B = rn_B.upper() # work in upper case
+	
+	rslt_out = ""
+	
+	return rslt_out
+
 
 if __name__ == "__main__":
 
