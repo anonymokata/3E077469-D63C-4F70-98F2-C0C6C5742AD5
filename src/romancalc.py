@@ -199,6 +199,11 @@ def rn_unmixed_borrow(rn_A, rn_B):
 		rslt_out = rn_A[:idx_c]
 		rslt_out += rn_brw[idx_brw][2]
 		rslt_out += rn_A[idx_c+1:]
+	else:
+		#simple concept if the digit above the one we need to borrow from deos not exist, then
+		# check the value above that for a borrowable value, and do this recursively to use same algorithm
+		rslt_out = rn_unmixed_borrow(rn_A, rn_brw[idx_brw][1])		# check next higher digit
+		rslt_out = rn_unmixed_borrow(rslt_out, rn_B)				# then re-check if borrowable digit
 
 	rslt_out = rn_numeral_digit_sort(rslt_out)						# keep digits in proper numerical magnitude order
 	return rslt_out
