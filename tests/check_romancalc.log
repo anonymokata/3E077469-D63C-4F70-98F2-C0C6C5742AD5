@@ -24,7 +24,7 @@ Roman Calc Suite Test Unmixed Roman Numeral Comparison
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
  
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
-100%: Checks: 19, Failures: 0, Errors: 0
+82%: Checks: 23, Failures: 4, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -55,11 +55,19 @@ check_romancalc.c:859:P:TestPython_Compare_Multi_Digits
 :test_rn_compare_digit_multi:0: Passed
 check_romancalc.c:975:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_single_noBorrow:0: Passed
-check_romancalc.c:1039:P:TestPython_borow calculation
+check_romancalc.c:986:F:TestPython_Subtraction_single
+:test_rn_unmixed_subt_LG_SML_borrow_Simple:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I")=="IIII"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I")=="IIIII", "IIII"=="IIII"
+check_romancalc.c:1002:F:TestPython_Subtraction_single
+:test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "I")=="VIIII"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "I")=="X", "VIIII"=="VIIII"
+check_romancalc.c:1030:F:TestPython_Subtraction_single
+:test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLX", "I")=="MDCLVIIII"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLX", "I")=="MDCLX", "MDCLVIIII"=="MDCLVIIII"
+check_romancalc.c:1053:F:TestPython_Subtraction_single
+:test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLI" , "V")=="MDCXXXXVI"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLI" , "V")=="MDCLI", "MDCXXXXVI"=="MDCXXXXVI"
+check_romancalc.c:1127:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Simple:0: Passed
-check_romancalc.c:1068:P:TestPython_borow calculation
+check_romancalc.c:1156:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1090:P:TestPython_borow calculation
+check_romancalc.c:1178:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1108:P:TestPython_borow calculation
+check_romancalc.c:1196:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
