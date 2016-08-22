@@ -737,61 +737,61 @@ START_TEST (test_rn_compare_digit_single)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_compare";
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "I"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "V"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "X"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "L"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "C"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "D"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "I", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "I"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "V"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "X"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "L"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "C"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "D"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "I", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "V"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "X"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "L"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "C"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "D"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "V", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "V"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "X"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "L"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "C"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "D"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "V", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "V"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "X"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "L"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "C"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "D"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "X"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "L"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "C"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "D"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "X", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "V"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "X"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "L"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "C"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "D"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "L", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "L"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "C"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "D"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "L", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "V"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "X"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "L"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "C"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "D"), -1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "C", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "L"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "C"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "D"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "V"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "X"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "L"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "C"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "D"),  0);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "D", "M"), -1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "L"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "C"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "D"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D", "M"), -1);
 	
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "I"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "V"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "X"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "L"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "C"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "D"),  1);
-	ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "M", "M"),  0);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "I"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "V"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "X"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "L"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "C"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "D"),  1);
+	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M", "M"),  0);
 	
 }
 END_TEST
