@@ -111,7 +111,7 @@ def rn_numeral_digit_remix(rn_str):
 # start by comparing largest magnitude digit
 # if not equal then return result
 # else if 0 then can't determine until check next lower digit
-def rn_compare(rn_A, rn_B):
+def rn_unmixed_compare(rn_A, rn_B):
 	rn_A = rn_A.upper() # work in upper case
 	rn_B = rn_B.upper() # work in upper case
 	rslt_out = 0

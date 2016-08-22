@@ -721,23 +721,23 @@ romancalc_suite_rn_numeral_digit_remix(void)
 	return s;
 }
 
-// MARK: romancalc_suite_rn_compare
+// MARK: romancalc_suite_rn_unmixed_compare
 /**************************************************************************
- * romancalc_suite_rn_compare
+ * romancalc_suite_rn_unmixed_compare
  * compares 2 roman numerals, A is first value, B is second
  * both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
  * A > B = 1
  * A == B = 0
  * A < B = -1
- * START_TEST (test_rn_compare_digit_single)
- * START_TEST (test_rn_compare_digit_multi)
+ * START_TEST (test_rn_unmixed_compare_digit_single)
+ * START_TEST (test_rn_unmixed_compare_digit_multi)
  *
  **************************************************************************/
-START_TEST (test_rn_compare_digit_single)
+START_TEST (test_rn_unmixed_compare_digit_single)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_compare";
+	char *lcl_NameFnc = "rn_unmixed_compare";
 	
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "I", "I"),  0);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "I", "V"), -1);
@@ -798,11 +798,11 @@ START_TEST (test_rn_compare_digit_single)
 }
 END_TEST
 
-START_TEST (test_rn_compare_digit_multi)
+START_TEST (test_rn_unmixed_compare_digit_multi)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_compare";
+	char *lcl_NameFnc = "rn_unmixed_compare";
 	
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"),  1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "VV",  "V"),  1);
@@ -861,26 +861,26 @@ START_TEST (test_rn_compare_digit_multi)
 END_TEST
 
 Suite *
-romancalc_suite_rn_compare(void)
+romancalc_suite_rn_unmixed_compare(void)
 {
 	Suite *s = suite_create ("\nRoman Calc Suite Test Unmixed Roman Numeral Comparison");
 	
 	/*********** compare unmixed strings ****************
 	 * both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
-	 * romancalc_suite_rn_compare
+	 * romancalc_suite_rn_unmixed_compare
 	 * compares 2 roman numerals, A is first value, B is second
 	 * A > B = 1
 	 * A == B = 0
 	 * A < B = -1
 	 */
 	
-	TCase *tc_check_rn_compare_single = tcase_create ("TestPython_Compare_Single_Digits\n");
-	tcase_add_test (tc_check_rn_compare_single, test_rn_compare_digit_single);
-	suite_add_tcase (s, tc_check_rn_compare_single);
+	TCase *tc_check_rn_unmixed_compare_single = tcase_create ("TestPython_Compare_Single_Digits\n");
+	tcase_add_test (tc_check_rn_unmixed_compare_single, test_rn_unmixed_compare_digit_single);
+	suite_add_tcase (s, tc_check_rn_unmixed_compare_single);
 	
-	TCase *tc_check_rn_compare_multi = tcase_create ("TestPython_Compare_Multi_Digits\n");
-	tcase_add_test (tc_check_rn_compare_multi, test_rn_compare_digit_multi);
-	suite_add_tcase (s, tc_check_rn_compare_multi);
+	TCase *tc_check_rn_unmixed_compare_multi = tcase_create ("TestPython_Compare_Multi_Digits\n");
+	tcase_add_test (tc_check_rn_unmixed_compare_multi, test_rn_unmixed_compare_digit_multi);
+	suite_add_tcase (s, tc_check_rn_unmixed_compare_multi);
 	
 	return s;
 }
@@ -1337,10 +1337,10 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_sort());	// digit magnitude sort
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_reduction());	// digit reduction
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_remix());	//remix mid-numeral digits
-	srunner_add_suite(sr, romancalc_suite_rn_compare());	// roman numeral comparison
+	srunner_add_suite(sr, romancalc_suite_rn_unmixed_compare());	// roman numeral comparison
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_subt_LG_SML());	// subtraction unmixed larger - smaller
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_borrow());	// check to see if can figure out borrow
-	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
+	//srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

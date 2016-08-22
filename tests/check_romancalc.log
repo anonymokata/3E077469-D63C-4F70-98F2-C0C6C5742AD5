@@ -24,9 +24,7 @@ Roman Calc Suite Test Unmixed Roman Numeral Comparison
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
  
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
- 
-Roman Calc Suite Test full subtraction
-95%: Checks: 24, Failures: 1, Errors: 0
+100%: Checks: 23, Failures: 0, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -52,9 +50,9 @@ check_romancalc.c:657:P:Test digit numeral reduction
 check_romancalc.c:696:P:Test remix of digits 
 :test_rn_numeral_digit_remix:0: Passed
 check_romancalc.c:796:P:TestPython_Compare_Single_Digits
-:test_rn_compare_digit_single:0: Passed
+:test_rn_unmixed_compare_digit_single:0: Passed
 check_romancalc.c:859:P:TestPython_Compare_Multi_Digits
-:test_rn_compare_digit_multi:0: Passed
+:test_rn_unmixed_compare_digit_multi:0: Passed
 check_romancalc.c:975:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_single_noBorrow:0: Passed
 check_romancalc.c:991:P:TestPython_Subtraction_single
@@ -73,5 +71,3 @@ check_romancalc.c:1177:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
 check_romancalc.c:1195:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1251:F:TestPython_full_subtraction
-:test_rn_subtraction_full_single:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I")=="IV"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I")=="", "IV"=="IV"
