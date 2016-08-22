@@ -2,6 +2,7 @@
 import sys
 import re
 
+rn_digits = ['M','D','C','L','X','V','I']
 
 def TestRoutineCheck__in_str__out_str(check_str):
 	return check_str
@@ -55,13 +56,8 @@ def rn_numeral_digit_sort(rn_str):
 	# original string, in magnitude order
 	# order from left to right is MDCLXVI
 	rn_str = rn_str.upper() # work in upper case
-	out_str += 'M' * rn_str.count('M')
-	out_str += 'D' * rn_str.count('D')
-	out_str += 'C' * rn_str.count('C')
-	out_str += 'L' * rn_str.count('L')
-	out_str += 'X' * rn_str.count('X')
-	out_str += 'V' * rn_str.count('V')
-	out_str += 'I' * rn_str.count('I')
+	for idx in rn_digits:
+		out_str += idx * rn_str.count(idx)
 
 	return out_str
 
@@ -108,13 +104,21 @@ def rn_numeral_digit_remix(rn_str):
 
  # rn_compare
  # compares 2 roman numerals, A is first value, B is second
+ # both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
  # A > B = 1
  # A == B = 0
  # A < B = -1
+# start by comparing largest magnitude digit
+# if not equal then return result
+# else if 0 then can't determine until check next lower digit
 def rn_compare(rn_A, rn_B):
-	out_str = rn_str.upper() # work in upper case
-
-
+	rn_A = rn_A.upper() # work in upper case
+	rn_B = rn_B.upper() # work in upper case
+	rslt_out = 0
+	for idx in rn_digits:
+		rslt_out = rn_A.count(idx) - rn_B.count(idx)
+		if rslt_out != 0:					# if not equal, then show result
+			return (rslt_out/abs(rslt_out))	# return sign only
 	return 0
 
 if __name__ == "__main__":

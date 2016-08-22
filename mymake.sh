@@ -1,5 +1,6 @@
 #!/bin/bash
 rm src/*.pyc
+rm tests/check_romancalc.log
 sleep 2
 make
 sleep 2
