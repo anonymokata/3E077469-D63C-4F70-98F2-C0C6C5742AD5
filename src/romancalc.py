@@ -105,6 +105,18 @@ def rn_numeral_digit_remix(rn_str):
 	out_str = out_str.replace( "IIII" ,"IV")
 	return out_str
 
+
+ # rn_compare
+ # compares 2 roman numerals, A is first value, B is second
+ # A > B = 1
+ # A == B = 0
+ # A < B = -1
+def rn_compare(rn_A, rn_B):
+	out_str = rn_str.upper() # work in upper case
+
+
+	return 0
+
 if __name__ == "__main__":
 
 
