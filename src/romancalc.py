@@ -160,6 +160,29 @@ def rn_unmixed_subt_LG_SML(rn_A, rn_B):
 	# still need to do borrowing portion of subtraction
 
 	return rslt_out
+
+#  romancalc_suite_rn_unmixed_borrow
+#    will borrow appropriate value
+#    such that rn_B can be subtracted from RN_A
+#    will find the next larger in magnitude of
+#    rn_B within rn_A, and change split the value
+#    into the next smaller value so that a borrow
+#    can be made
+#
+def rn_unmixed_borrow(rn_A, rn_B):
+	# rn_brw roman numear browwing array
+	# first  value = value we need be able to subtract
+	# second value = next higher in magnitude we can borrow from
+	# third  value = value split to borrow from
+	# this mimic the actual borrow process,
+	# check next higher digit,
+	#     if exists then spllit and return
+	#     if doesn't exist then check next higher
+	#         if exists then split
+	#         return, and split again
+	#         until done
+	rslt_out = ""
+	return rslt_out
 	return rslt_out
 
 if __name__ == "__main__":

@@ -1009,6 +1009,60 @@ romancalc_suite_rn_unmixed_subt_LG_SML(void)
 	return s;
 }
 
+// MARK: @micah
+// MARK: romancalc_suite_rn_unmixed_borrow
+/**************************************************************************
+ * romancalc_suite_rn_unmixed_borrow
+ *   mid process calculate roman numeral borrwed value,
+ *   where that A can be subtracted from
+ *   (1) always A > B
+ *   (2) equality check to ensure A>B ALWAYS done before this routine
+ *   and (3) A and B are both unmixed digits, by rn_numeral_digit_unmix
+ *
+ * START_TEST (test_rn_unmixed_borrow_Simple)
+ *
+ **************************************************************************/
+START_TEST (test_rn_unmixed_borrow_Simple)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_unmixed_borrow";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V",  "I"), "IIIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X",  "V"), "VV"   );
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L",  "X"), "XXXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C",  "L"), "LL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "C"), "CCCCC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "D"), "DD");
+	
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_unmixed_borrow(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Unmixed Subtraction Larger Minus SMaller");
+	
+	/**************************************************************************
+	 * romancalc_suite_rn_unmixed_borrow
+	 *   mid process calculate roman numeral borrwed value,
+	 *   where
+	 *   (1) always A > B
+	 *   (2) equality check to ensure A>B ALWAYS done before this routine
+	 *   and (3) A and B are both unmixed digits, by rn_numeral_digit_unmix
+	 *
+	 * START_TEST (test_rn_unmixed_borrow_Simple)
+	 *
+	 **************************************************************************/
+	
+	TCase *tc_check_rn_unmixed_borrow = tcase_create ("TestPython_borow calculation\n");
+	tcase_add_test (tc_check_rn_unmixed_borrow, test_rn_unmixed_borrow_Simple);
+	suite_add_tcase (s, tc_check_rn_unmixed_borrow);
+	
+	return s;
+}
+
+
 // MARK: Main routine
 int
 main (void)
@@ -1028,6 +1082,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_remix());	//remix mid-numeral digits
 	srunner_add_suite(sr, romancalc_suite_rn_compare());	// roman numeral comparison
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_subt_LG_SML());	// subtraction unmixed larger - smaller
+	srunner_add_suite(sr, romancalc_suite_rn_unmixed_borrow());	// check to see if can figure out borrow
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
