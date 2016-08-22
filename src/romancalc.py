@@ -77,7 +77,13 @@ def rn_numeral_digit_sort(rn_str):
  # CCCCC -> D,
  # DD -> M
 def rn_numeral_digit_reduction(rn_str):
-	out_str = rn_str
+	out_str = rn_str.upper() # work in upper case
+	out_str = out_str.replace("IIIII","V",20)
+	out_str = out_str.replace("VV"   ,"X",20)
+	out_str = out_str.replace("XXXXX","L",20)
+	out_str = out_str.replace("LL"   ,"C",20)
+	out_str = out_str.replace("CCCCC","D",20)
+	out_str = out_str.replace("DD"   ,"M",20)
 	return out_str
 
 if __name__ == "__main__":

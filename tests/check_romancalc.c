@@ -654,6 +654,7 @@ START_TEST (test_rn_numeral_digit_reduction)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MLLLLLLVI"), "MCCCVI");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DDCCCCCLLXXXXXVVIIIIII"), "MDCLXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IIIIIIIIIIIIIIIIIIIIIIIIIIIIII"), "XXX");
 }
 END_TEST
 
