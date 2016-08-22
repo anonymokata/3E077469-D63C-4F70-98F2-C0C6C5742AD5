@@ -410,6 +410,35 @@ START_TEST (test_rn_numeral_validate_bool_digits_lower_case)
 }
 END_TEST
 
+START_TEST (test_rn_numeral_validate_bool_digits_error)
+{
+	// ensure that the roman numeral check throws out all invalid characters
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_validate_bool";
+	char lcl_str_rnum[2] = " ";									// string to pass bad chars into check routine
+	
+	for(lcl_str_rnum[0] = ' '; lcl_str_rnum[0] < 'C'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'E'; lcl_str_rnum[0] < 'I'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'N'; lcl_str_rnum[0] < 'V'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'W'; lcl_str_rnum[0] < 'W'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'Y'; lcl_str_rnum[0] < 'c'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'e'; lcl_str_rnum[0] < 'i'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'n'; lcl_str_rnum[0] < 'v'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'w'; lcl_str_rnum[0] < 'w'; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	for(lcl_str_rnum[0] = 'y'; lcl_str_rnum[0] < 127; lcl_str_rnum[0]++){
+		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+}
+END_TEST
+
 Suite *
 romancalc_suite_rn_numeral_validate_bool(void)
 {
@@ -419,6 +448,7 @@ romancalc_suite_rn_numeral_validate_bool(void)
 	TCase *tc_check_rn_numeral_validate_bool = tcase_create ("Test Roman Numeral Validation \n");
 	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits);
 	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits_lower_case);
+	tcase_add_test (tc_check_rn_numeral_validate_bool, test_rn_numeral_validate_bool_digits_error);
 	suite_add_tcase (s, tc_check_rn_numeral_validate_bool);
 	
 	return s;
