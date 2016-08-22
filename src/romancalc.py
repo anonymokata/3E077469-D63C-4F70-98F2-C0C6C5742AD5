@@ -244,6 +244,21 @@ def rn_subtraction_full(rn_A, rn_B):
 
 	return rslt_out
 
+#   rn_addition_full
+#     process of roman numeral addition
+#     1) unmix mid value subtractions to improper values
+#     2) concatenate 2 values
+#     3) sort/group for simplification to higher digits (reduction)
+#     4) performsimplification to higher digits (reduction)
+#     5) remix any necessary value from improper to proper ie IIII-> IV, CCCC->CD etc.
+#     6) return value
+def rn_addition_full(rn_A, rn_B):
+	rn_A = rn_A.upper() # work in upper case
+	rn_B = rn_B.upper() # work in upper case
+
+	rslt_out = ""
+	
+	return rslt_out
 
 if __name__ == "__main__":
 

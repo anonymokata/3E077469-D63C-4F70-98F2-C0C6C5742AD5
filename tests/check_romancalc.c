@@ -911,7 +911,7 @@ START_TEST (test_rn_unmixed_subt_LG_SML_single_noBorrow)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
 	
-	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"), "I");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"),  "I");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "VI",  "I"), "V");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XI",  "I"), "X");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LI",  "I"), "L");
@@ -1223,7 +1223,6 @@ romancalc_suite_rn_unmixed_borrow(void)
 	return s;
 }
 
-// MARK: @micah
 // MARK: romancalc_suite_rn_subtraction_full
 /**************************************************************************
  *  romancalc_suite_rn_subtraction_full
@@ -1408,9 +1407,11 @@ START_TEST (test_rn_subtraction_full_digit_multi_random)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMM", "MMDLII"), "CDXLVIII");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMCCCI", "CCCXLIX"), "MCMLII");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMCMXLI", "MMXXXII"), "CMIX");
-	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXLV", "MMDCCCXIII"), "-MCLXVIII");	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "I"), "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXLV", "MMDCCCXIII"), "-MCLXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "I"), "");
 }
 END_TEST
+
 
 Suite *
 romancalc_suite_rn_subtraction_full(void)
@@ -1428,8 +1429,207 @@ romancalc_suite_rn_subtraction_full(void)
 	return s;
 }
 
+// MARK: romancalc_suite_rn_subtraction_full
+/**************************************************************************
+ *  romancalc_suite_rn_addition_full
+ *  full add
+ **************************************************************************/
 
+START_TEST (test_rn_addition_full_single_digit)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_addition_full";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "",  ""),  "");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "I"),  "I");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "V"), "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "X"), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "L"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "C"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "D"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  "", "M"), "M");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I",  ""),  "I");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "I"), "II");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "V"), "VI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "X"), "XI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "L"), "LI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "C"), "CI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "D"), "DI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "M"), "MI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V",  ""),  "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "I"), "VI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "V"),  "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "X"), "XV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "L"), "LV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "C"), "CV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "D"), "DV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "V", "M"), "MV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X",  ""),  "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "I"), "XI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "V"), "XV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "X"), "XX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "L"), "LX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "C"), "CX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "D"), "DX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "X", "M"), "MX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L",  ""),  "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "I"), "LI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "V"), "LV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "X"), "LX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "L"),  "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "C"), "CL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "D"), "DL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "L", "M"), "ML");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C",  ""),  "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "I"), "CI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "V"), "CV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "X"), "CX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "L"), "CL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "C"), "CC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "D"), "DC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "M"), "MC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  ""),  "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "I"), "DI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "V"), "DV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "X"), "DX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "L"), "DL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "C"), "DC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "D"),  "M");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "M"), "MD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  ""),  "M");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "I"), "MI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "V"), "MV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "X"), "MX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "L"), "ML");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "C"), "MC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "D"), "MD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "M"), "MM");
+}
+END_TEST
 
+START_TEST (test_rn_addition_full_to_mixed)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_addition_full";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "III",  "I"), "IV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "III", "VI"), "IX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XXX",  "X"), "XL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XXX", "LX"), "XC");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCC",  "C"), "CD");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCC", "DC"), "CM");
+}
+END_TEST
+
+START_TEST (test_rn_addition_full_digit_multi_random)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_addition_full";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMLXIX", "MLVII"), "MMXXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCLII", "CMXXIII"), "MMDCLXXV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCIV", "XLVI"), "MDCCCL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCLIX", "DCXL"), "MCCXCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXCII", "DLXXX"), "MCLXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXIV", "CXIX"), "DCXXXIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCXLVIII", "MCMLVII"), "MMMDCCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MXVII", "CCLIII"), "MCCLXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCCXXIV", "MDXXVII"), "MMCCCLI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCCLXXVIII", "MDXXXII"), "MMCDX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCCXXXV", "CCCXVI"), "DCLI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCLX", "DCCCX"), "MMLXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCLXXXVIII", "MCCCLXXXVII"), "MDCLXXV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCXCVI", "DCCXLVII"), "MCDXLIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCIV", "CXXXVII"), "DCCXLI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCMXII", "MDXXVI"), "MMMCDXXXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXC", "MCCLX"), "MDCCCL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCCXIII", "CCCXXXVII"), "MDCL");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDXLIX", "CMVIII"), "MMCCCLVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCLXXVI", "DCLXXXIV"), "MDCCCLX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDLXVII", "MDLI"), "MMMCXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCLXXXV", "CDXXXVI"), "MCXXI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCXVII", "DCCCXXIV"), "MDXLI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCXIX", "MDCCL"), "MMCMLXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCLXXVI", "DCCCXV"), "MMDCXCI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDLXXXV", "DCCXXV"), "MMCCCX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCLXXXIV", "CCCLXXXI"), "MLXV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDLXX", "MDCXIX"), "MMMLXXXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXIII", "MCMXXXIX"), "MMCDLII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMXII", "CLXXXIII"), "MXCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCXCV", "MCDIII"), "MDCXCVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCMLXXXIII", "CLXXVIII"), "MMCLXI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MLXXVIII", "DCCCXLV"), "MCMXXIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MLIV", "MDIV"), "MMDLVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DLXXVIII", "DCCCXXIII"), "MCDI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCXLV", "CXLVII"), "MCMXCII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCXL", "MXLIII"), "MMDCCLXXXIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCXIV", "MDCCCXCVII"), "MMDXI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCXXXIV", "MDCCLXI"), "MMDCCCXCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CXXIV", "MDLXXXII"), "MDCCVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DLXXXVI", "DCCII"), "MCCLXXXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXXV", "DCXLIII"), "MMCCLXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDLXXXVII", "DCXLVII"), "MMCCXXXIV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLVIII", "CCI"), "MDCCCLIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXVIII", "MCDXXXV"), "MCMLIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCXXVI", "MCLXII"), "MMCMLXXXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDLXXIII", "CMIII"), "MMCCCLXXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXXIX", "MCCXCIII"), "MMCMXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "VIII", "CCCXIV"), "CCCXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCLXXXII", "DLXXXVI"), "MDCCLXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MLXXXVIII", "CLXX"), "MCCLVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MLXXXII", "CDX"), "MCDXCII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCMLIX", "DCCCIX"), "MMDCCLXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCCXIV", "MCCLXXXI"), "MMXCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDXCVI", "CDXCVIII"), "MMXCIV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LXVI", "DCLXXXIX"), "DCCLV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CLIV", "MCMXCVIII"), "MMCLII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCCXVI", "DCLXIV"), "CMLXXX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDL", "CDXLII"), "MDCCCXCII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCLXXX", "MCCII"), "MMDCCCLXXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DXIII", "CDLIV"), "CMLXVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXLVII", "MCDLVIII"), "MMMCV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDLV", "DCCCLXXIV"), "MMCCCXXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDLXXXV", "CCXXVII"), "MDCCCXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCL", "DCCXLVI"), "MCMXCVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCXCIII", "MDCCCLXXXIII"), "MMMCLXXVI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMXLV", "MCCCLXXVII"), "MMCCCXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMXXIX", "MDCLXX"), "MMDXCIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DIX", "MDLX"), "MMLXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XXIV", "MCLIV"), "MCLXXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCCLXXX", "MDIX"), "MMCCCLXXXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCLXXXIV", "DXXXVIII"), "DCCCXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCLII", "DCLXXIX"), "MMDXXXI");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCCCXXXVIII", "MCMXC"), "MMMCCCXXVIII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MXXXII", "MCLXXXII"), "MMCCXIV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CXXII", "DCLXV"), "DCCLXXXVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCCLV", "CDXII"), "MCLXVII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCCCLXX", "CCXLIX"), "MMCXIX");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XLIII", "DCCCLXXI"), "CMXIV");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDLXXXII", "MCDXL"), "MMCMXXII");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCXLII", "MLXIII"), "MDCCV");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_addition_full(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test full addition");
+	
+	TCase *tc_check_rn_addition_full_digit_single = tcase_create ("TestPython_full_addition_Digit_Single\n");
+	tcase_add_test (tc_check_rn_addition_full_digit_single, test_rn_addition_full_single_digit);
+	suite_add_tcase (s, tc_check_rn_addition_full_digit_single);
+	
+	TCase *tc_check_rn_addition_full_to_mixed = tcase_create ("TestPython_addition_full_to_mixed\n");
+	tcase_add_test (tc_check_rn_addition_full_to_mixed, test_rn_addition_full_to_mixed);
+	suite_add_tcase (s, tc_check_rn_addition_full_to_mixed);
+	
+	TCase *tc_check_rn_addition_full_digit_multi_random = tcase_create(
+	"TestPython_full_addition_Digit_Multi_Random\n");
+	tcase_add_test (tc_check_rn_addition_full_digit_multi_random, test_rn_addition_full_digit_multi_random);
+	suite_add_tcase (s, tc_check_rn_addition_full_digit_multi_random);
+	
+	return s;
+}
 
 // MARK: Main routine
 int
@@ -1452,6 +1652,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_subt_LG_SML());	// subtraction unmixed larger - smaller
 	srunner_add_suite(sr, romancalc_suite_rn_unmixed_borrow());	// check to see if can figure out borrow
 	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
+	srunner_add_suite(sr, romancalc_suite_rn_addition_full());	// full addition pos results
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

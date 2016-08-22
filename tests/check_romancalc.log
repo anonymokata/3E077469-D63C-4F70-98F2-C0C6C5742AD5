@@ -26,7 +26,9 @@ Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
 Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
  
 Roman Calc Suite Test full subtraction
-100%: Checks: 25, Failures: 0, Errors: 0
+ 
+Roman Calc Suite Test full addition
+89%: Checks: 28, Failures: 3, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -73,7 +75,13 @@ check_romancalc.c:1177:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
 check_romancalc.c:1195:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1304:P:TestPython_full_subtraction_Digit_Single
+check_romancalc.c:1303:P:TestPython_full_subtraction_Digit_Single
 :test_rn_subtraction_full_digit_single:0: Passed
 check_romancalc.c:1411:P:TestPython_full_subtraction_Digit_Multi_Random
 :test_rn_subtraction_full_digit_multi_random:0: Passed
+check_romancalc.c:1444:F:TestPython_full_addition_Digit_Single
+:test_rn_addition_full_single_digit:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "", "I")=="I"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "", "I")=="", "I"=="I"
+check_romancalc.c:1515:F:TestPython_addition_full_to_mixed
+:test_rn_addition_full_to_mixed:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "III", "I")=="IV"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "III", "I")=="", "IV"=="IV"
+check_romancalc.c:1529:F:TestPython_full_addition_Digit_Multi_Random
+:test_rn_addition_full_digit_multi_random:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMLXIX", "MLVII")=="MMXXVI"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CMLXIX", "MLVII")=="", "MMXXVI"=="MMXXVI"
