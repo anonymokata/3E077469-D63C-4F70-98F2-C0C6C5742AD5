@@ -65,6 +65,21 @@ def rn_numeral_digit_sort(rn_str):
 
 	return out_str
 
+# roman numeral reduction
+ #  reduces multiple digits into the next higher value
+ #  these larger number of digits either occur due to addition
+ #  or possibly the result of borrowing during subtraction
+ #  i.e.
+ # IIIII -> V,
+ # VV -> X,
+ # XXXXX -> L,
+ # LL -> C,
+ # CCCCC -> D,
+ # DD -> M
+def rn_numeral_digit_reduction(rn_str):
+	out_str = rn_str
+	return out_str
+
 if __name__ == "__main__":
 
 

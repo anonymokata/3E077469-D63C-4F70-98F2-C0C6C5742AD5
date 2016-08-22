@@ -606,11 +606,65 @@ END_TEST
 Suite *
 romancalc_suite_rn_numeral_digit_sort(void)
 {
-	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-Digit Roman Numeral Validation");
+	Suite *s = suite_create ("\nRoman Calc Suite Test Digit Sort According to magnitude");
 	
 	TCase *tc_check_rn_numeral_digit_sort = tcase_create ("Test Digit Sort \n");
 	tcase_add_test (tc_check_rn_numeral_digit_sort, test_rn_numeral_digit_sort);
 	suite_add_tcase (s, tc_check_rn_numeral_digit_sort);
+	
+	return s;
+}
+
+// MARK: romancalc_suite_rn_numeral_digit_reduction
+/**************************************************************************
+ * romancalc_suite_rn_numeral_digit_reduction
+ *  reduces multiple digits into the next higher value
+ *  these larger number of digits either occur due to addition
+ *  or possibly the result of borrowing during subtraction
+ *  i.e. 
+ * IIIII -> V,
+ * VV -> X,
+ * XXXXX -> L,
+ * LL -> C,
+ * CCCCC -> D,
+ * DD -> M
+ * START_TEST (test_rn_numeral_digit_reduction)
+ *
+ **************************************************************************/
+START_TEST (test_rn_numeral_digit_reduction)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_numeral_digit_reduction";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IIIII"), "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "VV"   ), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XXXXX"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "LL"   ), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CCCCC"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DD"   ), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "VIIIII"    ), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IIIIIIIIII"), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "VVVVVVVVVV"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XVVVVVVVV"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XXVVVVVV"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "XXXVVVV"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "LL"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MLLLLLLVI"), "MCCCVI");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DDCCCCCLLXXXXXVVIIIIII"), "MDCLXVI");
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_numeral_digit_reduction(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Multi-digit numeral reduction");
+	
+	TCase *tc_check_rn_numeral_digit_reduction = tcase_create ("Test digit numeral reduction \n");
+	tcase_add_test (tc_check_rn_numeral_digit_reduction, test_rn_numeral_digit_reduction);
+	suite_add_tcase (s, tc_check_rn_numeral_digit_reduction);
 	
 	return s;
 }
@@ -628,8 +682,9 @@ main (void)
 																		// test the tester
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_single());	// test validate roman numerals
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_multi());	// test validate roman numerals
-	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_unmix());	// test validate roman numerals
-	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_sort());	// test validate roman numerals
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_unmix());	//unmix mid-numeral digits
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_sort());	// digit magnitude sort
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_reduction());	// digit reduction
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
