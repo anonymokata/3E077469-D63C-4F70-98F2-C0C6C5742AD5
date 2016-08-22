@@ -87,11 +87,22 @@ def rn_numeral_digit_reduction(rn_str):
 	return out_str
 
 # this re-mixes roman numeral values into proper values
-# i.e. IIII -> IV, VIIII -> IX, XXXX -> XL,
-# LXXXX -> XC, CCCC -> D, DCCCC -> CM
+# i.e.
+# DCCCC -> CM,
+#  CCCC -> CD,
+# LXXXX -> XC,
+#  XXXX -> XL,
+# VIIII -> IX,
+#  IIII -> IV,
 
 def rn_numeral_digit_remix(rn_str):
 	out_str = rn_str.upper() # work in upper case
+	out_str = out_str.replace("DCCCC" ,"CM")
+	out_str = out_str.replace( "CCCC" ,"CD")
+	out_str = out_str.replace("LXXXX" ,"XC")
+	out_str = out_str.replace( "XXXX" ,"XL")
+	out_str = out_str.replace("VIIII" ,"IX")
+	out_str = out_str.replace( "IIII" ,"IV")
 	return out_str
 
 if __name__ == "__main__":
