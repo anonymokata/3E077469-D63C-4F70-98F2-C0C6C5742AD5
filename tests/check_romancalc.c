@@ -440,7 +440,7 @@ START_TEST (test_rn_numeral_validate_bool_digits_error)
 END_TEST
 
 Suite *
-romancalc_suite_rn_numeral_validate_bool(void)
+romancalc_suite_rn_numeral_validate_bool_digits_single(void)
 {
 	Suite *s = suite_create ("\nRoman Calc Suite Test roman Numeral Validation");
 	
@@ -466,7 +466,7 @@ main (void)
 
 	SRunner *sr = srunner_create (romancalc_suite_test_pycall_io ());	// validate test routines
 																		// test the tester
-	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool());	// test validate roman numerals
+	srunner_add_suite(sr, romancalc_suite_rn_numeral_validate_bool_digits_single());	// test validate roman numerals
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

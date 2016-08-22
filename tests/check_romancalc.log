@@ -13,5 +13,5 @@ check_romancalc.c:394:P:Test Roman Numeral Validation
 :test_rn_numeral_validate_bool_digits:0: Passed
 check_romancalc.c:409:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_lower_case:0: Passed
-check_romancalc.c:439:P:Test Roman Numeral Validation 
+check_romancalc.c:438:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_error:0: Passed
