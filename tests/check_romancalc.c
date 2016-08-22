@@ -42,6 +42,7 @@ void append_Py_src_path(char* arg_NameSrcPath){
 		PyRun_SimpleString(tpath);
 	}
 }
+
 // MARK:  python module setup *********
 /**************************************************************************
  * pyenv_setup
@@ -105,6 +106,7 @@ void pymodule_teardown(PyObject* arg_pModule){
 	Py_DECREF(arg_pModule);
 }
 
+// MARK: pyfunc_teardown
 /**************************************************************************
  * pyfunc_teardown
  *   used to release memory related to function/method
@@ -116,6 +118,7 @@ void pyfunc_teardown(PyObject *arg_pFunc){
 		Py_DECREF(arg_pFunc);
 }
 
+// MARK: pyfunc_setup
 /**************************************************************************
  * pyfunc_setup
  *   used to check existance and initialize pointer to method/function
@@ -216,6 +219,7 @@ char* pycall__in_str__out_str(char* arg_NameMod, char* arg_NameFnc, int argc, ..
 	return strdup(cResult_str);
 }
 
+// MARK: pycall__in_str__out_int
 /**************************************************************************
  * pycall__in_str__out_int
  *   multi argument call interface to python routines
@@ -1432,7 +1436,7 @@ romancalc_suite_rn_subtraction_full(void)
 // MARK: romancalc_suite_rn_subtraction_full
 /**************************************************************************
  *  romancalc_suite_rn_addition_full
- *  full add
+ *  see python file for information on routine
  **************************************************************************/
 
 START_TEST (test_rn_addition_full_single_digit)
