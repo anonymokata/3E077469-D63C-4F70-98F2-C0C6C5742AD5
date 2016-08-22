@@ -46,8 +46,8 @@ def rn_numeral_digit_unmix(rn_str):
 
 #  rn_numeral_digit_sort
 #*  ensure digits with roman numeral string are sorted in value order
-# *  Since M = 1000, D = 500, C = 100, L = 50, X = 10, V = 5, I = 1
-# *  then the order from left to right is MDCLVI within any numeral string
+##   Since M = 1000, D = 500, C = 100, L = 50, X = 10, V = 5, I = 1
+##   then the order from left to right is MDCLVI within any numeral string
 
 def rn_numeral_digit_sort(rn_str):
 	
@@ -102,12 +102,12 @@ def rn_numeral_digit_remix(rn_str):
 	return out_str
 
 
- # rn_compare
- # compares 2 roman numerals, A is first value, B is second
- # both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
- # A > B = 1
- # A == B = 0
- # A < B = -1
+# rn_compare
+# compares 2 roman numerals, A is first value, B is second
+# both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
+# A > B = 1
+# A == B = 0
+# A < B = -1
 # start by comparing largest magnitude digit
 # if not equal then return result
 # else if 0 then can't determine until check next lower digit
@@ -120,6 +120,29 @@ def rn_compare(rn_A, rn_B):
 		if rslt_out != 0:					# if not equal, then show result
 			return (rslt_out/abs(rslt_out))	# return sign only
 	return 0
+
+#  romancalc_suite_rn_unmixed_subt_LG_SML
+#    mid process method test, this python routine is not final value
+#    test subtraction, routine performs A - B,
+#    where
+#    (1) always A > B
+#    (2) equality check to ensure A>B ALWAYS done before this routine
+#    and (3) A and B are both unmixed digits, by rn_numeral_digit_unmix
+# 
+#  ensuring that A>B occurs outside of this python routine
+#  ensuriong that A and B are unmixed occurrs outside of this python routine
+#  RESULTS:
+#    result will always be positive
+#    result will NEVER BE ZERO
+#    result will be unmixed romannumeral
+
+def rn_unmixed_subt_LG_SML(rn_A, rn_B):
+	rn_A = rn_A.upper() # work in upper case
+	rn_B = rn_B.upper() # work in upper case
+	
+	rslt_out = ""
+	
+	return rslt_out
 
 if __name__ == "__main__":
 

@@ -721,7 +721,7 @@ romancalc_suite_rn_numeral_digit_remix(void)
 	return s;
 }
 
-// MARK: test_rn_compare_digit_single
+// MARK: romancalc_suite_rn_compare
 /**************************************************************************
  * romancalc_suite_rn_compare
  * compares 2 roman numerals, A is first value, B is second
@@ -866,14 +866,14 @@ romancalc_suite_rn_compare(void)
 	Suite *s = suite_create ("\nRoman Calc Suite Test Unmixed Roman Numeral Comparison");
 	
 	/*********** compare unmixed strings ****************
-     * both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
+	 * both A and B MUST be unmixed/unrolled i.e. NO "IV" must be "IIII"
 	 * romancalc_suite_rn_compare
 	 * compares 2 roman numerals, A is first value, B is second
 	 * A > B = 1
 	 * A == B = 0
 	 * A < B = -1
 	 */
-
+	
 	TCase *tc_check_rn_compare_single = tcase_create ("TestPython_Compare_Single_Digits\n");
 	tcase_add_test (tc_check_rn_compare_single, test_rn_compare_digit_single);
 	suite_add_tcase (s, tc_check_rn_compare_single);
@@ -881,6 +881,99 @@ romancalc_suite_rn_compare(void)
 	TCase *tc_check_rn_compare_multi = tcase_create ("TestPython_Compare_Multi_Digits\n");
 	tcase_add_test (tc_check_rn_compare_multi, test_rn_compare_digit_multi);
 	suite_add_tcase (s, tc_check_rn_compare_multi);
+	
+	return s;
+}
+
+// MARK: romancalc_suite_rn_unmixed_subt_LG_SML
+/**************************************************************************
+ * romancalc_suite_rn_unmixed_subt_LG_SML
+ *   mid process method test, this python routine is not final value
+ *   test subtraction, routine performs A - B,
+ *   where
+ *   (1) always A > B
+ *   (2) equality check to ensure A>B ALWAYS done before this routine
+ *   and (3) A and B are both unmixed digits, by rn_numeral_digit_unmix
+ *
+ * ensuring that A>B occurs outside of this python routine
+ * ensuriong that A and B are unmixed occurrs outside of this python routine
+ * RESULTS:
+ *   result will always be positive 
+ *   result will NEVER BE ZERO
+ *   result will be unmixed romannumeral
+ * START_TEST (test_rn_unmixed_subt_LG_SML_single)
+ * START_TEST (test_rn_unmixed_subt_LG_SML_multi)
+ *
+ **************************************************************************/
+START_TEST (test_rn_unmixed_subt_LG_SML_single)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "II",  "I"), "I");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "VI",  "I"), "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XI",  "I"), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LI",  "I"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CI",  "I"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DI",  "I"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MI",  "I"), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "VV",  "V"), "V");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XV",  "V"), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LV",  "V"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CV",  "V"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DV",  "V"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MV",  "V"), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XX",  "X"), "X");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LX",  "X"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CX",  "X"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DX",  "X"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MX",  "X"), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "LL",  "L"), "L");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CL",  "L"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DL",  "L"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "ML",  "L"), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CC",  "C"), "C");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DC",  "C"), "D");
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MC",  "C"), "M");
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MM",  "M"), "M");
+	
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_unmixed_subt_LG_SML(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Unmixed Subtraction Larger Minus SMaller");
+	
+	/**************************************************************************
+	 * romancalc_suite_rn_unmixed_subt_LG_SML
+	 *   mid process method test, this python routine is not final value
+	 *   test subtraction, routine performs A - B,
+	 *   where
+	 *   (1) always A > B
+	 *   (2) equality check to ensure A>B ALWAYS done before this routine
+	 *   and (3) A and B are both unmixed digits, by rn_numeral_digit_unmix
+	 *
+	 * ensuring that A>B occurs outside of this python routine
+	 * ensuriong that A and B are unmixed occurrs outside of this python routine
+	 * RESULTS:
+	 *   result will always be positive
+	 *   result will NEVER BE ZERO
+	 *   result will be unmixed romannumeral
+	 * START_TEST (test_rn_unmixed_subt_LG_SML_single)
+	 * START_TEST (test_rn_unmixed_subt_LG_SML_multi)
+	 *
+	 **************************************************************************/
+	
+	TCase *tc_check_rn_unmixed_subt_LG_SML_single = tcase_create ("TestPython_Subtraction_single\n");
+	tcase_add_test (tc_check_rn_unmixed_subt_LG_SML_single, test_rn_unmixed_subt_LG_SML_single);
+	suite_add_tcase (s, tc_check_rn_unmixed_subt_LG_SML_single);
 	
 	return s;
 }
@@ -903,6 +996,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_reduction());	// digit reduction
 	srunner_add_suite(sr, romancalc_suite_rn_numeral_digit_remix());	//remix mid-numeral digits
 	srunner_add_suite(sr, romancalc_suite_rn_compare());	// roman numeral comparison
+	srunner_add_suite(sr, romancalc_suite_rn_unmixed_subt_LG_SML());	// subtraction unmixed larger - smaller
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

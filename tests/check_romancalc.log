@@ -20,7 +20,9 @@ Roman Calc Suite Test Multi-digit numeral reduction
 Roman Calc Suite Numeral Digit Remix Improper Multi-Digit to Mixed Proper Digit Pair
  
 Roman Calc Suite Test Unmixed Roman Numeral Comparison
-100%: Checks: 14, Failures: 0, Errors: 0
+ 
+Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
+93%: Checks: 15, Failures: 1, Errors: 0
 check_romancalc.c:303:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:331:P:TestPythonCallIO__In_String__Out_Int 
@@ -49,3 +51,5 @@ check_romancalc.c:796:P:TestPython_Compare_Single_Digits
 :test_rn_compare_digit_single:0: Passed
 check_romancalc.c:859:P:TestPython_Compare_Multi_Digits
 :test_rn_compare_digit_multi:0: Passed
+check_romancalc.c:914:F:TestPython_Subtraction_single
+:test_rn_unmixed_subt_LG_SML_single:0: Assertion 'pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "II", "I")=="I"' failed: pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "II", "I")=="", "I"=="I"
