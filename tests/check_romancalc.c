@@ -1697,18 +1697,38 @@ romancalc_suite_rn_addition_full(void)
 	return s;
 }
 
+// MARK: @micah
+
 // MARK: romancalc_suite_rn_process_expression
 /**************************************************************************
  *  romancalc_suite_rn_process_expression
  *  rn_process_expression
  *  see python file for information on routine
  **************************************************************************/
+char * rslt_exp_val_str(PyObject* arg_tpl){return strdup(PyString_AsString(PyTuple_GetItem(arg_tpl, 0)));}
+int    rslt_exp_err_int(PyObject* arg_tpl){return        PyInt_AsLong     (PyTuple_GetItem(arg_tpl, 1));}
+#define RN_NO_ERROR 0
+#define RN_RSLT_ZERO		-1 /* = result is zero*/
+#define RN_ERR_MULTI_OPS	-2 /* = multiple operators */
+#define RN_ERR_INVALID_EXP	-3 /*                           -3 = invalid expression*/
+#define RN_ERR_BAD_NUM_LEFT	-4 /* = invalid values left side*/
+#define RN_ERR_BAD_NUM_RIGHT -5 /*                          -5 = invalid values right side*/
+
+#define PY_TUPL_EXP_VAL_STR_EQ( STRIN, STROUT) ck_assert_str_eq(rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), STROUT );
+#define PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTOUT) ck_assert_int_eq(rslt_exp_err_int(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), INTOUT );
+// PY_TUPL_STR_VAL_EQ_ERR_EQ   used to process tuple from expression processing
+//   STRIN is the string input	STROUT is the string output INTERR is returned err
+#define PY_TUPL_STR_VAL_EQ_ERR_EQ( STRIN , STROUT ,INTERR )  PY_TUPL_EXP_VAL_STR_EQ( STRIN , STROUT) \
+PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTERR)
+
+
 START_TEST (test_rn_process_expression)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_process_expression";
-	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CMLXIX"), "MMXXVI");
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X" , "X" , RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X" , "XX" , RN_NO_ERROR);
 }
 END_TEST
 
@@ -1717,9 +1737,9 @@ romancalc_suite_rn_process_expression(void)
 {
 	Suite *s = suite_create ("\nRoman Calc Suite Test expression processing");
 	
-	TCase *tc_check_rn_addition_full_digit_single = tcase_create ("TestPython_Process_expression_Addition\n");
-	tcase_add_test (tc_check_rn_addition_full_digit_single, test_rn_addition_full_);
-	suite_add_tcase (s, tc_check_rn_addition_full_digit_single);
+	TCase *tc_check_rn_process_expression = tcase_create ("TestPython_Process_expression_Addition\n");
+	tcase_add_test (tc_check_rn_process_expression, test_rn_process_expression);
+	suite_add_tcase (s, tc_check_rn_process_expression);
 	
 
 	

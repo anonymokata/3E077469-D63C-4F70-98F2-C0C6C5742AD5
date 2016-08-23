@@ -295,10 +295,11 @@ def rn_addition_full(rn_A, rn_B):
 #                           -1 = result is zero
 #                           error value
 #                           -2 = multiple operators
-#                           -3 = invalid values
-#                           -4 = invalid expression
+#                           -3 = invalid expression
 #                                   (characters not allowed either not numerals
 #                                      not allowed operators '+' or '-')
+#                           -4 = invalid values left side
+#                           -5 = invalid values right side
 #               positive results have no preceding sign
 #               negative results will be preceeded by a '-'
 #               for addition results will be always positive
@@ -310,7 +311,11 @@ def rn_addition_full(rn_A, rn_B):
 def rn_process_expression(rn_exp):
 	rn_exp = rn_exp.upper() # work in upper case
 	
-	return rn_tp_rslt_out
+	rn_rslt_str = rn_exp
+	rn_rslt_err = 0
+	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
+	
+	return rn_tuple_out
 
 if __name__ == "__main__":
 
