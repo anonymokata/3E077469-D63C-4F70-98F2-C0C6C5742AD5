@@ -1722,13 +1722,45 @@ int    rslt_exp_err_int(PyObject* arg_tpl){return        PyInt_AsLong     (PyTup
 PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTERR)
 
 
-START_TEST (test_rn_process_expression)
+START_TEST (test_rn_process_expression_core)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_process_expression";
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X" , "X" , RN_NO_ERROR);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X" , "XX" , RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X++X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "++XX"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX++"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X+X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X+"	, ""	, RN_ERR_MULTI_OPS);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X--X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "--XX"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX--"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X-X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X-"	, ""	, RN_ERR_MULTI_OPS);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+-X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+-XX"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX+-"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X-X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X-"	, ""	, RN_ERR_MULTI_OPS);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-+X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-+XX"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX-+"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X+X"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X+"	, ""	, RN_ERR_MULTI_OPS);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X X "	, ""	, RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "BAD"	, ""	, RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX1"	, ""	, RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX)"	, ""	, RN_ERR_INVALID_EXP);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X"		,  "X"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X"		,  "X"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+"		,  "X"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X"		, "-X"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-"		,  "X"	, RN_NO_ERROR);
 }
 END_TEST
 
@@ -1737,8 +1769,8 @@ romancalc_suite_rn_process_expression(void)
 {
 	Suite *s = suite_create ("\nRoman Calc Suite Test expression processing");
 	
-	TCase *tc_check_rn_process_expression = tcase_create ("TestPython_Process_expression_Addition\n");
-	tcase_add_test (tc_check_rn_process_expression, test_rn_process_expression);
+	TCase *tc_check_rn_process_expression = tcase_create ("TestPython_Process_expression_core\n");
+	tcase_add_test (tc_check_rn_process_expression, test_rn_process_expression_core);
 	suite_add_tcase (s, tc_check_rn_process_expression);
 	
 
