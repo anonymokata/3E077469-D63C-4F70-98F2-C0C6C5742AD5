@@ -30,7 +30,7 @@ Roman Calc Suite Test full subtraction
 Roman Calc Suite Test full addition
  
 Roman Calc Suite Test expression processing
-96%: Checks: 29, Failures: 1, Errors: 0
+100%: Checks: 29, Failures: 0, Errors: 0
 check_romancalc.c:369:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:397:P:TestPythonCallIO__In_String__Out_Int 
@@ -87,5 +87,5 @@ check_romancalc.c:1586:P:TestPython_addition_full_to_mixed
 :test_rn_addition_full_to_mixed:0: Passed
 check_romancalc.c:1675:P:TestPython_full_addition_Digit_Multi_Random
 :test_rn_addition_full_digit_multi_random:0: Passed
-check_romancalc.c:1731:F:TestPython_Process_expression_core
-:test_rn_process_expression_core:0: Assertion 'rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1, "+X" ))=="X"' failed: rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1, "+X" ))=="+X", "X"=="X"
+check_romancalc.c:1766:P:TestPython_Process_expression_core
+:test_rn_process_expression_core:0: Passed

@@ -292,7 +292,7 @@ def rn_addition_full(rn_A, rn_B):
 #                        index 1 is type int and will be one of the following
 #                            0 = no errors/warnings
 #                           information value
-#                           -1 = result is zero
+#                not used no point           -1 = result is zero
 #                           error value
 #                           -2 = multiple operators
 #                           -3 = invalid expression
@@ -309,12 +309,56 @@ def rn_addition_full(rn_A, rn_B):
 #                    value1 <  value2    negative result
 #
 def rn_process_expression(rn_exp):
-	rn_exp = rn_exp.upper() # work in upper case
+	rn_exp = rn_exp.upper()						# work in upper case
+	rn_exp = rn_exp.strip()						# trim leading and trailing white space
 	
-	rn_rslt_str = rn_exp
-	rn_rslt_err = 0
+	rn_rslt_str = ""							# init result strings
+	rn_rslt_err = 0								# init error value
+	idx_op = 0									# index of the operator
+	cnt_ops_plus = 0							# init counter for number of plus operators
+	cnt_ops_minus = 0							# init counter for number of minus operator
+	rn_val_left  = ""
+	rn_val_right = ""
+	
+	cnt_ops_plus  = rn_exp.count('+')
+	cnt_ops_minus = rn_exp.count('-')
+	cnt_ops = cnt_ops_minus + cnt_ops_plus		# get total count
+	if cnt_ops > 1:								# if too many operators
+		rn_rslt_str = ""						# empty the response
+		rn_rslt_err = -2						# set the error appropriately
+	elif cnt_ops == 0:							# if no operators, then maybe just hex value
+		if not(rn_numeral_validate_bool(rn_exp)):# no ops then may be individual value
+			rn_rslt_str = ""					# empty the response
+			rn_rslt_err = -3					# so indicate invalid expression
+		else:									# no operator valid expression
+			rn_rslt_str = rn_exp				# then it's just a Roman Numeral
+			rn_rslt_err = 0						# just a value
+	else:										# single operator
+		if cnt_ops_plus:						# if we are adding
+			idx_op = rn_exp.find('+')			# find where to split expression
+		else:									# else we're subtracting
+			idx_op = rn_exp.find('-')			# find where to split expression
+		if idx_op > 0:							# if operator is not at beginning
+			rn_val_left = rn_exp[:idx_op]		# then there is a left value
+			rn_val_left = rn_val_left.strip()	# trim trailing/leading whitespace
+		if idx_op < (len(rn_exp)-1):			# if operator is not at the end
+			rn_val_right = rn_exp[idx_op+1:]	# then there is a right
+			rn_val_right = rn_val_right.strip()	# trim trailing/leading whitespace
+		if   len(rn_val_left ) and not(rn_numeral_validate_bool(rn_val_left)): # if left value is invalid
+			rn_rslt_str = ""					# empty the response
+			rn_rslt_err = -4					# so indicate invalid expression
+		elif len(rn_val_right) and not(rn_numeral_validate_bool(rn_val_right)): # if left value
+			rn_rslt_str = ""					# empty the response
+			rn_rslt_err = -5					# so indicate invalid expression
+		else:									# good expression so process it
+			if cnt_ops_plus:					# if adding
+												# add the values
+				rn_rslt_str = rn_addition_full(rn_val_left, rn_val_right)
+			else:								# else performing subtraction
+												# subtract the value
+				rn_rslt_str = rn_subtraction_full(rn_val_left, rn_val_right)
+
 	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
-	
 	return rn_tuple_out
 
 if __name__ == "__main__":

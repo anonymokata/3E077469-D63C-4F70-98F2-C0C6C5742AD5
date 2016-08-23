@@ -3,107 +3,12 @@
 =========================================
 
 # TOTAL: 1
-# PASS:  0
+# PASS:  1
 # SKIP:  0
 # XFAIL: 0
-# FAIL:  1
+# FAIL:  0
 # XPASS: 0
 # ERROR: 0
 
 .. contents:: :depth: 2
-
-FAIL: check_romancalc
-=====================
-
-Running suite(s): 
-Roman Calc Suite Test the "Test Suite" Python interface
- 
-Roman Calc Suite Test roman Numeral Validation
- 
-Roman Calc Suite Test Multi-Digit Roman Numeral Validation
-
- test_rn_numeral_validate_bool_digits_multi 
-Testing    1 to 1000
-Testing 1001 to 2000
-Testing 2001 to 3000
-Testing 3001 to 3999
- 
-Roman Calc Suite Test Digit Unmix
- 
-Roman Calc Suite Test Digit Sort According to magnitude
- 
-Roman Calc Suite Test Multi-digit numeral reduction
- 
-Roman Calc Suite Numeral Digit Remix Improper Multi-Digit to Mixed Proper Digit Pair
- 
-Roman Calc Suite Test Unmixed Roman Numeral Comparison
- 
-Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
- 
-Roman Calc Suite Test Unmixed Subtraction Larger Minus SMaller
- 
-Roman Calc Suite Test full subtraction
- 
-Roman Calc Suite Test full addition
- 
-Roman Calc Suite Test expression processing
-96%: Checks: 29, Failures: 1, Errors: 0
-check_romancalc.c:369:P:TestPythonCallIO__In_String__Out_String 
-:test_pycall__in_str__out_str:0: Passed
-check_romancalc.c:397:P:TestPythonCallIO__In_String__Out_Int 
-:test_pycall__in_str__out_int:0: Passed
-check_romancalc.c:412:P:TestPythonCallIO__In_String__Out_Bool 
-:test_pycall__in_str__out_bool:0: Passed
-check_romancalc.c:461:P:Test Roman Numeral Validation 
-:test_rn_numeral_validate_bool_digits_single_upper_case:0: Passed
-check_romancalc.c:476:P:Test Roman Numeral Validation 
-:test_rn_numeral_validate_bool_digits_single_lower_case:0: Passed
-check_romancalc.c:505:P:Test Roman Numeral Validation 
-:test_rn_numeral_validate_bool_digits_single_error:0: Passed
-check_romancalc.c:567:P:Test Multi-Digit Roman Numeral Validation 
-:test_rn_numeral_validate_bool_digits_multi:0: Passed
-check_romancalc.c:586:P:Test Multi-Digit Roman Numeral Validation 
-:test_rn_numeral_validate_bool_digits_multi_error:0: Passed
-check_romancalc.c:627:P:Test unroll 
-:test_rn_numeral_digit_unmix:0: Passed
-check_romancalc.c:668:P:Test Digit Sort 
-:test_rn_numeral_digit_sort:0: Passed
-check_romancalc.c:723:P:Test digit numeral reduction 
-:test_rn_numeral_digit_reduction:0: Passed
-check_romancalc.c:762:P:Test remix of digits 
-:test_rn_numeral_digit_remix:0: Passed
-check_romancalc.c:862:P:TestPython_Compare_Single_Digits
-:test_rn_unmixed_compare_digit_single:0: Passed
-check_romancalc.c:925:P:TestPython_Compare_Multi_Digits
-:test_rn_unmixed_compare_digit_multi:0: Passed
-check_romancalc.c:1041:P:TestPython_Subtraction_single
-:test_rn_unmixed_subt_LG_SML_single_noBorrow:0: Passed
-check_romancalc.c:1057:P:TestPython_Subtraction_single
-:test_rn_unmixed_subt_LG_SML_borrow_Simple:0: Passed
-check_romancalc.c:1086:P:TestPython_Subtraction_single
-:test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1108:P:TestPython_Subtraction_single
-:test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1126:P:TestPython_Subtraction_single
-:test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1192:P:TestPython_borow calculation
-:test_rn_unmixed_borrow_Simple:0: Passed
-check_romancalc.c:1221:P:TestPython_borow calculation
-:test_rn_unmixed_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1243:P:TestPython_borow calculation
-:test_rn_unmixed_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1261:P:TestPython_borow calculation
-:test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1369:P:TestPython_full_subtraction_Digit_Single
-:test_rn_subtraction_full_digit_single:0: Passed
-check_romancalc.c:1477:P:TestPython_full_subtraction_Digit_Multi_Random
-:test_rn_subtraction_full_digit_multi_random:0: Passed
-check_romancalc.c:1572:P:TestPython_full_addition_Digit_Single
-:test_rn_addition_full_single_digit:0: Passed
-check_romancalc.c:1586:P:TestPython_addition_full_to_mixed
-:test_rn_addition_full_to_mixed:0: Passed
-check_romancalc.c:1675:P:TestPython_full_addition_Digit_Multi_Random
-:test_rn_addition_full_digit_multi_random:0: Passed
-check_romancalc.c:1731:F:TestPython_Process_expression_core
-:test_rn_process_expression_core:0: Assertion 'rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1, "+X" ))=="X"' failed: rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1, "+X" ))=="+X", "X"=="X"
 
