@@ -348,6 +348,73 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
 	return lcl_pValue;										// result
 }
 
+// MARK: pycall__in_int__out_int
+/**************************************************************************
+ * pycall__in_int__out_int
+ *   multi argument call interface to python routines
+ *   calls python routine that returns integer value
+ *   with arguments, (none to many)
+ *   the output
+ * Inputs:
+ *   arg_NameMod         module name to be tested
+ *   arg_NameFnc         function name to be tested
+ *   argc                interger count of arguments being sent to python
+ *                       function
+ *   ...                 argument list of ints, which will be packed
+ *                       into tuple
+ *   NOTE: argc and the number of arguments MUST BE EQUAL or this will crash
+ *
+ * Output:
+ *   int                 the output from the python routine
+ *                       default returned value is 0
+ **************************************************************************/
+int pycall__in_int__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... ){
+	va_list args;											// arguments
+	char * lcl_arg_str = NULL;								// local argument string from argument list
+	int idx_arg;											// argument list indexer
+	PyObject *lcl_pMod = NULL;								// module name of function to be tested
+	PyObject *lcl_pFnc = NULL;								// function to be tested
+	PyObject *lcl_pArgs = NULL;								// python argument list
+	PyObject *lcl_pString = NULL;							// local string for creating arg list
+	PyObject *lcl_pValue = NULL;							// local returned value from the python routine
+	int cResult_int = 0;									// C string result from py routine
+	
+	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	
+	if(argc > 0){											// build argument list only if
+		// we ar sending the args
+		// else lcl_pArgs is preloaded with NULL
+		
+		lcl_pArgs = PyTuple_New(argc);						// create python argument list
+		
+		va_start( args, argc );								// start argument iterating
+		
+		for(idx_arg = 0; idx_arg < argc; idx_arg++){
+			lcl_arg_str = va_arg( args, long);				// pull next value and
+			if(lcl_arg_str) {
+				lcl_pString	= PyInt_FromLong( lcl_arg_str );// stuff it into the Python arg list
+				PyTuple_SetItem(lcl_pArgs, idx_arg, lcl_pString);// add the string to the argument list
+			} else {										// null string, can't process
+				Py_DECREF(lcl_pArgs);						// dump the arg list
+				lcl_pArgs = NULL;							// NULL to signify error, and abortof process
+			}
+		}
+		
+		va_end( args );										// close out argument iterating
+	}// if(argc > 0)
+	
+	lcl_pValue = PyObject_CallObject(lcl_pFnc, lcl_pArgs);	// call routine
+	
+	if(lcl_pValue)
+		cResult_int = PyInt_AsLong(lcl_pValue);				// if bytes value returned
+	
+	if(lcl_pArgs)
+		Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
+	
+	return cResult_int;										// result
+}
+
 // MARK: romancalc_suite_test_pycall_io
 /**************************************************************************
  * romancalc_suite_test_pycall_io
