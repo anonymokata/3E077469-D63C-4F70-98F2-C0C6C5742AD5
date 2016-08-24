@@ -424,6 +424,8 @@ int pycall__in_long__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ...
  **************************************************************************/
 START_TEST (test_pycall__in_str__out_str)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "TestRoutineCheck__in_str__out_str";
@@ -431,11 +433,14 @@ START_TEST (test_pycall__in_str__out_str)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "SAME"), "SAME");
 	ck_assert_str_ne(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DIFFERENT"), "SAME");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "NOTDIFFERENT"), "NOTDIFFERENT");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_pycall__in_str__out_int)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "TestRoutineCheck__in_str__out_int";
@@ -460,11 +465,14 @@ START_TEST (test_pycall__in_str__out_int)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "-7"), -7);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "-32000"), -32000);
 
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_pycall__in_str__out_bool)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "TestRoutineCheck__in_str__out_bool";
@@ -474,6 +482,7 @@ START_TEST (test_pycall__in_str__out_bool)
 	
 	ck_assert_int_ne(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "NOT_THE_TEST_STRING"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "NOT_THE_TEST_STRING"), 0);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -513,6 +522,8 @@ romancalc_suite_test_pycall_io(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_validate_bool_digits_single_upper_case)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_validate_bool";
@@ -523,11 +534,14 @@ START_TEST (test_rn_numeral_validate_bool_digits_single_upper_case)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "C"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "D"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "M"), 1);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_numeral_validate_bool_digits_single_lower_case)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_validate_bool";
@@ -538,11 +552,14 @@ START_TEST (test_rn_numeral_validate_bool_digits_single_lower_case)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "c"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "d"), 1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "m"), 1);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_numeral_validate_bool_digits_single_error)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// ensure that the roman numeral check throws out all invalid characters
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
@@ -567,6 +584,7 @@ START_TEST (test_rn_numeral_validate_bool_digits_single_error)
 		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
 	for(lcl_str_rnum[0] = 'y'; lcl_str_rnum[0] < 127; lcl_str_rnum[0]++){
 		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 0);}
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -596,6 +614,8 @@ romancalc_suite_rn_numeral_validate_bool_digits_single(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_validate_bool_digits_multi)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_validate_bool";
@@ -630,11 +650,14 @@ START_TEST (test_rn_numeral_validate_bool_digits_multi)
 
 		ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, lcl_str_rnum), 1);
 	}
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_numeral_validate_bool_digits_multi_error)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_validate_bool";
@@ -648,6 +671,7 @@ START_TEST (test_rn_numeral_validate_bool_digits_multi_error)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "MCMXCIX"), 1); // 1999 good value
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, "MCM XCIX"), 0); // invalid character
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1, ""), 0);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -675,6 +699,8 @@ romancalc_suite_rn_numeral_validate_bool_digits_multi(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_digit_unmix)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_digit_unmix";
@@ -689,6 +715,7 @@ START_TEST (test_rn_numeral_digit_unmix)
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "CMCDXCXLIXIV"),
 					 "DCCCCCCCCLXXXXXXXXVIIIIIIII");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -723,6 +750,8 @@ romancalc_suite_rn_numeral_digit_unmix(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_digit_sort)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_digit_sort";
@@ -730,6 +759,7 @@ START_TEST (test_rn_numeral_digit_sort)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IVXLCDM"), "MDCLXVI");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "MDCLXVIMDCLXVIMDCLXVI"),
 					 "MMMDDDCCCLLLXXXVVVIII");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -763,6 +793,8 @@ romancalc_suite_rn_numeral_digit_sort(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_digit_reduction)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_digit_reduction";
@@ -785,6 +817,7 @@ START_TEST (test_rn_numeral_digit_reduction)
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "DDCCCCCLLXXXXXVVIIIIII"), "MDCLXVI");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "IIIIIIIIIIIIIIIIIIIIIIIIIIIIII"), "XXX");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -810,6 +843,8 @@ romancalc_suite_rn_numeral_digit_reduction(void)
  **************************************************************************/
 START_TEST (test_rn_numeral_digit_remix)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_numeral_digit_remix";
@@ -824,6 +859,7 @@ START_TEST (test_rn_numeral_digit_remix)
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,
 					 "DCCCCCCCCLXXXXXXXXVIIIIIIII"), "CMCDXCXLIXIV");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -865,6 +901,8 @@ romancalc_suite_rn_numeral_digit_remix(void)
  **************************************************************************/
 START_TEST (test_rn_unmixed_compare_digit_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_compare";
@@ -925,11 +963,14 @@ START_TEST (test_rn_unmixed_compare_digit_single)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "M", "D"),  1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "M", "M"),  0);
 	
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_compare_digit_multi)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_compare";
@@ -987,6 +1028,7 @@ START_TEST (test_rn_unmixed_compare_digit_multi)
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "LL", "CC"), -1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "CC", "DD"), -1);
 	ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2, "DD", "MM"), -1);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1037,6 +1079,8 @@ romancalc_suite_rn_unmixed_compare(void)
  **************************************************************************/
 START_TEST (test_rn_unmixed_subt_LG_SML_single_noBorrow)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
@@ -1104,11 +1148,14 @@ START_TEST (test_rn_unmixed_subt_LG_SML_single_noBorrow)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMMDDDCCCLLLXXXVVVIII", "M"),
 					 "MMDDDCCCLLLXXXVVVIII");
 
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Simple)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
@@ -1120,11 +1167,14 @@ START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Simple)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "C"), "CCCC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "D"), "D");
 	
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
@@ -1148,11 +1198,14 @@ START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "L"), "DCCCCL");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "C"), "DCCCC");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
@@ -1170,11 +1223,14 @@ START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MD"   ,  "X"), "MCCCCLXXXX");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MD"   ,  "L"), "MCCCCL");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_subt_LG_SML";
@@ -1188,6 +1244,7 @@ START_TEST (test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDV"   ,  "X"), "MCCCCLXXXXV");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDX"   ,  "L"), "MCCCCLX");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1244,6 +1301,8 @@ romancalc_suite_rn_unmixed_subt_LG_SML(void)
  **************************************************************************/
 START_TEST (test_rn_unmixed_borrow_Simple)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_borrow";
@@ -1255,11 +1314,14 @@ START_TEST (test_rn_unmixed_borrow_Simple)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D",  "C"), "CCCCC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "D"), "DD");
 	
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_borrow_Complex_single_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_borrow";
@@ -1283,11 +1345,14 @@ START_TEST (test_rn_unmixed_borrow_Complex_single_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "L"), "DCCCCLL");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M",  "C"), "DCCCCC");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_borrow_Complex_multi_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_borrow";
@@ -1305,11 +1370,14 @@ START_TEST (test_rn_unmixed_borrow_Complex_multi_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MD"   ,  "X"), "MCCCCLXXXXX");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MD"   ,  "L"), "MCCCCLL");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_unmixed_borrow_Complex_multi_single_mid)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_unmixed_borrow";
@@ -1323,6 +1391,7 @@ START_TEST (test_rn_unmixed_borrow_Complex_multi_single_mid)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDV"   ,  "X"), "MCCCCLXXXXXV");
 	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDX"   ,  "L"), "MCCCCLLX");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1372,6 +1441,8 @@ romancalc_suite_rn_unmixed_borrow(void)
 
 START_TEST (test_rn_subtraction_full_digit_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_subtraction_full";
@@ -1431,11 +1502,14 @@ START_TEST (test_rn_subtraction_full_digit_single)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "C", "M"), "-CM");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "D", "M"), "-D");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "M"), "");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_subtraction_full_digit_multi_random)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_subtraction_full";
@@ -1539,6 +1613,7 @@ START_TEST (test_rn_subtraction_full_digit_multi_random)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MMCMXLI", "MMXXXII"), "CMIX");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MDCXLV", "MMDCCCXIII"), "-MCLXVIII");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "I", "I"), "");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1567,6 +1642,8 @@ romancalc_suite_rn_subtraction_full(void)
 
 START_TEST (test_rn_addition_full_single_digit)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_addition_full";
@@ -1634,11 +1711,14 @@ START_TEST (test_rn_addition_full_single_digit)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "C"), "MC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "D"), "MD");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "M", "M"), "MM");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_addition_full_to_mixed)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_addition_full";
@@ -1648,11 +1728,14 @@ START_TEST (test_rn_addition_full_to_mixed)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XXX", "LX"), "XC");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCC",  "C"), "CD");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "CCC", "DC"), "CM");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_addition_full_digit_multi_random)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_addition_full";
@@ -1737,6 +1820,7 @@ START_TEST (test_rn_addition_full_digit_multi_random)
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "XLIII", "DCCCLXXI"), "CMXIV");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "MCDLXXXII", "MCDXL"), "MMCMXXII");
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2, "DCXLII", "MLXIII"), "MDCCV");
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1801,6 +1885,8 @@ PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTERR)
 
 START_TEST (test_rn_process_expression_core)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_process_expression";
@@ -1848,11 +1934,14 @@ START_TEST (test_rn_process_expression_core)
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+ X"	,  "XX"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X "	,  "XX"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( " X + X ",  "XX"	, RN_NO_ERROR);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_process_expr_subt_single)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_process_expression";
@@ -1912,6 +2001,7 @@ START_TEST (test_rn_process_expr_subt_single)
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-M"		,  "-CM"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-M"		,  "-D"		, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-M"		,  ""		, RN_NO_ERROR);
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1939,6 +2029,8 @@ romancalc_suite_rn_process_expression(void)
  **************************************************************************/
 START_TEST (test_rn_server_start_and_kill)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_server_start";
@@ -1947,11 +2039,14 @@ START_TEST (test_rn_server_start_and_kill)
 	ck_assert_int_ne(pid_server, 0 );
 	ck_assert_int_eq(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is running
 	ck_assert_int_eq(kill(pid_server, SIGKILL), 0);		// Kill the process
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
 START_TEST (test_rn_server_start_and_delayed_exit)
 {
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
+	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_server_start";
@@ -1962,6 +2057,8 @@ START_TEST (test_rn_server_start_and_delayed_exit)
 	ck_assert_int_eq(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is running
 	delay(2000);										// delay 2 seconds
 	ck_assert_int_eq(kill(pid_server, SIGKILL), 0);		// Kill the process
+
+	pyenv_teardown();										// shut down python interprater
 }
 END_TEST
 
@@ -1985,7 +2082,6 @@ main (void)
 	int number_failed;
 	number_failed = 1;										// start assumption no tests passed
 
-	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
 
 	SRunner *sr = srunner_create (romancalc_suite_test_pycall_io ());	// validate test routines
 																		// test the tester
@@ -2009,7 +2105,6 @@ main (void)
 	number_failed = srunner_ntests_failed (sr);
 
 	srunner_free (sr);
-	pyenv_teardown();										// shut down python interprater
 	
 	return (number_failed == 0) ? EXIT_SUCCESS : EXIT_FAILURE;
 }
