@@ -1918,6 +1918,9 @@ romancalc_suite_rn_process_expression(void)
 	tcase_add_test (tc_check_rn_process_expression, test_rn_process_expression_core);
 	suite_add_tcase (s, tc_check_rn_process_expression);
 	
+	TCase *tc_check_rn_process_expr_subt_single = tcase_create ("TestPython_Process_expression_subtraction\n");
+	tcase_add_test (tc_check_rn_process_expr_subt_single, test_rn_process_expr_subt_single);
+	suite_add_tcase (s, tc_check_rn_process_expr_subt_single);
 
 	
 	return s;
