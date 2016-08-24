@@ -370,12 +370,12 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
  **************************************************************************/
 int pycall__in_int__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... ){
 	va_list args;											// arguments
-	char * lcl_arg_str = NULL;								// local argument string from argument list
+	long lcl_arg_long = 0;									// local argument string from argument list
 	int idx_arg;											// argument list indexer
 	PyObject *lcl_pMod = NULL;								// module name of function to be tested
 	PyObject *lcl_pFnc = NULL;								// function to be tested
 	PyObject *lcl_pArgs = NULL;								// python argument list
-	PyObject *lcl_pString = NULL;							// local string for creating arg list
+	PyObject *lcl_pLong = NULL;								// local long for creating arg list
 	PyObject *lcl_pValue = NULL;							// local returned value from the python routine
 	int cResult_int = 0;									// C string result from py routine
 	
@@ -391,14 +391,9 @@ int pycall__in_int__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... 
 		va_start( args, argc );								// start argument iterating
 		
 		for(idx_arg = 0; idx_arg < argc; idx_arg++){
-			lcl_arg_str = va_arg( args, long);				// pull next value and
-			if(lcl_arg_str) {
-				lcl_pString	= PyInt_FromLong( lcl_arg_str );// stuff it into the Python arg list
-				PyTuple_SetItem(lcl_pArgs, idx_arg, lcl_pString);// add the string to the argument list
-			} else {										// null string, can't process
-				Py_DECREF(lcl_pArgs);						// dump the arg list
-				lcl_pArgs = NULL;							// NULL to signify error, and abortof process
-			}
+			lcl_arg_long = va_arg( args, long);				// pull next value and
+			lcl_pLong = PyInt_FromLong( lcl_arg_long );		// stuff it into the Python arg list
+			PyTuple_SetItem(lcl_pArgs, idx_arg, lcl_pLong);	// add the string to the argument list
 		}
 		
 		va_end( args );										// close out argument iterating
