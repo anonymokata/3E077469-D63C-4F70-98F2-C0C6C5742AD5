@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
+#include <sys/types.h>
+#include <signal.h>
 #include <Python.h>
 #include "../src/romancalc.h"
 
@@ -1935,22 +1937,41 @@ romancalc_suite_rn_process_expression(void)
  * romancalc_suite_rn_server_start
  *		rn_server_star
  **************************************************************************/
-START_TEST (test_rn_server_start)
+START_TEST (test_rn_server_start_and_kill)
 {
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_process_expression";
-	PY_INT2_INT_NE( 0 , 0 , 0)					// checkchild process
+	char *lcl_NameFnc = "rn_server_start";
+	int pid_server = 0;
+	pid_server = pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2,  0 ,  0 );
+	ck_assert_int_ne(pid_server, 0 );
+	ck_assert_int_eq(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is running
+	ck_assert_int_eq(kill(pid_server, SIGKILL), 0);		// Kill the process
+}
+END_TEST
+
+START_TEST (test_rn_server_start_and_delayed_exit)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_server_start";
+	int pid_server = 0;
+	// runserver for 10 seconds then kill it
+	pid_server = pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 10,  0 ,  0 );
+	ck_assert_int_ne(pid_server, 0 );
+	ck_assert_int_eq(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is running
+	delay(2000);										// delay 2 seconds
+	ck_assert_int_eq(kill(pid_server, SIGKILL), 0);		// Kill the process
 }
 END_TEST
 
 Suite *
 romancalc_suite_rn_server_start(void)
 {
-	Suite *s = suite_create ("\nRoman Calc Suite Test expression processing");
+	Suite *s = suite_create ("\nRoman Calc Suite Test server start");
 	
-	TCase *tc_check_rn_server_start = tcase_create ("TestPython_Process_expression_core\n");
-	tcase_add_test (tc_check_rn_server_start, test_rn_server_start);
+	TCase *tc_check_rn_server_start = tcase_create ("TestPython_Process_server_start\n");
+	tcase_add_test (tc_check_rn_server_start, test_rn_server_start_and_kill);
 	suite_add_tcase (s, tc_check_rn_server_start);
 	
 	return s;

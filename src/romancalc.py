@@ -2,6 +2,8 @@
 
 import sys
 import re
+import os
+import time
 
 rn_digits = ['M','D','C','L','X','V','I']
 
@@ -362,6 +364,33 @@ def rn_process_expression(rn_exp):
 	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
 	return rn_tuple_out
 
+#	rn_server
+#		is the server process runs until exit conditions are met
+#           exit conditions are
+#                --serverdown command
+#                arg_duration  has expired
+#                arg_responses has been met
+#           arg_duration  duration in seconds to run
+#                0    run in server mode
+#                >0   exit after given number of seconds
+#           arg_responses max responses to give before exiting
+#                0    run in server mode
+#                >0   exit after given count  of responses
+#			start roman calc server process
+#			process will exit when the server receives a kill command
+#
+#			commands received through communication channel
+#				--serverdown
+def rn_server(arg_duration = 1, arg_responses = 1):
+	time_end = time.time() + arg_duration
+	
+	lcl_response_cnt = arg_responses			# loop this number of times
+	
+	while ( ( ( arg_duration  == 0) or ( ( arg_duration  > 0 ) and ( time.time() < time_end ) ) ) and
+			( ( arg_responses == 0) or ( ( arg_responses > 0 ) and ( lcl_response_cnt > 0   ) ) ) ):
+		abc = 1
+	sys.exit(0);
+
 #		rn_server_start
 #           arg_duration  duration in seconds to run
 #                0    run in server mode
@@ -377,9 +406,14 @@ def rn_process_expression(rn_exp):
 #		return
 #			child PID   by   parent process
 #			0           by   child  process
-def rn_server_start(arg_duration, arg_responses):
-	cid = 0										# child id set initted
-	return cid									# return the child id
+def rn_server_start(arg_duration = 1, arg_responses = 1):
+	cpid = 0									# child process id set initted
+	
+	cpid = os.fork()							# fork off the server process
+	
+	if cpid == 0:								# if this is forked child/server process
+		rn_server(arg_duration, arg_responses)	# then start the server
+	return cpid									# return the child process id
 
 def main():
 	import sys
