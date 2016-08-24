@@ -1777,13 +1777,17 @@ int    rslt_exp_err_int(PyObject* arg_tpl){return        PyInt_AsLong     (PyTup
 #define RN_ERR_BAD_NUM_RIGHT -5 /*                          -5 = invalid values right side*/
 
 
-#define PY_STR1_INT_EQ( STRIN1, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), INTOUT );
-#define PY_STR2_INT_EQ( STRIN1, STRIN2, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ), INTOUT );
-#define PY_STR3_INT_EQ( STRIN1, STRIN2, STRIN3, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ,  STRIN3 ), INTOUT );
+#define PY_STR1_STR_EQ( STRIN1, STROUT)                 ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), STROUT );
+#define PY_STR2_STR_EQ( STRIN1, STRIN2, STROUT)         ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  STRIN1 ,  STRIN2 ), STROUT );
+#define PY_STR3_STR_EQ( STRIN1, STRIN2, STRIN3, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 3,  STRIN1 ,  STRIN2 ,  STRIN3 ), STROUT );
 
-#define PY_STR1_STR_EQ( STRIN1, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), STROUT );
-#define PY_STR2_STR_EQ( STRIN1, STRIN2, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ), STROUT );
-#define PY_STR3_STR_EQ( STRIN1, STRIN2, STRIN3, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ,  STRIN3 ), STROUT );
+#define PY_STR1_INT_EQ( STRIN1, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), INTOUT );
+#define PY_STR2_INT_EQ( STRIN1, STRIN2, INTOUT)         ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  STRIN1 ,  STRIN2 ), INTOUT );
+#define PY_STR3_INT_EQ( STRIN1, STRIN2, STRIN3, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 3,  STRIN1 ,  STRIN2 ,  STRIN3 ), INTOUT );
+
+#define PY_INT1_INT_NE( INTIN1, INTOUT)                 ck_assert_int_ne(pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 1,  INTIN1 ), INTOUT );
+#define PY_INT2_INT_NE( INTIN1, INTIN2, INTOUT)         ck_assert_int_ne(pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2,  INTIN1 ,  INTIN2 ), INTOUT );
+#define PY_INT3_INT_NE( INTIN1, INTIN2, INTIN3, INTOUT) ck_assert_int_ne(pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 3,  INTIN1 ,  INTIN2 ,  INTIN3 ), INTOUT );
 
 #define PY_TUPL_EXP_VAL_STR_EQ( STRIN, STROUT) ck_assert_str_eq(rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), STROUT );
 #define PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTOUT) ck_assert_int_eq(rslt_exp_err_int(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), INTOUT );
