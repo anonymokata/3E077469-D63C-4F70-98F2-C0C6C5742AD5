@@ -30,7 +30,9 @@ Roman Calc Suite Test full subtraction
 Roman Calc Suite Test full addition
  
 Roman Calc Suite Test expression processing
-100%: Checks: 30, Failures: 0, Errors: 0
+ 
+Roman Calc Suite Test expression processing
+96%: Checks: 31, Failures: 1, Errors: 0
 check_romancalc.c:431:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:459:P:TestPythonCallIO__In_String__Out_Int 
@@ -87,7 +89,9 @@ check_romancalc.c:1648:P:TestPython_addition_full_to_mixed
 :test_rn_addition_full_to_mixed:0: Passed
 check_romancalc.c:1737:P:TestPython_full_addition_Digit_Multi_Random
 :test_rn_addition_full_digit_multi_random:0: Passed
-check_romancalc.c:1844:P:TestPython_Process_expression_core
+check_romancalc.c:1848:P:TestPython_Process_expression_core
 :test_rn_process_expression_core:0: Passed
-check_romancalc.c:1908:P:TestPython_Process_expression_subtraction
+check_romancalc.c:1912:P:TestPython_Process_expression_subtraction
 :test_rn_process_expr_subt_single:0: Passed
+check_romancalc.c:1943:F:TestPython_Process_expression_core
+:test_rn_server_start:0: Assertion 'pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2, 0 , 0 )!=0' failed: pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2, 0 , 0 )==0, 0==0

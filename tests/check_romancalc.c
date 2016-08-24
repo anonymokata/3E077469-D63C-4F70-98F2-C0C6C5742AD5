@@ -1781,7 +1781,7 @@ int    rslt_exp_err_int(PyObject* arg_tpl){return        PyInt_AsLong     (PyTup
 #define PY_STR2_STR_EQ( STRIN1, STRIN2, STROUT)         ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 2,  STRIN1 ,  STRIN2 ), STROUT );
 #define PY_STR3_STR_EQ( STRIN1, STRIN2, STRIN3, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 3,  STRIN1 ,  STRIN2 ,  STRIN3 ), STROUT );
 
-#define PY_STR1_INT_EQ( STRIN1, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), INTOUT );
+#define PY_STR1_INT_EQ( STRIN1, INTOUT)                 ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), INTOUT );
 #define PY_STR2_INT_EQ( STRIN1, STRIN2, INTOUT)         ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 2,  STRIN1 ,  STRIN2 ), INTOUT );
 #define PY_STR3_INT_EQ( STRIN1, STRIN2, STRIN3, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 3,  STRIN1 ,  STRIN2 ,  STRIN3 ), INTOUT );
 
@@ -1925,7 +1925,33 @@ romancalc_suite_rn_process_expression(void)
 	TCase *tc_check_rn_process_expr_subt_single = tcase_create ("TestPython_Process_expression_subtraction\n");
 	tcase_add_test (tc_check_rn_process_expr_subt_single, test_rn_process_expr_subt_single);
 	suite_add_tcase (s, tc_check_rn_process_expr_subt_single);
+	
 
+	return s;
+}
+
+// MARK: romancalc_suite_rn_server_start
+/**************************************************************************
+ * romancalc_suite_rn_server_start
+ *		rn_server_star
+ **************************************************************************/
+START_TEST (test_rn_server_start)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_process_expression";
+	PY_INT2_INT_NE( 0 , 0 , 0)					// checkchild process
+}
+END_TEST
+
+Suite *
+romancalc_suite_rn_server_start(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test expression processing");
+	
+	TCase *tc_check_rn_server_start = tcase_create ("TestPython_Process_expression_core\n");
+	tcase_add_test (tc_check_rn_server_start, test_rn_server_start);
+	suite_add_tcase (s, tc_check_rn_server_start);
 	
 	return s;
 }
@@ -1954,7 +1980,9 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
 	srunner_add_suite(sr, romancalc_suite_rn_addition_full());	// full addition pos results
 	srunner_add_suite(sr, romancalc_suite_rn_process_expression());
-	
+
+	srunner_add_suite(sr, romancalc_suite_rn_server_start());
+
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	
 	number_failed = srunner_ntests_failed (sr);

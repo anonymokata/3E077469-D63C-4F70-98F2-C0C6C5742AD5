@@ -1,3 +1,4 @@
+#!/usr/bin/python
 
 import sys
 import re
@@ -361,7 +362,39 @@ def rn_process_expression(rn_exp):
 	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
 	return rn_tuple_out
 
+#		rn_server_start
+#           arg_duration  duration in seconds to run
+#                0    run in server mode
+#                >0   exit after given number of seconds
+#           arg_responses max responses to give before exiting
+#                0    run in server mode
+#                >0   exit after given count  of responses
+#			start roman calc server process
+#			process will exit when the server receives a kill command
+#
+#			commands received through communication channel
+#				--serverdown
+#		return
+#			child PID   by   parent process
+#			0           by   child  process
+def rn_server_start(arg_duration, arg_responses):
+	cid = 0										# child id set initted
+	return cid									# return the child id
+
+def main():
+	import sys
+	argc = len(sys.argv)						# get number of arguments
+	arg_str = ""								# used to build arg list
+
+	if argc > 1:								# only proces if any input
+		arg_str = sys.argv[1]					# use first argument
+		for arg_idx in sys.argv[2:]:			# iterate through rest if any args
+			arg_str = arg_str + ' ' + arg_idx	#tack on each additional argument
+	rn_rslt_str = arg_str
+
+	return rn_rslt_str							# send out the result
+
 if __name__ == "__main__":
 
 
-	print sys.argv
+	exit(main())
