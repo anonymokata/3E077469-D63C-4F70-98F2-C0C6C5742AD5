@@ -1781,6 +1781,15 @@ int    rslt_exp_err_int(PyObject* arg_tpl){return        PyInt_AsLong     (PyTup
 #define RN_ERR_BAD_NUM_LEFT	-4 /* = invalid values left side*/
 #define RN_ERR_BAD_NUM_RIGHT -5 /*                          -5 = invalid values right side*/
 
+
+#define PY_STR1_INT_EQ( STRIN1, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), INTOUT );
+#define PY_STR2_INT_EQ( STRIN1, STRIN2, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ), INTOUT );
+#define PY_STR3_INT_EQ( STRIN1, STRIN2, STRIN3, INTOUT) ck_assert_int_eq(pycall__in_str__out_int(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ,  STRIN3 ), INTOUT );
+
+#define PY_STR1_STR_EQ( STRIN1, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ), STROUT );
+#define PY_STR2_STR_EQ( STRIN1, STRIN2, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ), STROUT );
+#define PY_STR3_STR_EQ( STRIN1, STRIN2, STRIN3, STROUT) ck_assert_int_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  STRIN1 ,  STRIN2 ,  STRIN3 ), STROUT );
+
 #define PY_TUPL_EXP_VAL_STR_EQ( STRIN, STROUT) ck_assert_str_eq(rslt_exp_val_str(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), STROUT );
 #define PY_TUPL_EXP_ERR_INT_EQ( STRIN, INTOUT) ck_assert_int_eq(rslt_exp_err_int(pycall__in_str__out_tuple(lcl_NameMod, lcl_NameFnc, 1,  STRIN )), INTOUT );
 // PY_TUPL_STR_VAL_EQ_ERR_EQ   used to process tuple from expression processing
