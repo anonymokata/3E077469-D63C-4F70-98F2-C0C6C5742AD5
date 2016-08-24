@@ -348,9 +348,9 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
 	return lcl_pValue;										// result
 }
 
-// MARK: pycall__in_int__out_int
+// MARK: pycall__in_long__out_int
 /**************************************************************************
- * pycall__in_int__out_int
+ * pycall__in_long__out_int
  *   multi argument call interface to python routines
  *   calls python routine that returns integer value
  *   with arguments, (none to many)
@@ -368,7 +368,7 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
  *   int                 the output from the python routine
  *                       default returned value is 0
  **************************************************************************/
-int pycall__in_int__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... ){
+int pycall__in_long__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... ){
 	va_list args;											// arguments
 	long lcl_arg_long = 0;									// local argument string from argument list
 	int idx_arg;											// argument list indexer
