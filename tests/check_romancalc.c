@@ -1835,6 +1835,77 @@ START_TEST (test_rn_process_expression_core)
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+"		,  "X"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X"		, "-X"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-"		,  "X"	, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X"	,  "XX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( " X+X"	,  "XX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X +X"	,  "XX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+ X"	,  "XX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X "	,  "XX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( " X + X ",  "XX"	, RN_NO_ERROR);
+}
+END_TEST
+
+START_TEST (test_rn_process_expr_subt_single)
+{
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_process_expression";
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-I"		,     ""	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-I"		,   "IV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-I"		,    "IX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-I"		,  "XLIX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-I"		,  "XCIX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-I"		,  "CDXCIX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-I"		,  "CMXCIX"	, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-V"		,	"-IV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-V"		,		""	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-V"		,		"V"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-V"		,	"XLV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-V"		,  "XCV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-V"		,  "CDXCV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-V"		,  "CMXCV"	, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-X"		,  "-IX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-X"		,  "-V"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X"		,  ""		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-X"		,  "XL"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-X"		,  "XC"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-X"		,  "CDXC"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-X"		,  "CMXC"	, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-L"		,  "-XLIX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-L"		,  "-XLV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-L"		,  "-XL"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-L"		,  ""		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-L"		,  "L"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-L"		,  "CDL"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-L"		,  "CML"	, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-C"		,  "-XCIX"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-C"		,  "-XCV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-C"		,  "-XC"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-C"		,  "-L"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-C"		,  ""		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-C"		,  "CD"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-C"		,  "CM"		, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-D"		,  "-CDXCIX", RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-D"		,  "-CDXCV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-D"		,  "-CDXC"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-D"		,  "-CDL"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-D"		,  "-CD"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-D"		,  ""		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-D"		,  "D"		, RN_NO_ERROR);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "I-M"		,  "-CMXCIX", RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "V-M"		,  "-CMXCV"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-M"		,  "-CMXC"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "L-M"		,  "-CML"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "C-M"		,  "-CM"	, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "D-M"		,  "-D"		, RN_NO_ERROR);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "M-M"		,  ""		, RN_NO_ERROR);
 }
 END_TEST
 
