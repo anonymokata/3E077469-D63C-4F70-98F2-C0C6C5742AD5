@@ -500,14 +500,15 @@ def rn_client(arg_exp):
 #		return
 #			child PID   by   parent process
 #			0           by   child  process
-def rn_server_start(arg_duration = 1, arg_responses = 1):
-	cpid = 0									# child process id set initted
+#def rn_server_start(arg_duration = 1, arg_responses = 1):
+#	cpid = 0									# child process id set initted
+#
+#	#	cpid = os.fork()							# fork off the server process
+#
+#	#	if cpid == 0:								# if this is forked child/server process
+#	#	rn_server(arg_duration, arg_responses)	# then start the server
+#	return cpid									# return the child process id
 	
-	cpid = os.fork()							# fork off the server process
-	
-	if cpid == 0:								# if this is forked child/server process
-		rn_server(arg_duration, arg_responses)	# then start the server
-	return cpid									# return the child process id
 
 def main():
 	import sys
