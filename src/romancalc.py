@@ -504,21 +504,17 @@ def rn_client(arg_exp):
 			return glbl_client_pkt[0]		# return the actual result
 		else:
 			return "<ERROR: CODE "+str(glbl_client_pkt[1])+" >"
-
 	return "<ERROR: SERVER RESPONSE TIMEOUT >"
 
 #		rn_test_coms_using_threads
 #		threaded comunications tester
 def rn_test_coms_using_threads (arg_exp):
-
 	rn_rslt_str = ""
-
 	# start the server thread to receive 1 message or 1 second
 	rn_thread = threading.Thread(target=rn_server, args=(10,1))
 	rn_thread.start()							# start the thread
 	rn_rslt_str = rn_client(arg_exp)			# call cleint requesting result
 	rn_thread.join()							# rejoin the thread
-
 	return rn_rslt_str
 
 
@@ -531,11 +527,9 @@ def main():
 		arg_str = sys.argv[1]					# use first argument
 		for arg_idx in sys.argv[2:]:			# iterate through rest if any args
 			arg_str = arg_str + ' ' + arg_idx	#tack on each additional argument
-	rn_rslt_str = arg_str
+	# process arguments using lcm modules and send out the result
+	return rn_test_coms_using_threads(arg_str)
 
-	return rn_rslt_str							# send out the result
 
 if __name__ == "__main__":
-
-
 	exit(main())
