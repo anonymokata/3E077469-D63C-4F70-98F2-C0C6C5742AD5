@@ -373,6 +373,50 @@ def rn_process_expression(rn_exp):
 	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
 	return rn_tuple_out
 
+#   rn_tx_lcm_packet
+#        packs data into lcm communicaitons packet and publishes it to listeners
+#
+#      arg_ch is the channel to publish the packet to
+#      arg_exp_n_rslt      if going to server then this holds the expression
+#                          if response from server then this is the result
+#      arg_cmd_n_err       if going to server then this is command for server
+#                             0 = calculate expression result
+#                             1 = kill server
+#                          if response from server then result code are that
+#                              is rn_rslt_err tuple from rn_process_expression
+def rn_lcm_tx_packet(arg_ch, arg_exp_n_rslt, arg_cmd_n_err):
+	rslt_err = 0								# reserve right to return err
+	
+	pkt = rn_packet_t()							# create packet
+	pkt.timestamp = 0							# time stamp it
+	pkt.cmd_n_err  = arg_cmd_n_err				# set command or error
+	pkt.exp_n_rslt = arg_exp_n_rslt				# set the data portion
+	
+	lc = lcm.LCM(rn_lcm_provider)
+	lc.publish(arg_ch, pkt.encode())
+	return rslt_err
+
+# rn_lcm_server_handler
+## server handler for packet
+def rn_lcm_server_handler(channel, data):
+	rslt_str = ""								# rsponse string
+	rslt_err = 0								# response error
+	srvr_pkt = rn_packet_t.decode(data)
+	if srvr_pkt.cmd_n_err == 0:					# if command to calculate result
+												# send data to packet
+		rslt_tpl = rn_process_expression(srvr_pkt.exp_n_rslt)
+												# send back result
+		rlst_err = rslt_tpl[1]					# set error code
+		if rslt_tpl[1] != 0:
+			rslt_str = "<ERROR: "+str(rslt_tpl[1])+" >"
+		else:
+			rslt_str = rslt_tpl[0]				# set calcualtion result
+
+		rn_lcm_tx_packet(rn_lcm_ch_to_cli, rslt_str, rlst_err)
+	else:
+		rn_server_done = 1						# kill the server
+	return
+
 #	rn_server
 #		is the server process runs until exit conditions are met
 #           exit conditions are
