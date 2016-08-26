@@ -31,67 +31,67 @@ Roman Calc Suite Test full addition
  
 Roman Calc Suite Test expression processing
  
-Roman Calc Suite Test expression processing
-96%: Checks: 31, Failures: 1, Errors: 0
-check_romancalc.c:431:P:TestPythonCallIO__In_String__Out_String 
+Roman Calc Suite Test Coms Using Threads
+100%: Checks: 31, Failures: 0, Errors: 0
+check_romancalc.c:435:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
-check_romancalc.c:459:P:TestPythonCallIO__In_String__Out_Int 
+check_romancalc.c:466:P:TestPythonCallIO__In_String__Out_Int 
 :test_pycall__in_str__out_int:0: Passed
-check_romancalc.c:474:P:TestPythonCallIO__In_String__Out_Bool 
+check_romancalc.c:484:P:TestPythonCallIO__In_String__Out_Bool 
 :test_pycall__in_str__out_bool:0: Passed
-check_romancalc.c:523:P:Test Roman Numeral Validation 
+check_romancalc.c:536:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_upper_case:0: Passed
-check_romancalc.c:538:P:Test Roman Numeral Validation 
+check_romancalc.c:554:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_lower_case:0: Passed
-check_romancalc.c:567:P:Test Roman Numeral Validation 
+check_romancalc.c:586:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_error:0: Passed
-check_romancalc.c:629:P:Test Multi-Digit Roman Numeral Validation 
+check_romancalc.c:651:P:Test Multi-Digit Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_multi:0: Passed
-check_romancalc.c:648:P:Test Multi-Digit Roman Numeral Validation 
+check_romancalc.c:673:P:Test Multi-Digit Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_multi_error:0: Passed
-check_romancalc.c:689:P:Test unroll 
+check_romancalc.c:717:P:Test unroll 
 :test_rn_numeral_digit_unmix:0: Passed
-check_romancalc.c:730:P:Test Digit Sort 
+check_romancalc.c:761:P:Test Digit Sort 
 :test_rn_numeral_digit_sort:0: Passed
-check_romancalc.c:785:P:Test digit numeral reduction 
+check_romancalc.c:819:P:Test digit numeral reduction 
 :test_rn_numeral_digit_reduction:0: Passed
-check_romancalc.c:824:P:Test remix of digits 
+check_romancalc.c:861:P:Test remix of digits 
 :test_rn_numeral_digit_remix:0: Passed
-check_romancalc.c:924:P:TestPython_Compare_Single_Digits
+check_romancalc.c:964:P:TestPython_Compare_Single_Digits
 :test_rn_unmixed_compare_digit_single:0: Passed
-check_romancalc.c:987:P:TestPython_Compare_Multi_Digits
+check_romancalc.c:1030:P:TestPython_Compare_Multi_Digits
 :test_rn_unmixed_compare_digit_multi:0: Passed
-check_romancalc.c:1103:P:TestPython_Subtraction_single
+check_romancalc.c:1149:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_single_noBorrow:0: Passed
-check_romancalc.c:1119:P:TestPython_Subtraction_single
+check_romancalc.c:1168:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Simple:0: Passed
-check_romancalc.c:1148:P:TestPython_Subtraction_single
+check_romancalc.c:1200:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1170:P:TestPython_Subtraction_single
+check_romancalc.c:1225:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1188:P:TestPython_Subtraction_single
+check_romancalc.c:1246:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1254:P:TestPython_borow calculation
+check_romancalc.c:1315:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Simple:0: Passed
-check_romancalc.c:1283:P:TestPython_borow calculation
+check_romancalc.c:1347:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1305:P:TestPython_borow calculation
+check_romancalc.c:1372:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1323:P:TestPython_borow calculation
+check_romancalc.c:1393:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1431:P:TestPython_full_subtraction_Digit_Single
+check_romancalc.c:1504:P:TestPython_full_subtraction_Digit_Single
 :test_rn_subtraction_full_digit_single:0: Passed
-check_romancalc.c:1539:P:TestPython_full_subtraction_Digit_Multi_Random
+check_romancalc.c:1615:P:TestPython_full_subtraction_Digit_Multi_Random
 :test_rn_subtraction_full_digit_multi_random:0: Passed
-check_romancalc.c:1634:P:TestPython_full_addition_Digit_Single
+check_romancalc.c:1713:P:TestPython_full_addition_Digit_Single
 :test_rn_addition_full_single_digit:0: Passed
-check_romancalc.c:1648:P:TestPython_addition_full_to_mixed
+check_romancalc.c:1730:P:TestPython_addition_full_to_mixed
 :test_rn_addition_full_to_mixed:0: Passed
-check_romancalc.c:1737:P:TestPython_full_addition_Digit_Multi_Random
+check_romancalc.c:1822:P:TestPython_full_addition_Digit_Multi_Random
 :test_rn_addition_full_digit_multi_random:0: Passed
-check_romancalc.c:1848:P:TestPython_Process_expression_core
+check_romancalc.c:1936:P:TestPython_Process_expression_core
 :test_rn_process_expression_core:0: Passed
-check_romancalc.c:1912:P:TestPython_Process_expression_subtraction
+check_romancalc.c:2003:P:TestPython_Process_expression_subtraction
 :test_rn_process_expr_subt_single:0: Passed
-check_romancalc.c:1943:F:TestPython_Process_expression_core
-:test_rn_server_start:0: Assertion 'pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2, 0 , 0 )!=0' failed: pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2, 0 , 0 )==0, 0==0
+check_romancalc.c:2107:P:TestPython_Test_Server_Using_Threads
+:test_rn_test_coms_using_threads:0: Passed
