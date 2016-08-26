@@ -485,6 +485,24 @@ def rn_client(arg_exp):
 
 	return result_str							#return the result expression
 
+#		rn_test_coms_using_threads
+#		threaded comunications tester
+def rn_test_coms_using_threads (arg_exp):
+
+	rn_rslt_str = ""
+
+	# start the server thread to receive 1 message or 1 second
+	cpid = os.fork()
+	if cpid == 0:
+		rn_server(10,1)
+	#rn_thread = threading.Thread(target=rn_server, args=(10,1))
+	
+	#	rn_lcm_tx_packet(rn_lcm_ch_to_srv, "A",0)
+
+
+	rn_rslt_str = rn_client(arg_exp)			# call cleint requesting result
+	return rn_rslt_str
+
 #		rn_server_start
 #           arg_duration  duration in seconds to run
 #                0    run in server mode
