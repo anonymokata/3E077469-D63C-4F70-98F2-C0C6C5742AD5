@@ -411,6 +411,7 @@ def rn_lcm_tx_packet(arg_ch, arg_exp_n_rslt, arg_cmd_n_err):
 # rn_lcm_server_handler
 ## server handler for packet
 def rn_lcm_server_handler(channel, data):
+	global rn_server_done						# define global variable
 	rslt_str = ""								# rsponse string
 	rslt_err = 0								# response error
 	srvr_pkt = rn_packet_t.decode(data)
@@ -447,6 +448,7 @@ def rn_lcm_server_handler(channel, data):
 #			commands received through communication channel
 #				--serverdown
 def rn_server(arg_duration = 1, arg_responses = 1):
+	global rn_server_done						# define global variable
 	time_end = time.time() + arg_duration
 	rn_server_done = 0							# signal server exit if done
 	
@@ -472,6 +474,8 @@ def rn_server(arg_duration = 1, arg_responses = 1):
 # rn_lcm_client_handler
 # server handler for packet
 def rn_lcm_client_handler(channel, data):
+	global glbl_client_pkt						#define global variable
+	global glbl_client_rxed						#define global variable
 	lcl_client_pkt = rn_packet_t.decode(data)
 	glbl_client_pkt = (lcl_client_pkt.exp_n_rslt, lcl_client_pkt.cmd_n_err)
 	glbl_client_rxed = 1						#signal we received packet
@@ -479,6 +483,8 @@ def rn_lcm_client_handler(channel, data):
 	return
 
 def rn_client(arg_exp):
+	global glbl_client_pkt						#define global variable
+	global glbl_client_rxed						#define global variable
 	rlst_to = 0									# handler time out rsult
 	glbl_client_pkt	= ("",-1)					# create global client packet
 	glbl_client_rxed = 0						# reset rxed flag
