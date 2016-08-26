@@ -451,9 +451,9 @@ def rn_server(arg_duration = 1, arg_responses = 1):
 	global rn_server_done						# define global variable
 	time_end = time.time() + arg_duration
 	rn_server_done = 0							# signal server exit if done
-	
+
 	lcl_response_cnt = arg_responses			# loop this number of times
-	
+
 	lc = lcm_opener(rn_lcm_provider)			# lcm code
 												# setup our channel receiver
 	rn_svr_subscription = lc.subscribe(rn_lcm_ch_to_srv, rn_lcm_server_handler)
@@ -502,7 +502,7 @@ def rn_client(arg_exp):
 	if rslt_to > 0:
 		if glbl_client_pkt[1] == 0:				# if no error
 			return glbl_client_pkt[0]		# return the actual result
-	else:
+		else:
 			return "<ERROR: CODE "+str(glbl_client_pkt[1])+" >"
 
 	return "<ERROR: SERVER RESPONSE TIMEOUT >"
@@ -520,7 +520,7 @@ def rn_test_coms_using_threads (arg_exp):
 	rn_thread.join()							# rejoin the thread
 
 	return rn_rslt_str
-	
+
 
 def main():
 	import sys
