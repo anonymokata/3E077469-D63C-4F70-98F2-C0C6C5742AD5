@@ -489,7 +489,6 @@ def rn_client(arg_exp):
 	glbl_client_pkt	= ("",-1)					# create global client packet
 	glbl_client_rxed = 0						# reset rxed flag
 
-	result_str = ""
 
 	lc = lcm_opener(rn_lcm_provider)			# lcm code
 	# setup our channel receiver
@@ -502,13 +501,11 @@ def rn_client(arg_exp):
 	
 	if rslt_to > 0:
 		if glbl_client_pkt[1] == 0:				# if no error
-			rslt_str = glbl_client_pkt[0]			# return the actual result
-		else:
-			rslt_str = "<ERROR: CODE "+str(glbl_client_pkt[1])+" >"
+			return glbl_client_pkt[0]		# return the actual result
 	else:
-		rslt_str = "<ERROR: SERVER RESPONSE TIMEOUT>"
+			return "<ERROR: CODE "+str(glbl_client_pkt[1])+" >"
 
-	return result_str							#return the result expression
+	return "<ERROR: SERVER RESPONSE TIMEOUT >"
 
 #		rn_test_coms_using_threads
 #		threaded comunications tester
