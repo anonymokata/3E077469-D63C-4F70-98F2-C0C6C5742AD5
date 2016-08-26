@@ -34,6 +34,9 @@ requirements
 	python 2.7 or 3.4.3
 	NOTE fix autgen.sh and configure.ac appropriately depending on version of python
 
+to compile the lcm packet you also need to execute the following command
+lcm-gen -p src/rn_packet.lcm  this was added into mymake.sh
+
 for ubuntu libcheck
 adt-get install check
 

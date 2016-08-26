@@ -1,6 +1,9 @@
 #!/bin/bash
 rm src/*.pyc
 rm tests/check_romancalc.log
+cd src
+lcm-gen -p rn_packet.lcm
+cd ..
 sleep 2
 make
 sleep 2

@@ -4,8 +4,17 @@ import sys
 import re
 import os
 import time
+import threading
+import lcm
+from exlcm import rn_packet_t
 
 rn_digits = ['M','D','C','L','X','V','I']
+
+rn_lcm_ch_to_srv = "ROMAN_CALC_TO_SRV"		# channel receiveing data from client
+rn_lcm_ch_to_cli = "ROMAN_CALC_TO_CLI"		# channel sending data back to client
+rn_server_done = 0							#used to flag when server needs to exit
+
+rn_lcm_provider = "udpm://239.255.255.255:7667"
 
 def TestRoutineCheck__in_str__out_str(check_str):
 	return check_str

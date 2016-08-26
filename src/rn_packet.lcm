@@ -1,0 +1,8 @@
+package exlcm;
+
+struct rn_packet_t
+{
+	int64_t  timestamp;
+	int32_t  cmd_n_err;			// used as both command and error value
+	string   exp_n_rslt;		// expression and result
+}
