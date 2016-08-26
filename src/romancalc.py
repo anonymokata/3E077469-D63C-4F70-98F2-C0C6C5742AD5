@@ -514,40 +514,12 @@ def rn_test_coms_using_threads (arg_exp):
 	rn_rslt_str = ""
 
 	# start the server thread to receive 1 message or 1 second
-	cpid = os.fork()
-	if cpid == 0:
-		rn_server(10,1)
-	#rn_thread = threading.Thread(target=rn_server, args=(10,1))
-	
-	#	rn_lcm_tx_packet(rn_lcm_ch_to_srv, "A",0)
-
-
+	rn_thread = threading.Thread(target=rn_server, args=(10,1))
+	rn_thread.start()							# start the thread
 	rn_rslt_str = rn_client(arg_exp)			# call cleint requesting result
-	return rn_rslt_str
+	rn_thread.join()							# rejoin the thread
 
-#		rn_server_start
-#           arg_duration  duration in seconds to run
-#                0    run in server mode
-#                >0   exit after given number of seconds
-#           arg_responses max responses to give before exiting
-#                0    run in server mode
-#                >0   exit after given count  of responses
-#			start roman calc server process
-#			process will exit when the server receives a kill command
-#
-#			commands received through communication channel
-#				--serverdown
-#		return
-#			child PID   by   parent process
-#			0           by   child  process
-#def rn_server_start(arg_duration = 1, arg_responses = 1):
-#	cpid = 0									# child process id set initted
-#
-#	#	cpid = os.fork()							# fork off the server process
-#
-#	#	if cpid == 0:								# if this is forked child/server process
-#	#	rn_server(arg_duration, arg_responses)	# then start the server
-#	return cpid									# return the child process id
+	return rn_rslt_str
 	
 
 def main():
