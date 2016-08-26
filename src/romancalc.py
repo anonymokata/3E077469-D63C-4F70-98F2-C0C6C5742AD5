@@ -436,13 +436,54 @@ def rn_lcm_server_handler(channel, data):
 #				--serverdown
 def rn_server(arg_duration = 1, arg_responses = 1):
 	time_end = time.time() + arg_duration
+	rn_server_done = 0							# signal server exit if done
 	
 	lcl_response_cnt = arg_responses			# loop this number of times
 	
-	while ( ( ( arg_duration  == 0) or ( ( arg_duration  > 0 ) and ( time.time() < time_end ) ) ) and
-			( ( arg_responses == 0) or ( ( arg_responses > 0 ) and ( lcl_response_cnt > 0   ) ) ) ):
-		abc = 1
-	sys.exit(0);
+	lc = lcm.LCM(rn_lcm_provider)				# lcm code
+												# setup our channel receiver
+	rn_svr_subscription = lc.subscribe(rn_lcm_ch_to_srv, rn_lcm_server_handler)
+	while rn_server_done == 0:					# loop until ready to exit
+		lc.handle_timeout(500)					# listen but check every 500 seconds
+												# for abort command or loop timeout
+
+		if ( ( ( arg_duration  > 0 ) and ( time.time() > time_end ) ) or
+			( ( arg_responses > 0 ) and ( lcl_response_cnt == 0   ) ) ):
+			rn_server_done = 1					# time to end the loop
+
+	lc.unsubscribe(rn_svr_subscription)
+	return 0
+
+
+glbl_client_pkt	= ("",0)						# create global client packet
+# rn_lcm_client_handler
+# server handler for packet
+def rn_lcm_client_handler(channel, data):
+	glbl_client_pkt = rn_packet_t.decode(data)
+
+	return
+
+def rn_client(arg_exp):
+	rlst_to = 0									# handler time out rsult
+	glbl_client_pkt	= ("",0)					# create global client packet
+
+	result_str = ""
+
+	lc = lcm.LCM(rn_lcm_provider)				# lcm code
+	# setup our channel receiver
+	rn_cli_subscription = lc.subscribe(rn_lcm_ch_to_cli, rn_lcm_client_handler)
+
+	rn_lcm_tx_packet(rn_lcm_ch_to_srv, arg_exp, 0)
+
+	rslt_to = lc.handle_timeout(3)			# listen but check every 500 mseconds
+	lc.unsubscribe(rn_cli_subscription)
+	
+	if rslt_to > 0:
+		rslt_str = glbl_client_pkt[0]
+	else:
+		rslt_str = "<ERROR: SERVER RESPONSE TIMEOUT>"
+
+	return result_str							#return the result expression
 
 #		rn_server_start
 #           arg_duration  duration in seconds to run
