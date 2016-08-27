@@ -2041,76 +2041,11 @@ romancalc_suite_rn_process_expression(void)
 	return s;
 }
 
-// MARK: romancalc_suite_rn_server_start
+// MARK: romancalc_suite_rn_test_coms_using_threads
 /**************************************************************************
- * romancalc_suite_rn_server_start
- *		rn_server_star
+ * romancalc_suite_rn_test_coms_using_threads
+ *		lcm coms testing
  **************************************************************************/
-START_TEST (test_rn_server_start_and_kill)
-{
-	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
-	
-	// setup python module and function interface for this test
-	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_server_start";
-	int pid_server = 0;
-	pid_server = pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 2,  0 ,  0 );
-	ck_assert_int_ne(pid_server, 0 );
-	ck_assert_int_eq(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is running
-	ck_assert_int_eq(kill(pid_server, SIGTERM), 0);		// Kill the process
-	ck_assert_int_ne(kill(pid_server, 0), 0);			// use kill in CHECK only mode see if process is stopped
-	pyenv_teardown();									// shut down python interprater
-}
-END_TEST
-
-START_TEST (test_rn_server_start_and_delayed_exit)
-{
-	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
-	
-	// setup python module and function interface for this test
-	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_server_start";
-	int pid_server = 0;
-	// runserver for 10 seconds then kill it
-	pid_server = pycall__in_long__out_int(lcl_NameMod, lcl_NameFnc, 1,  1 ,  0 );
-	printf("\n-test2--->%i<---\n",pid_server);
-	ck_assert_int_ne(pid_server, 0 );					// child process should have non-zeor PID
-	ck_assert_int_eq(kill(pid_server, 0), 0);			// forked process should still be alive
-	sleep(2);											// delay 2 seconds
-	ck_assert_int_eq(kill(pid_server, 0), 0);			// forked process should still be alive
-	ck_assert_int_ne(kill(pid_server, 0), 0);			// forked process should be dead
-//	ck_assert_int_eq(kill(pid_server, SIGKILL), 0);		// Kill the process
-
-	pyenv_teardown();									// shut down python interprater
-}
-END_TEST
-
-Suite *
-romancalc_suite_rn_server_start(void)
-{
-	Suite *s = suite_create ("\nRoman Calc Suite Test server start");
-	
-	TCase *tc_check_rn_server_start_and_kill = tcase_create ("TestPython_Process_server_start_and_kill\n");
-	tcase_set_timeout(tc_check_rn_server_start_and_kill, 15);
-	tcase_add_test (tc_check_rn_server_start_and_kill, test_rn_server_start_and_kill);
-	suite_add_tcase (s, tc_check_rn_server_start_and_kill);
-	
-	TCase *tc_check_rn_server_start_and_delayed_exit = tcase_create ("TestPython_Process_server_start_delayed_exit\n");
-//	tcase_set_timeout(tc_check_rn_server_start_and_delayed_exit, 14);
-	tcase_add_test (tc_check_rn_server_start_and_delayed_exit, test_rn_server_start_and_delayed_exit);
-	suite_add_tcase (s, tc_check_rn_server_start_and_delayed_exit);
-	return s;
-}
-
-
-// MARK: romancalc_suite_rn_server_start
-/**************************************************************************
- * romancalc_suite_rn_server_start
- *		rn_server_star
- **************************************************************************/
-
-
-
 START_TEST (test_rn_test_coms_using_threads)
 {
 	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
@@ -2298,9 +2233,6 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_subtraction_full());	// full subtraction pos, neg zero results
 	srunner_add_suite(sr, romancalc_suite_rn_addition_full());	// full addition pos results
 	srunner_add_suite(sr, romancalc_suite_rn_process_expression());
-
-//	srunner_add_suite(sr, romancalc_suite_rn_server_start());
-	
 	srunner_add_suite(sr, romancalc_suite_rn_test_coms_using_threads()); // threaded communications test
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
