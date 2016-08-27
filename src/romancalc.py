@@ -547,19 +547,80 @@ def rn_test_coms_using_threads (arg_exp):
 	rn_thread.join()							# rejoin the thread
 	return rn_rslt_str
 
+def rn_help_display():
+	sp_0 = ""									# no space,used to make code "line up" visually
+	sp_1 = "    "								# space for 'tabbing' values over
+	sp_2 = sp_1+sp_1							# tab doubled
+	sp_3 = sp_1+sp_1+sp_1						# tab trippled
+	sp_4 = sp_1+sp_1+sp_1+sp_1					# tab quadrupled
+	Op_nm1 = "ValueI"							# name of first value
+	Op_nm2 = "ValueII"							# name of second value
+	help_str = "\n"
+	help_str += sp_0+"Help\n"
+	help_str += sp_1+"Command syntax '"+os.path.basename(__file__)+"' "+Op_nm1+" Operator "+Op_nm2+"\n"
+
+	help_str += sp_2+"A valid expression may either be:\n"
+	help_str += sp_3+"No Operator and a Single Roman Numeral, will return that Numeral\n"
+	help_str += sp_3+"A Numeral Followed Either Operator, will Return That Numeral\n"
+	help_str += sp_4+"i.e. Numeral plus/minus nothing\n"
+	help_str += sp_3+"Plus  Operator Followed by a Numeral, Returns That Numeral, Nothing Plus Numeral\n"
+	help_str += sp_3+"Minus Operator Followed by a Numeral, Returns Negative of that Numeral\n"
+	help_str += sp_3+"i.e. Nothing(Zero) Minus a Numeral, will Return a Negative Value, '-X' is negative X\n"
+	
+	help_str += sp_2+Op_nm1+" + "+Op_nm2+" will Return the Result of the Addition of the Two values \n"
+	
+	help_str += sp_2+Op_nm1+" - "+Op_nm2+" Returns Result of the Subtraction of "+Op_nm1+" - "+Op_nm2+" \n"
+	help_str += sp_3+"if "+Op_nm1+"   >    "+Op_nm2+" Returns a Positive Result, a Numeral Preceded by No Sign\n"
+	help_str += sp_3+"if "+Op_nm1+"   <    "+Op_nm2+" Returns a Negative Result, a Numeral Preceded by a minus Sign\n"
+	help_str += sp_3+"if "+Op_nm1+" equals "+Op_nm2+" Returns '' (Nothing which is euqivalent of a Roman Numeral Zero)\n"
+	
+	help_str += sp_2+"Operators Allowed: either '+' or '-'\n"
+	help_str += sp_2+""+Op_nm1+" and "+Op_nm2+": Valid Roman Numerals\n"
+	help_str += sp_3+"Consisting of Upper or Lower Case Digits M,D,C,L,X,V,I only.\n"
+	help_str += sp_2+"Numerals cannot contain spaces between any II digits.\n"
+	help_str += sp_3+"Numerals cannot contain characters other than valid Roman Digits.\n"
+	help_str += sp_1+"<ERROR: CODE -II Multiple Operators >\n"
+	help_str += sp_2+"More than I mathematical operaotr within\n"
+	help_str += sp_2+"the expression is not allowed\n"
+	help_str += sp_2+"i.e. 'X++X' 'X--X' 'X+-X' 'X-+X'\n"
+	help_str += sp_2+"     '+X+X' 'X+X+' '-X-X' 'X-X-'\n"
+	help_str += sp_2+"     '-X+X' 'X-X+' '+X-X' 'X+X-'\n"
+	help_str += sp_2+"      '++X'  'X++'  '--X'  'X--'\n"
+	help_str += sp_2+"      '+-X'  'X+-'  '-+X'  'X-+'\n"
+	help_str += sp_1+"<ERROR: CODE -III Invalid Expression >\n"
+	help_str += sp_2+"Expression with No Mathematical Operator and Non-Numeral Digits with the Value\n"
+	help_str += sp_1+"ERROR CODES -IV and -V are returned when invalid characters\n"
+	help_str += sp_2+"are found within a numeral on either side of the mathemical\n"
+	help_str += sp_2+"operator. See above for definition of Valid Numeral Digits\n"
+	help_str += sp_1+"<ERROR: CODE -IV Invalid Value on Left Side of Operator >\n"
+	help_str += sp_1+"<ERROR: CODE -V Invalid Value on Right Side of Operator >\n"
+	help_str += sp_1+"\n"
+	help_str += sp_1+"NOTE: Spaces or Tabs ar allowed at the beginning and end of the epxression\n"
+	help_str += sp_1+"and directly before and after the operator.\n"
+	help_str += sp_1+"i.e. ' X' 'X' 'X +X' 'X + X' ' X+X' 'X+X '\n"
+	help_str += sp_1+"\n"
+	help_str += sp_1+"FOR HELP: Empty input will print this,\n"
+	help_str += sp_2+" or "+Op_nm1+" can be the following'-?'  or '--help'\n"
+	return help_str								# give the help string
+
 
 def main():
 	import sys
 	argc = len(sys.argv)						# get number of arguments
 	arg_str = ""								# used to build arg list
 
+	if argc == 1:								# no input so display help
+		return rn_help_display()
 	if argc > 1:								# only proces if any input
+		if (sys.argv[1] == "-?") or (sys.argv[0] == "--help"):
+			return rn_help_display()
+		else:										# else process the value
 		arg_str = sys.argv[1]					# use first argument
 		for arg_idx in sys.argv[2:]:			# iterate through rest if any args
 			arg_str = arg_str + ' ' + arg_idx	#tack on each additional argument
 	# process arguments using lcm modules and send out the result
 	return rn_test_coms_using_threads(arg_str)
-
+	return rn_help_display()
 
 if __name__ == "__main__":
 	exit(main())
