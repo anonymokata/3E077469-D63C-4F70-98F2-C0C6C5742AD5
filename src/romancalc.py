@@ -306,21 +306,21 @@ def rn_exp_error_strings(arg_err_num):
 	if arg_err_num == 0:
 		return "No Errors/Warnings"
 	elif arg_err_num == -1:
-		return "Result is Zero"
+		return "-I   Result is Zero"
 	elif arg_err_num == -2:
-		return "Multiple Operators"
+		return "-II  Multiple Operators"
 	elif arg_err_num == -3:
-		return "Invalid Expression"
+		return "-III  Invalid Expression"
 	elif arg_err_num == -4:
-		return "Invalid Value on Left Side of Operator"
+		return "-IV  Invalid Value on Left Side of Operator"
 	elif arg_err_num == -5:
-		return "Invalid Value on Right Side of Operator"
+		return "-V  Invalid Value on Right Side of Operator"
 	elif arg_err_num == -99:
 		return "Calculation Thread/Server Response TimeOut"
 	return "General Error"
 
 def rn_exp_error_display(arg_err_num):
-	return "<ERROR: CODE "+str(arg_err_num)+" "+rn_exp_error_strings(arg_err_num)+" >"
+	return "<ERROR: CODE "+rn_exp_error_strings(arg_err_num)+" >"
 
 #     rn_expression_process
 #          this adds or subtracts 2 roman numerals
@@ -412,6 +412,9 @@ def rn_process_expression(rn_exp):
 												# subtract the value
 				rn_rslt_str = rn_subtraction_full(rn_val_left, rn_val_right)
 
+	if rn_rslt_err != 0:						# if there is an err then
+		rn_rslt_str = rn_exp_error_display(rn_rslt_err) # then build error response message
+
 	rn_tuple_out = (rn_rslt_str, rn_rslt_err)
 	return rn_tuple_out
 
@@ -450,10 +453,7 @@ def rn_lcm_server_handler(channel, data):
 		rslt_tpl = rn_process_expression(srvr_pkt.exp_n_rslt)
 												# send back result
 		rlst_err = rslt_tpl[1]					# set error code
-		if rslt_tpl[1] != 0:
-			rslt_str = "<ERROR: "+str(rslt_tpl[1])+" >"
-		else:
-			rslt_str = rslt_tpl[0]				# set calcualtion result
+		rslt_str = rslt_tpl[0]					# set calcualtion/err result
 
 		rn_lcm_tx_packet(rn_lcm_ch_to_cli, rslt_str, rlst_err)
 	else:
@@ -530,10 +530,7 @@ def rn_client(arg_exp):
 	lc.unsubscribe(rn_cli_subscription)
 	
 	if rslt_to > 0:								# if server/thread did not time out
-		if glbl_client_pkt[1] == 0:				# if no error
-			return glbl_client_pkt[0]			# return the actual result
-		else:
-			return rn_exp_error_display( glbl_client_pkt[1] ) #display error
+		return glbl_client_pkt[0]				# return the actual result
 	return rn_exp_error_display( -99 )			# server thread timed out
 
 #		rn_test_coms_using_threads
@@ -615,11 +612,11 @@ def main():
 		if (sys.argv[1] == "-?") or (sys.argv[0] == "--help"):
 			return rn_help_display()
 		else:										# else process the value
-		arg_str = sys.argv[1]					# use first argument
-		for arg_idx in sys.argv[2:]:			# iterate through rest if any args
-			arg_str = arg_str + ' ' + arg_idx	#tack on each additional argument
+			arg_str = sys.argv[1]					# use first argument
+			for arg_idx in sys.argv[2:]:			# iterate through rest if any args
+				arg_str = arg_str + ' ' + arg_idx	#tack on each additional argument
 	# process arguments using lcm modules and send out the result
-	return rn_test_coms_using_threads(arg_str)
+			return rn_test_coms_using_threads(arg_str)
 	return rn_help_display()
 
 if __name__ == "__main__":

@@ -10,6 +10,13 @@
 #include <Python.h>
 #include "../src/romancalc.h"
 
+
+char *err_multi_ops = "<ERROR: CODE -II  Multiple Operators >";
+char *err_inval_exp = "<ERROR: CODE -III  Invalid Expression >";
+char *err_inval_left = "<ERROR: CODE -IV  Invalid Value on Left Side of Operator >";
+char *err_inval_right = "<ERROR: CODE -V  Invalid Value on Right Side of Operator >";
+
+
 /****** Routines for setting up and tearing Python interperter interface ******/
 /**************************************************************************
  * append_Py_src_path
@@ -1890,37 +1897,49 @@ START_TEST (test_rn_process_expression_core)
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_process_expression";
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X++X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "++XX"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX++"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X+X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X+"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X++X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "++XX"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX++"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X+X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X+"	, err_multi_ops   , RN_ERR_MULTI_OPS);
 	
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X--X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "--XX"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX--"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X-X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X-"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X--X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "--XX"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX--"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X-X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X-"	, err_multi_ops   , RN_ERR_MULTI_OPS);
 	
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+-X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+-XX"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX+-"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X-X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X-"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+-X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+-XX"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX+-"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X-X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X+X-"	, err_multi_ops   , RN_ERR_MULTI_OPS);
 	
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-+X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-+XX"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX-+"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X+X"	, ""	, RN_ERR_MULTI_OPS);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X+"	, ""	, RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-+X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-+XX"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "XX-+"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "-X+X"	, err_multi_ops   , RN_ERR_MULTI_OPS);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X-X+"	, err_multi_ops   , RN_ERR_MULTI_OPS);
 	
-	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X X "	, ""	, RN_ERR_INVALID_EXP);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "BAD"	, ""	, RN_ERR_INVALID_EXP);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX1"	, ""	, RN_ERR_INVALID_EXP);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX)"	, ""	, RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X X "	, err_inval_exp	  , RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X X"	, err_inval_exp	  , RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "BAD"	, err_inval_exp	  , RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX1"	, err_inval_exp	  , RN_ERR_INVALID_EXP);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX)"	, err_inval_exp	  , RN_ERR_INVALID_EXP);
 	
-	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "X X+XX", ""	, RN_ERR_BAD_NUM_LEFT);
-	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX+X X", ""	, RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "X X+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(    "A+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(    "*+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(   "X*+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(   "*X+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "X*X+XX", err_inval_left  , RN_ERR_BAD_NUM_LEFT);
+	
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX+X X", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(    "XX+A", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(    "XX+*", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(   "XX+X*", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(   "XX+*X", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
+	PY_TUPL_STR_VAL_EQ_ERR_EQ(  "XX+X*X", err_inval_right , RN_ERR_BAD_NUM_RIGHT);
 	
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "X"		,  "X"	, RN_NO_ERROR);
 	PY_TUPL_STR_VAL_EQ_ERR_EQ( "+X"		,  "X"	, RN_NO_ERROR);
@@ -2120,7 +2139,6 @@ START_TEST (test_rn_test_threads_errors_multi_ops)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
 	
-	char *err_multi_ops = "<ERROR: CODE -2 Multiple Operators >";
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X++"),  err_multi_ops);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "++X"),  err_multi_ops);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+X+"),  err_multi_ops);
@@ -2161,7 +2179,6 @@ START_TEST (test_rn_test_threads_errors_inval_exp)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
 	
-	char *err_inval_exp = "<ERROR: CODE -3 Invalid Expression >";
 	char* test ="XRX";
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, test),  err_inval_exp);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "#X"),  err_inval_exp);
@@ -2180,7 +2197,6 @@ START_TEST (test_rn_test_threads_errors_inval_left)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
 	
-	char *err_inval_left = "<ERROR: CODE -4 Invalid Value on Left Side of Operator >";
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X X+X"),  err_inval_left);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "A+X"),  err_inval_left);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "1+X"),  err_inval_left);
@@ -2209,7 +2225,6 @@ START_TEST (test_rn_test_threads_errors_inval_right)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
 	
-	char *err_inval_right = "<ERROR: CODE -5 Invalid Value on Right Side of Operator >";
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X+X X"),  err_inval_right);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+A"),  err_inval_right);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+1"),  err_inval_right);
