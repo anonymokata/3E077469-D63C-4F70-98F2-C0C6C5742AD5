@@ -292,6 +292,36 @@ def rn_addition_full(rn_A, rn_B):
 	
 	return rslt_out
 
+#                            0 = no errors/warnings
+#                           information value
+#                not used no point           -1 = result is zero
+#                           error value
+#                           -2 = multiple operators
+#                           -3 = invalid expression
+#                                   (characters not allowed either not numerals
+#                                      not allowed operators '+' or '-')
+#                           -4 = invalid values left side
+#                           -5 = invalid values right side
+def rn_exp_error_strings(arg_err_num):
+	if arg_err_num == 0:
+		return "No Errors/Warnings"
+	elif arg_err_num == -1:
+		return "Result is Zero"
+	elif arg_err_num == -2:
+		return "Multiple Operators"
+	elif arg_err_num == -3:
+		return "Invalid Expression"
+	elif arg_err_num == -4:
+		return "Invalid Value on Left Side of Operator"
+	elif arg_err_num == -5:
+		return "Invalid Value on Right Side of Operator"
+	elif arg_err_num == -99:
+		return "Calculation Thread/Server Response TimeOut"
+	return "General Error"
+
+def rn_exp_error_display(arg_err_num):
+	return "<ERROR: CODE "+str(arg_err_num)+" "+rn_exp_error_strings(arg_err_num)+" >"
+
 #     rn_expression_process
 #          this adds or subtracts 2 roman numerals
 #
@@ -499,12 +529,12 @@ def rn_client(arg_exp):
 	rslt_to = lc.handle_timeout(8000)			# listen but check every 500 mseconds
 	lc.unsubscribe(rn_cli_subscription)
 	
-	if rslt_to > 0:
+	if rslt_to > 0:								# if server/thread did not time out
 		if glbl_client_pkt[1] == 0:				# if no error
-			return glbl_client_pkt[0]		# return the actual result
+			return glbl_client_pkt[0]			# return the actual result
 		else:
-			return "<ERROR: CODE "+str(glbl_client_pkt[1])+" >"
-	return "<ERROR: SERVER RESPONSE TIMEOUT >"
+			return rn_exp_error_display( glbl_client_pkt[1] ) #display error
+	return rn_exp_error_display( -99 )			# server thread timed out
 
 #		rn_test_coms_using_threads
 #		threaded comunications tester

@@ -32,7 +32,7 @@ Roman Calc Suite Test full addition
 Roman Calc Suite Test expression processing
  
 Roman Calc Suite Test Coms Using Threads
-100%: Checks: 31, Failures: 0, Errors: 0
+100%: Checks: 35, Failures: 0, Errors: 0
 check_romancalc.c:435:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
 check_romancalc.c:466:P:TestPythonCallIO__In_String__Out_Int 
@@ -93,5 +93,13 @@ check_romancalc.c:1936:P:TestPython_Process_expression_core
 :test_rn_process_expression_core:0: Passed
 check_romancalc.c:2003:P:TestPython_Process_expression_subtraction
 :test_rn_process_expr_subt_single:0: Passed
-check_romancalc.c:2107:P:TestPython_Test_Server_Using_Threads
+check_romancalc.c:2109:P:TestPython_Test_Server_Using_Threads
 :test_rn_test_coms_using_threads:0: Passed
+check_romancalc.c:2150:P:TestPython_Test_Server_Using_Threads_Errors_Multi_Ops
+:test_rn_test_threads_errors_multi_ops:0: Passed
+check_romancalc.c:2170:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Exp
+:test_rn_test_threads_errors_inval_exp:0: Passed
+check_romancalc.c:2199:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Left
+:test_rn_test_threads_errors_inval_left:0: Passed
+check_romancalc.c:2228:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Right
+:test_rn_test_threads_errors_inval_right:0: Passed

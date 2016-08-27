@@ -2099,12 +2099,132 @@ START_TEST (test_rn_test_coms_using_threads)
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
-
+	
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X"),   "X" );
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X+X"),  "XX" );
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X-X"),    "" );
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "+X"),   "X" );
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "-X"),  "-X" );
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X+"),   "X" );
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X-"),   "X" );
+	
+	pyenv_teardown();									// shut down python interprater
+}
+END_TEST
+
+START_TEST (test_rn_test_threads_errors_multi_ops)
+{
+	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	
+	char *err_multi_ops = "<ERROR: CODE -2 Multiple Operators >";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X++"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "++X"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+X+"),  err_multi_ops);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X--"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "--X"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "-X-"),  err_multi_ops);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+-"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+-X"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+X-"),  err_multi_ops);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-+"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "-+X"),  err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "-X+"),  err_multi_ops);
+
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X++V"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+V+"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+X+V"), err_multi_ops);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-+V"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-V+"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "-X+V"), err_multi_ops);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+-V"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+V-"), err_multi_ops);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "+X-V"), err_multi_ops);
+	
+	pyenv_teardown();									// shut down python interprater
+}
+END_TEST
+
+START_TEST (test_rn_test_threads_errors_inval_exp)
+{
+	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	
+	char *err_inval_exp = "<ERROR: CODE -3 Invalid Expression >";
+	char* test ="XRX";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, test),  err_inval_exp);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "#X"),  err_inval_exp);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X#X"), err_inval_exp);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "#X"),  err_inval_exp);
+	
+	pyenv_teardown();									// shut down python interprater
+}
+END_TEST
+
+START_TEST (test_rn_test_threads_errors_inval_left)
+{
+	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	
+	char *err_inval_left = "<ERROR: CODE -4 Invalid Value on Left Side of Operator >";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X X+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "A+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "1+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "(+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "&+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "XA+X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "AX+X"),  err_inval_left);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X X-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "A-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "1-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "(-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "&-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "XA-X"),  err_inval_left);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "AX-X"),  err_inval_left);
+	
+	pyenv_teardown();									// shut down python interprater
+}
+END_TEST
+
+START_TEST (test_rn_test_threads_errors_inval_right)
+{
+	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	
+	char *err_inval_right = "<ERROR: CODE -5 Invalid Value on Right Side of Operator >";
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X+X X"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+A"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+1"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+("),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X+&"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X+XA"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X+AX"),  err_inval_right);
+	
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X-X X"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-A"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-1"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-("),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,   "X-&"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X-XA"),  err_inval_right);
+	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1,  "X-AX"),  err_inval_right);
 	
 	pyenv_teardown();									// shut down python interprater
 }
@@ -2118,6 +2238,23 @@ romancalc_suite_rn_test_coms_using_threads(void)
 	TCase *tc_check_rn_test_coms_using_threads = tcase_create ("TestPython_Test_Server_Using_Threads\n");
 	tcase_add_test (tc_check_rn_test_coms_using_threads, test_rn_test_coms_using_threads);
 	suite_add_tcase (s, tc_check_rn_test_coms_using_threads);
+	
+	TCase *tc_check_rn_test_threads_errrors_multi_ops = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Multi_Ops\n");
+	tcase_add_test (tc_check_rn_test_threads_errrors_multi_ops, test_rn_test_threads_errors_multi_ops);
+	suite_add_tcase (s, tc_check_rn_test_threads_errrors_multi_ops);
+	
+	TCase *tc_check_rn_test_threads_errrors_inval_exp = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Exp\n");
+	tcase_add_test (tc_check_rn_test_threads_errrors_inval_exp, test_rn_test_threads_errors_inval_exp);
+	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_exp);
+	
+	TCase *tc_check_rn_test_threads_errrors_inval_left = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Left\n");
+	tcase_add_test (tc_check_rn_test_threads_errrors_inval_left, test_rn_test_threads_errors_inval_left);
+	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_left);
+	
+	TCase *tc_check_rn_test_threads_errrors_inval_right = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Right\n");
+	tcase_add_test (tc_check_rn_test_threads_errrors_inval_right, test_rn_test_threads_errors_inval_right);
+	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_right);
+	
 	return s;
 }
 
