@@ -12,6 +12,7 @@ libtool
 m4
 Makefile
 Makefile.in
+*.pyc
 src/.deps
 src/.libs
 src/*.o
@@ -21,6 +22,7 @@ src/main
 src/Makefile
 src/Makefile.in
 src/*.pyc
+src/exlm/*.pyc
 stamp-h1
 tests/.deps
 tests/.libs
