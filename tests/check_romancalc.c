@@ -2114,8 +2114,6 @@ START_TEST (test_rn_test_threads_errors_inval_exp)
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
 	
-	char* test ="XRX";
-	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, test),  err_inval_exp);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "#X"),  err_inval_exp);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "X#X"), err_inval_exp);
 	ck_assert_str_eq(pycall__in_str__out_str(lcl_NameMod, lcl_NameFnc, 1, "#X"),  err_inval_exp);
@@ -2186,22 +2184,27 @@ romancalc_suite_rn_test_coms_using_threads(void)
 	Suite *s = suite_create ("\nRoman Calc Suite Test Coms Using Threads");
 	
 	TCase *tc_check_rn_test_coms_using_threads = tcase_create ("TestPython_Test_Server_Using_Threads\n");
+	tcase_set_timeout(tc_check_rn_test_coms_using_threads, 15);
 	tcase_add_test (tc_check_rn_test_coms_using_threads, test_rn_test_coms_using_threads);
 	suite_add_tcase (s, tc_check_rn_test_coms_using_threads);
 	
 	TCase *tc_check_rn_test_threads_errrors_multi_ops = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Multi_Ops\n");
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_multi_ops, 15);
 	tcase_add_test (tc_check_rn_test_threads_errrors_multi_ops, test_rn_test_threads_errors_multi_ops);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_multi_ops);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_exp = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Exp\n");
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_exp, 15);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_exp, test_rn_test_threads_errors_inval_exp);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_exp);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_left = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Left\n");
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_left, 15);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_left, test_rn_test_threads_errors_inval_left);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_left);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_right = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Right\n");
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_right, 15);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_right, test_rn_test_threads_errors_inval_right);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_right);
 	
