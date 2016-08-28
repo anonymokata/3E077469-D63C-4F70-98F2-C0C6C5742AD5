@@ -21,8 +21,7 @@ uint64_t __exlcm_rn_packet_t_hash_recursive(const __lcm_hash_ptr *p)
     cp.v = (void*)__exlcm_rn_packet_t_get_hash;
     (void) cp;
 
-    uint64_t hash = (uint64_t)0xc2972e89b7626735LL
-         + __int64_t_hash_recursive(&cp)
+    uint64_t hash = (uint64_t)0xb0560ebbc4e8521eLL
          + __int32_t_hash_recursive(&cp)
          + __string_hash_recursive(&cp)
         ;
@@ -46,9 +45,6 @@ int __exlcm_rn_packet_t_encode_array(void *buf, int offset, int maxlen, const ex
     int thislen;
 
     for (element = 0; element < elements; element++) {
-
-        thislen = __int64_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
 
         thislen = __int32_t_encode_array(buf, offset + pos, maxlen - pos, &(p[element].cmd_n_err), 1);
         if (thislen < 0) return thislen; else pos += thislen;
@@ -79,8 +75,6 @@ int __exlcm_rn_packet_t_encoded_array_size(const exlcm_rn_packet_t *p, int eleme
     int size = 0, element;
     for (element = 0; element < elements; element++) {
 
-        size += __int64_t_encoded_array_size(&(p[element].timestamp), 1);
-
         size += __int32_t_encoded_array_size(&(p[element].cmd_n_err), 1);
 
         size += __string_encoded_array_size(&(p[element].exp_n_rslt), 1);
@@ -100,9 +94,6 @@ int __exlcm_rn_packet_t_decode_array(const void *buf, int offset, int maxlen, ex
 
     for (element = 0; element < elements; element++) {
 
-        thislen = __int64_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].timestamp), 1);
-        if (thislen < 0) return thislen; else pos += thislen;
-
         thislen = __int32_t_decode_array(buf, offset + pos, maxlen - pos, &(p[element].cmd_n_err), 1);
         if (thislen < 0) return thislen; else pos += thislen;
 
@@ -117,8 +108,6 @@ int __exlcm_rn_packet_t_decode_array_cleanup(exlcm_rn_packet_t *p, int elements)
 {
     int element;
     for (element = 0; element < elements; element++) {
-
-        __int64_t_decode_array_cleanup(&(p[element].timestamp), 1);
 
         __int32_t_decode_array_cleanup(&(p[element].cmd_n_err), 1);
 
@@ -153,8 +142,6 @@ int __exlcm_rn_packet_t_clone_array(const exlcm_rn_packet_t *p, exlcm_rn_packet_
 {
     int element;
     for (element = 0; element < elements; element++) {
-
-        __int64_t_clone_array(&(p[element].timestamp), &(q[element].timestamp), 1);
 
         __int32_t_clone_array(&(p[element].cmd_n_err), &(q[element].cmd_n_err), 1);
 

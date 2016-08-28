@@ -18,7 +18,6 @@ extern "C" {
 typedef struct _exlcm_rn_packet_t exlcm_rn_packet_t;
 struct _exlcm_rn_packet_t
 {
-    int64_t    timestamp;
     int32_t    cmd_n_err;
     char*      exp_n_rslt;
 };

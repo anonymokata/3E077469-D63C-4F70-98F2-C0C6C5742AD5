@@ -10,10 +10,9 @@ except ImportError:
 import struct
 
 class rn_packet_t(object):
-    __slots__ = ["timestamp", "cmd_n_err", "exp_n_rslt"]
+    __slots__ = ["cmd_n_err", "exp_n_rslt"]
 
     def __init__(self):
-        self.timestamp = 0
         self.cmd_n_err = 0
         self.exp_n_rslt = ""
 
@@ -24,7 +23,7 @@ class rn_packet_t(object):
         return buf.getvalue()
 
     def _encode_one(self, buf):
-        buf.write(struct.pack(">qi", self.timestamp, self.cmd_n_err))
+        buf.write(struct.pack(">i", self.cmd_n_err))
         __exp_n_rslt_encoded = self.exp_n_rslt.encode('utf-8')
         buf.write(struct.pack('>I', len(__exp_n_rslt_encoded)+1))
         buf.write(__exp_n_rslt_encoded)
@@ -42,7 +41,7 @@ class rn_packet_t(object):
 
     def _decode_one(buf):
         self = rn_packet_t()
-        self.timestamp, self.cmd_n_err = struct.unpack(">qi", buf.read(12))
+        self.cmd_n_err = struct.unpack(">i", buf.read(4))[0]
         __exp_n_rslt_len = struct.unpack('>I', buf.read(4))[0]
         self.exp_n_rslt = buf.read(__exp_n_rslt_len)[:-1].decode('utf-8', 'replace')
         return self
@@ -51,7 +50,7 @@ class rn_packet_t(object):
     _hash = None
     def _get_hash_recursive(parents):
         if rn_packet_t in parents: return 0
-        tmphash = (0xc2972e89b7626735) & 0xffffffffffffffff
+        tmphash = (0xb0560ebbc4e8521e) & 0xffffffffffffffff
         tmphash  = (((tmphash<<1)&0xffffffffffffffff)  + (tmphash>>63)) & 0xffffffffffffffff
         return tmphash
     _get_hash_recursive = staticmethod(_get_hash_recursive)
