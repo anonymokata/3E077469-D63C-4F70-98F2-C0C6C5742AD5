@@ -24,19 +24,45 @@ glbl_client_rxed = 0							# used signal when packet received
 #     lcm_globals_return
 #        returns lcm globals for use by external programs
 #        mainly fo ruse by
+#        if a value is set to none, then make into empty string
+#        to avoid hassles in passing back and forth values
 def lcm_globals_return():
-	return (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
+	lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
+	if lcl_glbls[0] == None
+		lcl_glbls[0] = ""
+
+	if lcl_glbls[1] == None
+		lcl_glbls[1] = ""
+
+	if lcl_glbls[2] == None
+		lcl_glbls[2] = ""
+
+	return lcl_glbls
 
 #     lcm_globals_set
 #         c call back routine to set the global values
+#         values set to empty string indicate that the value was
+#         desired to set as None or NULL, i.e. not used
 def lcm_globals_set(arg_glbl_tpls):
 	global rn_lcm_ch_to_srv						# ensure this is not a local var
 	global rn_lcm_ch_to_cli						# ensure this is not a local var
 	global rn_lcm_provider						# ensure this is not a local var
 	
+	if arg_glbl_tpls[0] == ""					# if value was empty stirng
+		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
+	else
 	rn_lcm_ch_to_srv = arg_glbl_tpls[0]			# set global values
+
+	if arg_glbl_tpls[0] == ""					# if value was empty stirng
+		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
+	else
 	rn_lcm_ch_to_cli = arg_glbl_tpls[1]			# set global values
+	
+	if arg_glbl_tpls[0] == ""					# if value was empty stirng
+		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
+	else
 	rn_lcm_provider	 = arg_glbl_tpls[2]			# set global values
+
 	return lcm_globals_return()					# respond back with values for checking
 
 #     lcm_opener
