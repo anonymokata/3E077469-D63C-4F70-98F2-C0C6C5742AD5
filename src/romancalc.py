@@ -28,12 +28,16 @@ def lcm_globals_return():
 	return (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
 
 #     lcm_globals_set
-#         set the global values
+#         c call back routine to set the global values
 def lcm_globals_set(arg_glbl_tpls):
 	global rn_lcm_ch_to_srv						# ensure this is not a local var
 	global rn_lcm_ch_to_cli						# ensure this is not a local var
 	global rn_lcm_provider						# ensure this is not a local var
-	return
+	
+	rn_lcm_ch_to_srv = arg_glbl_tpls[0]			# set global values
+	rn_lcm_ch_to_cli = arg_glbl_tpls[1]			# set global values
+	rn_lcm_provider	 = arg_glbl_tpls[2]			# set global values
+	return lcm_globals_return()					# respond back with values for checking
 
 #     lcm_opener
 #        used to set up the communications channel

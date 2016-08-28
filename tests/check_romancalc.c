@@ -12,6 +12,15 @@
 #include "../src/romancalc.h"
 
 
+// share channel and provider between all lcmroutines
+typedef struct {
+	char *ch_to_srv = NULL;								// channel receiveing data from client
+	char *ch_to_cli = NULL;								// channel sending data back to client
+	char *provider = NULL;								// lcm provider string, network address info
+} struct_rn_lcm_globals;
+
+struct_rn_lcm_globals lcm_glbls = NULL;					// lcm channel and network info
+
 char *err_multi_ops = "<ERROR: CODE -II  Multiple Operators >";
 char *err_inval_exp = "<ERROR: CODE -III  Invalid Expression >";
 char *err_inval_left = "<ERROR: CODE -IV  Invalid Value on Left Side of Operator >";
@@ -19,6 +28,59 @@ char *err_inval_right = "<ERROR: CODE -V  Invalid Value on Right Side of Operato
 
 
 /****** Routines for setting up and tearing Python interperter interface ******/
+// MARK: rn_lcm_globals_get
+/**************************************************************************
+ * rn_lcm_globals_get
+ *   use python call back lcm_globals_return method to get lcm related
+ *   channel and IP address information
+ **************************************************************************/
+void rn_lcm_globals_get(PyObject *arg_pModule){
+	PyObject *lcl_pGlbls = NULL;
+
+	// get lcm related global variables
+	lcl_pGlbls = pycall__in_str__out_tuple(arg_pModule, "lcm_globals_return", 0);
+	lcm_glbls.ch_to_srv = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0));
+	lcm_glbls.ch_to_cli = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1));
+	lcm_glbls.provider  = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2));
+	
+	Py_DECREF(lcl_py_glbls);						// dump the trash
+}
+
+int rn_lcm_globals_set(PyObject *arg_pModule, char *arg_ch_to_srv, char* arg_ch_to_cli, char *arg_provider){
+	int rslt_int= 0;								// report back values programmed or failed = 0
+	const char *str_empty;							// used to values, if NULL was passed, avoid
+													// runtime errors
+	
+	// set the global lcm related variables
+	lcl_pGlbls = pycall__in_str__out_tuple(arg_pModule, "lcm_globals_set", 3,
+										   arg_ch_to_srv, arg_ch_to_cli, arg_provider);
+	
+	if(arg_ch_to_srv == NULL)						// if setting empty value
+		arg_ch_to_srv = str_empty;					// then set empty stirng to avoid NULL errors
+	if(lcm_glbls.ch_to_srv)							// if string is already exists
+		free(lcm_glbls.ch_to_srv);					// dump the old value
+	lcm_glbls.ch_to_srv = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0)));
+	rslt_int  = (0 == strcmp(arg_ch_to_srv, lcm_glbls.ch_to_srv));	// ensure the values were set properly
+	
+	if(arg_ch_to_cli == NULL)						// if setting empty value
+		arg_ch_to_cli = str_empty;					// then set empty stirng to avoid NULL errors
+	if(lcm_glbls.ch_to_cli)							// if string is already exists
+		free(lcm_glbls.ch_to_cli);					// dump the old value
+	lcm_glbls.ch_to_cli = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0)));
+	rslt_int  = (0 == strcmp(arg_ch_to_cli, lcm_glbls.ch_to_cli));	// ensure the values were set properly
+	
+	if(arg_provider == NULL)						// if setting empty value
+		arg_provider = str_empty;					// then set empty stirng to avoid NULL errors
+	if(lcm_glbls.provider)							// if string is already exists
+		free(lcm_glbls.provider);					// dump the old value
+	lcm_glbls.provider = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0)));
+	rslt_int  = (0 == strcmp(arg_provider, lcm_glbls.provider));	// ensure the values were set properly
+	
+	Py_DECREF(lcl_py_glbls);						// dump the trash
+	return rslt_int;
+}
+
+// MARK: append_Py_src_path
 /**************************************************************************
  * append_Py_src_path
  * append python source path for interperetor WARNING ONLY CALL AFTER Python Interpertor
@@ -99,6 +161,7 @@ PyObject *pymodule_setup(char * arg_modulename){
 	
 	/* Error checking of pName left out */
 	lcl_pModule = PyImport_Import(lcl_pName);				// import the module
+	
 	Py_DECREF(lcl_pName);									// no longer needed, so dump
 
 	return lcl_pModule;
