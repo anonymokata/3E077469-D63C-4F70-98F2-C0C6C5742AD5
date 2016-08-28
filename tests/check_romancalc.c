@@ -8,6 +8,7 @@
 #include <sys/types.h>
 #include <signal.h>
 #include <Python.h>
+#include <unistd.h>
 #include "../src/romancalc.h"
 
 
@@ -2211,8 +2212,54 @@ romancalc_suite_rn_test_coms_using_threads(void)
 	return s;
 }
 
+// MARK: romancalc_suite_rn_test_server_coms_from_checker
+/**************************************************************************
+ * romancalc_suite_rn_test_server_coms_from_checker
+ *		lcm coms seerver test routines from checking software
+ **************************************************************************/
+START_TEST (test_rn_test_server_coms_from_checker)
+{
+	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	
+	// setup python module and function interface for this test
+	char *lcl_NameMod = "romancalc";
+	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	int server_pid = 0;									// server fork pid
+	PyObject * rn_globals = NULL;
+	char *rn_lcm_ch_to_srv = NULL;						// channel receiveing data from client
+	char *rn_lcm_ch_to_cli = NULL;						// channel sending data back to client
+	char *rn_lcm_provider = NULL;						// lcm provider string, network address info
+														// get lcm related global variables
+	rn_globals = pycall__in_str__out_tuple(lcl_NameMod, "lcm_globals_return", 0);
+	rn_lcm_ch_to_srv = PyString_AsString(PyTuple_GetItem(rn_globals,0));
+	rn_lcm_ch_to_cli = PyString_AsString(PyTuple_GetItem(rn_globals,1));
+	rn_lcm_provider  = PyString_AsString(PyTuple_GetItem(rn_globals,2));
+	
+	server_pid = fork();
+	if(server_pid == 0){
+		(void)pycall__in_long__out_int(lcl_NameMod, "rn_server", 2, 1,20);
+		exit(0);
+	}
+	ck_assert_int_gt(server_pid, 0);					// see if fork worked
+	pyenv_teardown();									// shut down python interprater
+}
+END_TEST
 
+Suite *
+romancalc_suite_rn_test_server_coms_from_checker(void)
+{
+	Suite *s = suite_create ("\nRoman Calc Suite Test Server Coms From C");
 
+	TCase *tc_check_rn_test_server_coms_from_checker =
+				tcase_create ("TestPython_Test_Server_coms_from_checker\n");
+	// give extended test time to allow python interperter to respond
+	// python interperter ontop of VMware virtual machine may have have caching issue
+	tcase_set_timeout(tc_check_rn_test_server_coms_from_checker, 75);
+	tcase_add_test (tc_check_rn_test_server_coms_from_checker, test_rn_test_server_coms_from_checker);
+	suite_add_tcase (s, tc_check_rn_test_server_coms_from_checker);
+
+	return s;
+}
 
 // MARK: Main routine
 int
@@ -2237,6 +2284,7 @@ main (void)
 	srunner_add_suite(sr, romancalc_suite_rn_addition_full());	// full addition pos results
 	srunner_add_suite(sr, romancalc_suite_rn_process_expression());
 	srunner_add_suite(sr, romancalc_suite_rn_test_coms_using_threads()); // threaded communications test
+	srunner_add_suite(sr, romancalc_suite_rn_test_server_coms_from_checker()); // test server from C routine
 
 	srunner_run_all (sr, CK_VERBOSE);						// perform the tests
 	

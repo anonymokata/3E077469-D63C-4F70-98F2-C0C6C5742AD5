@@ -1,9 +1,15 @@
 #!/bin/bash
-rm src/*.pyc
-rm tests/check_romancalc.log
-cd src
-lcm-gen -p rn_packet.lcm
-cd ..
+if [ -e src/*.pyc ]
+then
+	rm src/*.pyc
+fi
+if [ -e tests/check_romancalc.log ]
+then
+	rm tests/check_romancalc.log
+fi
+
+./mylcm_gen.sh
+
 sleep 2
 make
 sleep 2

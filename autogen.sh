@@ -1,4 +1,5 @@
 #!/bin/bash
+./mylcm_gen.sh
 libtoolize --force
 aclocal
 autoheader

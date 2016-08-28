@@ -13,14 +13,31 @@ rn_digits = ['M','D','C','L','X','V','I']
 rn_lcm_ch_to_srv = "ROMAN_CALC_TO_SRV"		# channel receiveing data from client
 rn_lcm_ch_to_cli = "ROMAN_CALC_TO_CLI"		# channel sending data back to client
 rn_server_done = 0							#used to flag when server needs to exit
+#rn_lcm_provider = "udpm://239.255.255.255:7667"
+rn_lcm_provider = ""
 
 glbl_client_pkt	= ("",-1)						# create global client packet
 glbl_client_rxed = 0							# used signal when packet received
 
 
-#rn_lcm_provider = "udpm://239.255.255.255:7667"
-rn_lcm_provider = ""
 
+#     lcm_globals_return
+#        returns lcm globals for use by external programs
+#        mainly fo ruse by
+def lcm_globals_return():
+	return (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
+
+#     lcm_globals_set
+#         set the global values
+def lcm_globals_set(arg_glbl_tpls):
+	global rn_lcm_ch_to_srv						# ensure this is not a local var
+	global rn_lcm_ch_to_cli						# ensure this is not a local var
+	global rn_lcm_provider						# ensure this is not a local var
+	return
+
+#     lcm_opener
+#        used to set up the communications channel
+#        common code avoid code duplication
 def lcm_opener(arg_lcm_provider):
 	if (arg_lcm_provider == "") or (arg_lcm_provider == None):
 		lcl_lcm = lcm.LCM()
