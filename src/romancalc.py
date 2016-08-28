@@ -445,17 +445,13 @@ def rn_lcm_tx_packet(arg_ch, arg_exp_n_rslt, arg_cmd_n_err):
 ## server handler for packet
 def rn_lcm_server_handler(channel, data):
 	global rn_server_done						# define global variable
-	rslt_str = ""								# rsponse string
-	rslt_err = 0								# response error
 	srvr_pkt = rn_packet_t.decode(data)
 	if srvr_pkt.cmd_n_err == 0:					# if command to calculate result
 												# send data to packet
 		rslt_tpl = rn_process_expression(srvr_pkt.exp_n_rslt)
 												# send back result
-		rlst_err = rslt_tpl[1]					# set error code
-		rslt_str = rslt_tpl[0]					# set calcualtion/err result
-
-		rn_lcm_tx_packet(rn_lcm_ch_to_cli, rslt_str, rlst_err)
+		# return calculation and error code
+		rn_lcm_tx_packet(rn_lcm_ch_to_cli, rslt_tpl[0], rslt_tpl[1])
 	else:
 		rn_server_done = 1						# kill the server
 	return
