@@ -96,7 +96,7 @@ int rn_lcm_globals_set(PyObject *arg_pModule, char *arg_ch_to_srv, char* arg_ch_
 	lcm_glbls.provider = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0)));
 	rslt_int  = (0 == strcmp(arg_provider, lcm_glbls.provider));	// ensure the values were set properly
 	
-	Py_DECREF(lcl_py_glbls);						// dump the trash
+	Py_DECREF(lcl_pGlbls);							// dump the trash
 	return rslt_int;
 }
 
@@ -181,7 +181,6 @@ PyObject *pymodule_setup(char * arg_modulename){
 	
 	/* Error checking of pName left out */
 	lcl_pModule = PyImport_Import(lcl_pName);				// import the module
-	
 	Py_DECREF(lcl_pName);									// no longer needed, so dump
 
 	return lcl_pModule;
@@ -238,7 +237,6 @@ PyObject* pyfunc_setup(PyObject *arg_pModule, char *arg_funcname){
 	
 	// we got here do to error to release any memory
 	pyfunc_teardown(lcl_pFunc);								// free unneeded object
-	Py_DECREF(lcl_pFunc)									// dump the trans
 	return NULL;											// failure
 }
 
@@ -306,10 +304,6 @@ char* pycall__in_str__out_str(char* arg_NameMod, char* arg_NameFnc, int argc, ..
 	
 	if(lcl_pArgs)
 	Py_DECREF(lcl_pArgs);									// don't need python arg list anymore
-	Py_DECREF(lcl_pMod);									// dump the trash
-	Py_DECREF(lcl_pFnc);									// dump the trash
-	Py_DECREF(lcl_pString);									// dump the trash
-	Py_DECREF(lcl_pValue);									// dump the trash
 	
 	if(cResult_str == NULL)									// protective programming
 		return strdup("");									// avoid
@@ -380,10 +374,6 @@ int pycall__in_str__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... 
 	
 	if(lcl_pArgs)
 		Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
-	Py_DECREF(lcl_pMod);									// dump the trash
-	Py_DECREF(lcl_pFnc);									// dump the trash
-	Py_DECREF(lcl_pString);									// dump the trash
-	Py_DECREF(lcl_pValue);									// dump the trash
 	
 	return cResult_int;										// result
 }
@@ -447,13 +437,6 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
 	
 	lcl_pValue = PyObject_CallObject(lcl_pFnc, lcl_pArgs);	// call routine
 	
-	if(lcl_pArgs)
-		Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
-	Py_DECREF(lcl_pMod);									// dump the trash
-	Py_DECREF(lcl_pFnc);									// dump the trash
-	Py_DECREF(lcl_pString);									// dump the trash
-	Py_DECREF(lcl_pValue);									// dump the trash
-	
 	return lcl_pValue;										// result
 }
 
@@ -515,10 +498,6 @@ int pycall__in_long__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ...
 	
 	if(lcl_pArgs)
 		Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
-	Py_DECREF(lcl_pMod);									// dump the trash
-	Py_DECREF(lcl_pFnc);									// dump the trash
-	Py_DECREF(lcl_pLong);									// dump the trash
-	Py_DECREF(lcl_pValue);									// dump the trash
 	
 	return cResult_int;										// result
 }
