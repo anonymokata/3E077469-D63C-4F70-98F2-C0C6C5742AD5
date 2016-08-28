@@ -480,7 +480,6 @@ def rn_lcm_tx_packet(arg_ch, arg_exp_n_rslt, arg_cmd_n_err):
 	rslt_err = 0								# reserve right to return err
 	
 	pkt = rn_packet_t()							# create packet
-	pkt.timestamp = 0							# time stamp it
 	pkt.cmd_n_err  = arg_cmd_n_err				# set command or error
 	pkt.exp_n_rslt = arg_exp_n_rslt				# set the data portion
 	
