@@ -14,17 +14,20 @@
 
 // share channel and provider between all lcmroutines
 typedef struct {
-	char *ch_to_srv = NULL;								// channel receiveing data from client
-	char *ch_to_cli = NULL;								// channel sending data back to client
-	char *provider = NULL;								// lcm provider string, network address info
+	char *ch_to_srv;									// channel receiveing data from client
+	char *ch_to_cli;									// channel sending data back to client
+	char *provider;										// lcm provider string, network address info
 } struct_rn_lcm_globals;
 
-struct_rn_lcm_globals lcm_glbls = NULL;					// lcm channel and network info
+struct_rn_lcm_globals lcm_glbls = {NULL,NULL,NULL};		// lcm channel and network info
 
 char *err_multi_ops = "<ERROR: CODE -II  Multiple Operators >";
 char *err_inval_exp = "<ERROR: CODE -III  Invalid Expression >";
 char *err_inval_left = "<ERROR: CODE -IV  Invalid Value on Left Side of Operator >";
 char *err_inval_right = "<ERROR: CODE -V  Invalid Value on Right Side of Operator >";
+
+// prototype for forward reference
+PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int argc, ... );
 
 
 /****** Routines for setting up and tearing Python interperter interface ******/
@@ -34,45 +37,46 @@ char *err_inval_right = "<ERROR: CODE -V  Invalid Value on Right Side of Operato
  *   use python call back lcm_globals_return method to get lcm related
  *   channel and IP address information
  **************************************************************************/
-void rn_lcm_globals_get(PyObject *arg_pModule){
+void rn_lcm_globals_get(char* arg_NameMod){
 	PyObject *lcl_pGlbls = NULL;
 
 	// get lcm related global variables
-	lcl_pGlbls = pycall__in_str__out_tuple(arg_pModule, "lcm_globals_return", 0);
+	lcl_pGlbls = pycall__in_str__out_tuple(arg_NameMod, "lcm_globals_return", 0);
 	lcm_glbls.ch_to_srv = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0));
 	lcm_glbls.ch_to_cli = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1));
 	lcm_glbls.provider  = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2));
 	
 	printf("\nrn_lcm_ch_to_srv->%s<- rn_lcm_ch_to_cli->%s<- rn_lcm_provider->%s<-\n",
-		   rn_lcm_ch_to_srv,  rn_lcm_ch_to_cli, rn_lcm_provider);
+		   lcm_glbls.ch_to_srv,  lcm_glbls.ch_to_cli, lcm_glbls.provider);
 	
 	// if we got back an empty string, that meant at we actually wan to use a NULL
 	// i.e. not using that value and the lcm needs to see null to ignore that value
-	if(lcl_pGlbls.ch_to_srv[0] == 0){
-		free(&lcl_pGlbls.ch_to_srv[0]);				// dump the string
-		lcl_pGlbls.ch_to_srv = NULL;				// ensure we are using empty string
+	if(lcm_glbls.ch_to_srv[0] != 0){
+		free(&lcm_glbls.ch_to_srv[0]);				// dump the string
+		lcm_glbls.ch_to_srv = NULL;					// ensure we are using empty string
 	}
 	
-	if(lcl_pGlbls.ch_to_cli[0] == 0){
-		free(&lcl_pGlbls.ch_to_cli[0]);				// dump the string
-		lcl_pGlbls.ch_to_cli = NULL;				// ensure we are using empty string
+	if(lcm_glbls.ch_to_cli[0] != 0){
+		free(&lcm_glbls.ch_to_cli[0]);				// dump the string
+		lcm_glbls.ch_to_cli = NULL;					// ensure we are using empty string
 	}
 	
-	if(lcl_pGlbls.provider[0] == 0){
-		free(&lcl_pGlbls.provider[0]);				// dump the string
-		lcl_pGlbls.provider = NULL;					// ensure we are using empty string
+	if(lcm_glbls.provider[0] != 0){
+		free(&lcm_glbls.provider[0]);				// dump the string
+		lcm_glbls.provider = NULL;					// ensure we are using empty string
 	}
 	
-	Py_DECREF(lcl_py_glbls);						// dump the trash
+	Py_DECREF(lcl_pGlbls);							// dump the trash
 }
 
-int rn_lcm_globals_set(PyObject *arg_pModule, char *arg_ch_to_srv, char* arg_ch_to_cli, char *arg_provider){
+int rn_lcm_globals_set(char* arg_NameMod, char *arg_ch_to_srv, char* arg_ch_to_cli, char *arg_provider){
 	int rslt_int= 0;								// report back values programmed or failed = 0
-	const char *str_empty;							// used to values, if NULL was passed, avoid
+	char *str_empty = "";							// used to values, if NULL was passed, avoid
+	PyObject *lcl_pGlbls = NULL;
 													// runtime errors
 	
 	// set the global lcm related variables
-	lcl_pGlbls = pycall__in_str__out_tuple(arg_pModule, "lcm_globals_set", 3,
+	lcl_pGlbls = pycall__in_str__out_tuple(arg_NameMod, "lcm_globals_set", 3,
 										   arg_ch_to_srv, arg_ch_to_cli, arg_provider);
 	
 	if(arg_ch_to_srv == NULL)						// if setting empty value
