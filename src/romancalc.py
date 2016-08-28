@@ -26,18 +26,18 @@ glbl_client_rxed = 0							# used signal when packet received
 #        mainly fo ruse by
 #        if a value is set to none, then make into empty string
 #        to avoid hassles in passing back and forth values
-#def lcm_globals_return():
-#	lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
-	#if lcl_glbls[0] == None:
-	#	lcl_glbls[0] = ""
+def lcm_globals_return():
+	lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
+	if lcl_glbls[0] == None:
+		lcl_glbls[0] = ""
 
-	#if lcl_glbls[1] == None:
-	#	lcl_glbls[1] = ""
+	if lcl_glbls[1] == None:
+		lcl_glbls[1] = ""
 
-	#if lcl_glbls[2] == None:
-	#	lcl_glbls[2] = ""
+	if lcl_glbls[2] == None:
+		lcl_glbls[2] = ""
 
-#	return lcl_glbls
+	return lcl_glbls
 
 #     lcm_globals_set
 #         c call back routine to set the global values
