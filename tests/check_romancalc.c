@@ -43,6 +43,26 @@ void rn_lcm_globals_get(PyObject *arg_pModule){
 	lcm_glbls.ch_to_cli = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1));
 	lcm_glbls.provider  = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2));
 	
+	printf("\nrn_lcm_ch_to_srv->%s<- rn_lcm_ch_to_cli->%s<- rn_lcm_provider->%s<-\n",
+		   rn_lcm_ch_to_srv,  rn_lcm_ch_to_cli, rn_lcm_provider);
+	
+	// if we got back an empty string, that meant at we actually wan to use a NULL
+	// i.e. not using that value and the lcm needs to see null to ignore that value
+	if(lcl_pGlbls.ch_to_srv[0] == 0){
+		free(&lcl_pGlbls.ch_to_srv[0]);				// dump the string
+		lcl_pGlbls.ch_to_srv = NULL;				// ensure we are using empty string
+	}
+	
+	if(lcl_pGlbls.ch_to_cli[0] == 0){
+		free(&lcl_pGlbls.ch_to_cli[0]);				// dump the string
+		lcl_pGlbls.ch_to_cli = NULL;				// ensure we are using empty string
+	}
+	
+	if(lcl_pGlbls.provider[0] == 0){
+		free(&lcl_pGlbls.provider[0]);				// dump the string
+		lcl_pGlbls.provider = NULL;					// ensure we are using empty string
+	}
+	
 	Py_DECREF(lcl_py_glbls);						// dump the trash
 }
 
@@ -2307,18 +2327,14 @@ START_TEST (test_rn_test_server_coms_from_checker)
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
+	PyObject *lcl_pMod = NULL;								// module name of function to be tested
 	int server_pid = 0;									// server fork pid
-	PyObject * rn_globals = NULL;
-	char *rn_lcm_ch_to_srv = NULL;						// channel receiveing data from client
-	char *rn_lcm_ch_to_cli = NULL;						// channel sending data back to client
-	char *rn_lcm_provider = NULL;						// lcm provider string, network address info
-														// get lcm related global variables
-	rn_globals = pycall__in_str__out_tuple(lcl_NameMod, "lcm_globals_return", 0);
-	rn_lcm_ch_to_srv = PyString_AsString(PyTuple_GetItem(rn_globals,0));
-	rn_lcm_ch_to_cli = PyString_AsString(PyTuple_GetItem(rn_globals,1));
-	rn_lcm_provider  = PyString_AsString(PyTuple_GetItem(rn_globals,2));
 	
-	server_pid = fork();
+	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+
+	rn_lcm_globals_get(lcl_pMod);							// get lcm globals for use in testing
+	
+	server_pid = fork();									// start up the server create brach for server
 	if(server_pid == 0){
 		(void)pycall__in_long__out_int(lcl_NameMod, "rn_server", 2, 1,20);
 		exit(0);

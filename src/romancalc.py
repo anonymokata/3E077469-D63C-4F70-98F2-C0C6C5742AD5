@@ -51,7 +51,7 @@ def lcm_globals_set(arg_glbl_tpls):
 	if arg_glbl_tpls[0] == ""					# if value was empty stirng
 		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
 	else
-	rn_lcm_ch_to_srv = arg_glbl_tpls[0]			# set global values
+		rn_lcm_ch_to_srv = arg_glbl_tpls[0]		# set global values
 
 	if arg_glbl_tpls[0] == ""					# if value was empty stirng
 		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
@@ -61,7 +61,7 @@ def lcm_globals_set(arg_glbl_tpls):
 	if arg_glbl_tpls[0] == ""					# if value was empty stirng
 		rn_lcm_ch_to_srv = None					# then we actually wanted a NULL
 	else
-	rn_lcm_provider	 = arg_glbl_tpls[2]			# set global values
+		rn_lcm_provider	 = arg_glbl_tpls[2]			# set global values
 
 	return lcm_globals_return()					# respond back with values for checking
 
