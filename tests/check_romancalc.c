@@ -42,9 +42,9 @@ void rn_lcm_globals_get(char* arg_NameMod){
 
 	// get lcm related global variables
 	lcl_pGlbls = pycall__in_str__out_tuple(arg_NameMod, "lcm_globals_return", 0);
-	lcm_glbls.ch_to_srv = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0));
-	lcm_glbls.ch_to_cli = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1));
-	lcm_glbls.provider  = PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2));
+	lcm_glbls.ch_to_srv = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,0)));
+	lcm_glbls.ch_to_cli = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1)));
+	lcm_glbls.provider  = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2)));
 	
 	printf("\nrn_lcm_ch_to_srv->%s<- rn_lcm_ch_to_cli->%s<- rn_lcm_provider->%s<-\n",
 		   lcm_glbls.ch_to_srv,  lcm_glbls.ch_to_cli, lcm_glbls.provider);
