@@ -278,6 +278,7 @@ char* pycall__in_str__out_str(char* arg_NameMod, char* arg_NameFnc, int argc, ..
 	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
 	ck_assert_ptr_ne(lcl_pMod, NULL);						// ensure we got back pointer
 	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	ck_assert_ptr_ne(lcl_pFnc, NULL);						// ensure we got back pointer
 
 	if(argc > 0){											// build argument list only if
 		// we ar sending the args
@@ -347,7 +348,9 @@ int pycall__in_str__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ... 
 	int cResult_int = 0;									// C string result from py routine
 	
 	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+	ck_assert_ptr_ne(lcl_pMod, NULL);						// ensure we got back pointer
 	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	ck_assert_ptr_ne(lcl_pFnc, NULL);						// ensure we got back pointer
 	
 	if(argc > 0){											// build argument list only if
 		// we ar sending the args
@@ -415,7 +418,9 @@ PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int ar
 	int cResult_int = 0;									// C string result from py routine
 	
 	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+	ck_assert_ptr_ne(lcl_pMod, NULL);						// ensure we got back pointer
 	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	ck_assert_ptr_ne(lcl_pFnc, NULL);						// ensure we got back pointer
 	
 	if(argc > 0){											// build argument list only if
 		// we ar sending the args
@@ -476,7 +481,9 @@ int pycall__in_long__out_int(char* arg_NameMod, char* arg_NameFnc, int argc, ...
 	int cResult_int = 0;									// C string result from py routine
 	
 	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+	ck_assert_ptr_ne(lcl_pMod, NULL);						// ensure we got back pointer
 	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	ck_assert_ptr_ne(lcl_pFnc, NULL);						// ensure we got back pointer
 	
 	if(argc > 0){											// build argument list only if
 		// we ar sending the args
@@ -2310,12 +2317,14 @@ START_TEST (test_rn_test_server_coms_from_checker)
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
 	char *lcl_NameFnc = "rn_test_coms_using_threads";
-	PyObject *lcl_pMod = NULL;								// module name of function to be tested
+//	PyObject *lcl_pMod = NULL;								// module name of function to be tested
+//	PyObject *lcl_pFnc = NULL;								// function to be tested
 	int server_pid = 0;									// server fork pid
 	
-	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+//	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
+//	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
 
-	rn_lcm_globals_get(lcl_pMod);							// get lcm globals for use in testing
+	rn_lcm_globals_get(lcl_NameMod);							// get lcm globals for use in testing
 	
 	server_pid = fork();									// start up the server create brach for server
 	if(server_pid == 0){
