@@ -10,7 +10,7 @@
 #include <Python.h>
 #include <unistd.h>
 #include "../src/romancalc.h"
-
+#include "exlcm_rn_packet_t.h"
 
 // share channel and provider between all lcmroutines
 typedef struct {
