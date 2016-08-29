@@ -10,7 +10,7 @@
 #include <Python.h>
 #include <unistd.h>
 #include "../src/romancalc.h"
-
+#include "exlcm_rn_packet_t.h"
 
 // share channel and provider between all lcmroutines
 typedef struct {
@@ -21,10 +21,11 @@ typedef struct {
 
 struct_rn_lcm_globals lcm_glbls = {NULL,NULL,NULL};		// lcm channel and network info
 
-char *err_multi_ops = "<ERROR: CODE -II  Multiple Operators >";
-char *err_inval_exp = "<ERROR: CODE -III  Invalid Expression >";
-char *err_inval_left = "<ERROR: CODE -IV  Invalid Value on Left Side of Operator >";
+char *err_multi_ops   = "<ERROR: CODE -II  Multiple Operators >";
+char *err_inval_exp   = "<ERROR: CODE -III  Invalid Expression >";
+char *err_inval_left  = "<ERROR: CODE -IV  Invalid Value on Left Side of Operator >";
 char *err_inval_right = "<ERROR: CODE -V  Invalid Value on Right Side of Operator >";
+char *err_timedout    = "<ERROR: CODE Calculation Thread/Server Response TimeOut >";
 
 // prototype for forward reference
 PyObject* pycall__in_str__out_tuple(char* arg_NameMod, char* arg_NameFnc, int argc, ... );
@@ -51,22 +52,21 @@ void rn_lcm_globals_get(char* arg_NameMod){
 	
 	// if we got back an empty string, that meant at we actually wan to use a NULL
 	// i.e. not using that value and the lcm needs to see null to ignore that value
-	if(lcm_glbls.ch_to_srv[0] != 0){
+	if(lcm_glbls.ch_to_srv[0] == 0){
 		free(&lcm_glbls.ch_to_srv[0]);				// dump the string
 		lcm_glbls.ch_to_srv = NULL;					// ensure we are using empty string
 	}
 	
-	if(lcm_glbls.ch_to_cli[0] != 0){
+	if(lcm_glbls.ch_to_cli[0] == 0){
 		free(&lcm_glbls.ch_to_cli[0]);				// dump the string
 		lcm_glbls.ch_to_cli = NULL;					// ensure we are using empty string
 	}
 	
-	if(lcm_glbls.provider[0] != 0){
+	if(lcm_glbls.provider[0] == 0){
 		free(&lcm_glbls.provider[0]);				// dump the string
 		lcm_glbls.provider = NULL;					// ensure we are using empty string
 	}
-	
-	Py_DECREF(lcl_pGlbls);							// dump the trash
+
 }
 
 int rn_lcm_globals_set(char* arg_NameMod, char *arg_ch_to_srv, char* arg_ch_to_cli, char *arg_provider){
@@ -308,7 +308,7 @@ char* pycall__in_str__out_str(char* arg_NameMod, char* arg_NameFnc, int argc, ..
 		cResult_str = PyString_AsString(lcl_pValue);		// if bytes value returned
 	
 	if(lcl_pArgs)
-	Py_DECREF(lcl_pArgs);									// don't need python arg list anymore
+		Py_DECREF(lcl_pArgs);								// don't need python arg list anymore
 	
 	if(cResult_str == NULL)									// protective programming
 		return strdup("");									// avoid
@@ -1946,7 +1946,6 @@ romancalc_suite_rn_addition_full(void)
 	return s;
 }
 
-// MARK: @micah
 
 // MARK: romancalc_suite_rn_process_expression
 /**************************************************************************
