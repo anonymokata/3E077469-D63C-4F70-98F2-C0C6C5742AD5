@@ -13,8 +13,8 @@ rn_digits = ['M','D','C','L','X','V','I']
 rn_lcm_ch_to_srv = "ROMAN_CALC_TO_SRV"		# channel receiveing data from client
 rn_lcm_ch_to_cli = "ROMAN_CALC_TO_CLI"		# channel sending data back to client
 rn_server_done = 0							#used to flag when server needs to exit
-#rn_lcm_provider = "udpm://239.255.255.255:7667"
-rn_lcm_provider = ""
+#rn_lcm_provider = "udpm://239.255.76.67:7667?ttl=1"
+rn_lcm_provider = None
 
 glbl_client_pkt	= ("",-1)						# create global client packet
 glbl_client_rxed = 0							# used signal when packet received
@@ -27,16 +27,10 @@ glbl_client_rxed = 0							# used signal when packet received
 #        if a value is set to none, then make into empty string
 #        to avoid hassles in passing back and forth values
 def lcm_globals_return():
-	lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
-	if lcl_glbls[0] == None:
-		lcl_glbls[0] = ""
-
-	if lcl_glbls[1] == None:
-		lcl_glbls[1] = ""
-
-	if lcl_glbls[2] == None:
-		lcl_glbls[2] = ""
-
+	if rn_lcm_provider == None:
+		lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, "")
+	else:
+		lcl_glbls = (rn_lcm_ch_to_srv, rn_lcm_ch_to_cli, rn_lcm_provider)
 	return lcl_glbls
 
 #     lcm_globals_set
@@ -557,7 +551,7 @@ def rn_lcm_client_handler(channel, data):
 def rn_client(arg_exp):
 	global glbl_client_pkt						#define global variable
 	global glbl_client_rxed						#define global variable
-	rlst_to = 0									# handler time out rsult
+	rslt_to = 0									# handler time out rsult
 	glbl_client_pkt	= ("",-1)					# create global client packet
 	glbl_client_rxed = 0						# reset rxed flag
 
