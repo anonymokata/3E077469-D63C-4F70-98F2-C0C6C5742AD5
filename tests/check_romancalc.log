@@ -34,108 +34,76 @@ Roman Calc Suite Test expression processing
 Roman Calc Suite Test Coms Using Threads
  
 Roman Calc Suite Test Server Coms From C
-
-rn_lcm_ch_to_srv->ROMAN_CALC_TO_SRV<- rn_lcm_ch_to_cli->ROMAN_CALC_TO_CLI<- rn_lcm_provider-><-
-
-
-
-
- --fork server_pid-->0<--
-
-
-
-
-
-
- server exiting 
-
-
-
-rn_lcm_ch_to_srv->ROMAN_CALC_TO_SRV<- rn_lcm_ch_to_cli->ROMAN_CALC_TO_CLI<- rn_lcm_provider-><-
-
-
-
-
- --non-fork server_pid-->27214<--
-
-
-
-
-
-
-exiting client
-
-
 100%: Checks: 36, Failures: 0, Errors: 0
-check_romancalc.c:443:P:TestPythonCallIO__In_String__Out_String 
+check_romancalc.c:532:P:TestPythonCallIO__In_String__Out_String 
 :test_pycall__in_str__out_str:0: Passed
-check_romancalc.c:474:P:TestPythonCallIO__In_String__Out_Int 
+check_romancalc.c:563:P:TestPythonCallIO__In_String__Out_Int 
 :test_pycall__in_str__out_int:0: Passed
-check_romancalc.c:492:P:TestPythonCallIO__In_String__Out_Bool 
+check_romancalc.c:581:P:TestPythonCallIO__In_String__Out_Bool 
 :test_pycall__in_str__out_bool:0: Passed
-check_romancalc.c:544:P:Test Roman Numeral Validation 
+check_romancalc.c:633:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_upper_case:0: Passed
-check_romancalc.c:562:P:Test Roman Numeral Validation 
+check_romancalc.c:651:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_lower_case:0: Passed
-check_romancalc.c:594:P:Test Roman Numeral Validation 
+check_romancalc.c:683:P:Test Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_single_error:0: Passed
-check_romancalc.c:659:P:Test Multi-Digit Roman Numeral Validation 
+check_romancalc.c:748:P:Test Multi-Digit Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_multi:0: Passed
-check_romancalc.c:681:P:Test Multi-Digit Roman Numeral Validation 
+check_romancalc.c:770:P:Test Multi-Digit Roman Numeral Validation 
 :test_rn_numeral_validate_bool_digits_multi_error:0: Passed
-check_romancalc.c:725:P:Test unroll 
+check_romancalc.c:814:P:Test unroll 
 :test_rn_numeral_digit_unmix:0: Passed
-check_romancalc.c:769:P:Test Digit Sort 
+check_romancalc.c:858:P:Test Digit Sort 
 :test_rn_numeral_digit_sort:0: Passed
-check_romancalc.c:827:P:Test digit numeral reduction 
+check_romancalc.c:916:P:Test digit numeral reduction 
 :test_rn_numeral_digit_reduction:0: Passed
-check_romancalc.c:869:P:Test remix of digits 
+check_romancalc.c:958:P:Test remix of digits 
 :test_rn_numeral_digit_remix:0: Passed
-check_romancalc.c:972:P:TestPython_Compare_Single_Digits
+check_romancalc.c:1061:P:TestPython_Compare_Single_Digits
 :test_rn_unmixed_compare_digit_single:0: Passed
-check_romancalc.c:1038:P:TestPython_Compare_Multi_Digits
+check_romancalc.c:1127:P:TestPython_Compare_Multi_Digits
 :test_rn_unmixed_compare_digit_multi:0: Passed
-check_romancalc.c:1157:P:TestPython_Subtraction_single
+check_romancalc.c:1246:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_single_noBorrow:0: Passed
-check_romancalc.c:1176:P:TestPython_Subtraction_single
+check_romancalc.c:1265:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Simple:0: Passed
-check_romancalc.c:1208:P:TestPython_Subtraction_single
+check_romancalc.c:1297:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1233:P:TestPython_Subtraction_single
+check_romancalc.c:1322:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1254:P:TestPython_Subtraction_single
+check_romancalc.c:1343:P:TestPython_Subtraction_single
 :test_rn_unmixed_subt_LG_SML_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1323:P:TestPython_borow calculation
+check_romancalc.c:1412:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Simple:0: Passed
-check_romancalc.c:1355:P:TestPython_borow calculation
+check_romancalc.c:1444:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_single_single:0: Passed
-check_romancalc.c:1380:P:TestPython_borow calculation
+check_romancalc.c:1469:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single:0: Passed
-check_romancalc.c:1401:P:TestPython_borow calculation
+check_romancalc.c:1490:P:TestPython_borow calculation
 :test_rn_unmixed_borrow_Complex_multi_single_mid:0: Passed
-check_romancalc.c:1512:P:TestPython_full_subtraction_Digit_Single
+check_romancalc.c:1601:P:TestPython_full_subtraction_Digit_Single
 :test_rn_subtraction_full_digit_single:0: Passed
-check_romancalc.c:1623:P:TestPython_full_subtraction_Digit_Multi_Random
+check_romancalc.c:1712:P:TestPython_full_subtraction_Digit_Multi_Random
 :test_rn_subtraction_full_digit_multi_random:0: Passed
-check_romancalc.c:1721:P:TestPython_full_addition_Digit_Single
+check_romancalc.c:1810:P:TestPython_full_addition_Digit_Single
 :test_rn_addition_full_single_digit:0: Passed
-check_romancalc.c:1738:P:TestPython_addition_full_to_mixed
+check_romancalc.c:1827:P:TestPython_addition_full_to_mixed
 :test_rn_addition_full_to_mixed:0: Passed
-check_romancalc.c:1830:P:TestPython_full_addition_Digit_Multi_Random
+check_romancalc.c:1919:P:TestPython_full_addition_Digit_Multi_Random
 :test_rn_addition_full_digit_multi_random:0: Passed
-check_romancalc.c:1956:P:TestPython_Process_expression_core
+check_romancalc.c:2044:P:TestPython_Process_expression_core
 :test_rn_process_expression_core:0: Passed
-check_romancalc.c:2023:P:TestPython_Process_expression_subtraction
+check_romancalc.c:2111:P:TestPython_Process_expression_subtraction
 :test_rn_process_expr_subt_single:0: Passed
-check_romancalc.c:2064:P:TestPython_Test_Server_Using_Threads
+check_romancalc.c:2152:P:TestPython_Test_Server_Using_Threads
 :test_rn_test_coms_using_threads:0: Passed
-check_romancalc.c:2104:P:TestPython_Test_Server_Using_Threads_Errors_Multi_Ops
+check_romancalc.c:2192:P:TestPython_Test_Server_Using_Threads_Errors_Multi_Ops
 :test_rn_test_threads_errors_multi_ops:0: Passed
-check_romancalc.c:2120:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Exp
+check_romancalc.c:2208:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Exp
 :test_rn_test_threads_errors_inval_exp:0: Passed
-check_romancalc.c:2148:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Left
+check_romancalc.c:2236:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Left
 :test_rn_test_threads_errors_inval_left:0: Passed
-check_romancalc.c:2176:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Right
+check_romancalc.c:2264:P:TestPython_Test_Server_Using_Threads_Errors_Inval_Right
 :test_rn_test_threads_errors_inval_right:0: Passed
-check_romancalc.c:2249:P:TestPython_Test_Server_Coms_From_C
-:test_rn_test_server_coms_from_c:0: Passed
+check_romancalc.c:2377:P:TestPython_Test_Server_coms_from_checker
+:test_rn_test_server_coms_from_checker:0: Passed

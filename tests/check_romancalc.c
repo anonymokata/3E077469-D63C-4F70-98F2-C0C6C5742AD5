@@ -47,9 +47,6 @@ void rn_lcm_globals_get(char* arg_NameMod){
 	lcm_glbls.ch_to_cli = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,1)));
 	lcm_glbls.provider  = strdup(PyString_AsString(PyTuple_GetItem(lcl_pGlbls,2)));
 	
-	printf("\nrn_lcm_ch_to_srv->%s<- rn_lcm_ch_to_cli->%s<- rn_lcm_provider->%s<-\n",
-		   lcm_glbls.ch_to_srv,  lcm_glbls.ch_to_cli, lcm_glbls.provider);
-	
 	// if we got back an empty string, that meant at we actually wan to use a NULL
 	// i.e. not using that value and the lcm needs to see null to ignore that value
 	if(lcm_glbls.ch_to_srv[0] == 0){
@@ -66,7 +63,6 @@ void rn_lcm_globals_get(char* arg_NameMod){
 		free(&lcm_glbls.provider[0]);				// dump the string
 		lcm_glbls.provider = NULL;					// ensure we are using empty string
 	}
-
 }
 
 int rn_lcm_globals_set(char* arg_NameMod, char *arg_ch_to_srv, char* arg_ch_to_cli, char *arg_provider){
@@ -2282,56 +2278,108 @@ romancalc_suite_rn_test_coms_using_threads(void)
 	suite_add_tcase (s, tc_check_rn_test_coms_using_threads);
 	
 	TCase *tc_check_rn_test_threads_errrors_multi_ops = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Multi_Ops\n");
-	tcase_set_timeout(tc_check_rn_test_threads_errrors_multi_ops, 15);
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_multi_ops, 20);
 	tcase_add_test (tc_check_rn_test_threads_errrors_multi_ops, test_rn_test_threads_errors_multi_ops);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_multi_ops);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_exp = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Exp\n");
-	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_exp, 15);
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_exp, 20);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_exp, test_rn_test_threads_errors_inval_exp);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_exp);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_left = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Left\n");
-	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_left, 15);
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_left, 20);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_left, test_rn_test_threads_errors_inval_left);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_left);
 	
 	TCase *tc_check_rn_test_threads_errrors_inval_right = tcase_create ("TestPython_Test_Server_Using_Threads_Errors_Inval_Right\n");
-	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_right, 15);
+	tcase_set_timeout(tc_check_rn_test_threads_errrors_inval_right, 20);
 	tcase_add_test (tc_check_rn_test_threads_errrors_inval_right, test_rn_test_threads_errors_inval_right);
 	suite_add_tcase (s, tc_check_rn_test_threads_errrors_inval_right);
 	
 	return s;
 }
 
+// MARK: @micah
 // MARK: romancalc_suite_rn_test_server_coms_from_checker
 /**************************************************************************
  * romancalc_suite_rn_test_server_coms_from_checker
  *		lcm coms seerver test routines from checking software
  **************************************************************************/
+int rn_start_server(char *arg_NameMod){
+	int lcl_svr_pid;									// server pid
+	lcl_svr_pid = fork();								// start up the server create brach for server
+	if(lcl_svr_pid == 0){								// if thisis the forked process
+		(void)pycall__in_long__out_int(arg_NameMod, "rn_server", 2, 25, 20); // then run the server
+		exit(0);
+	}
+	sleep(1);											// sleep to give python interpertor time to spin up
+	return lcl_svr_pid;									// return server pid
+}
+
+#define LCM_TEST_SIZE 200
+char glbl_rslt_str[LCM_TEST_SIZE];						// result storage spote
+
+static void
+lcm_cli_handler(const lcm_recv_buf_t *rbuf, const char * channel,
+				const exlcm_rn_packet_t * msg, void * user){
+	(void)strncpy(glbl_rslt_str, msg->exp_n_rslt, LCM_TEST_SIZE);
+}
+
+char* lcm_client(lcm_t * arg_lcm, char * arg_ch_to_srv,char* arg_exp, char* arg_rslt){
+	glbl_rslt_str[0] =0;
+	exlcm_rn_packet_t lcl_pkt;
+	lcl_pkt.cmd_n_err = 0;									// calculate expression command
+	lcl_pkt.exp_n_rslt= arg_exp;
+	
+//	printf("\n\n\n\n--sending-->%i<-->%s<--\n\n",lcl_pkt.cmd_n_err, lcl_pkt.exp_n_rslt);
+	exlcm_rn_packet_t_publish(arg_lcm, arg_ch_to_srv, &lcl_pkt);
+	sleep(1);
+	if(lcm_handle_timeout(arg_lcm,20000)==0)
+		return err_timedout;
+//	printf("\n\n\n-----client-->%s<-----\n\n\n",glbl_rslt_str);
+	return strdup(glbl_rslt_str);
+}
 START_TEST (test_rn_test_server_coms_from_checker)
 {
-	pyenv_setup("../src", NULL, NULL);					// set up test env and point to py src
+	pyenv_setup("../src", NULL, NULL);						// set up test env and point to py src
 	
 	// setup python module and function interface for this test
 	char *lcl_NameMod = "romancalc";
-	char *lcl_NameFnc = "rn_test_coms_using_threads";
-//	PyObject *lcl_pMod = NULL;								// module name of function to be tested
-//	PyObject *lcl_pFnc = NULL;								// function to be tested
-	int server_pid = 0;									// server fork pid
+	char *lcl_NameFnc = "rn_client";
+	int server_pid = 0;										// server fork pid
+	lcm_t *lcl_lcm = NULL;									// local lcm module
+	static char myexp[255];
 	
-//	lcl_pMod	= pymodule_setup(arg_NameMod);				// point to module being tested
-//	lcl_pFnc	= pyfunc_setup(lcl_pMod, arg_NameFnc);		// point to function being tested
+	
+	rn_lcm_globals_get(lcl_NameMod);						// get lcm globals for use in testing
+// check to ensure that the channels we go back were set properly
+	ck_assert_ptr_ne(lcm_glbls.ch_to_srv, NULL);
+	ck_assert_ptr_ne(lcm_glbls.ch_to_cli, NULL);
+	
+	server_pid = rn_start_server(lcl_NameMod);
+	ck_assert_int_gt(server_pid, 0);						// see if fork worked
 
-	rn_lcm_globals_get(lcl_NameMod);							// get lcm globals for use in testing
-	
-	server_pid = fork();									// start up the server create brach for server
-	if(server_pid == 0){
-		(void)pycall__in_long__out_int(lcl_NameMod, "rn_server", 2, 1,20);
-		exit(0);
-	}
-	ck_assert_int_gt(server_pid, 0);					// see if fork worked
-	pyenv_teardown();									// shut down python interprater
+	lcl_lcm = lcm_create(lcm_glbls.provider);				// initialize the lcm module
+															// initialize the client handleler
+	exlcm_rn_packet_t_subscription_t* lcm_cli_sub = NULL;
+	lcm_cli_sub = exlcm_rn_packet_t_subscribe(lcl_lcm, lcm_glbls.ch_to_cli, &lcm_cli_handler, NULL);
+
+ 	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,    "CC", glbl_rslt_str), "CC");
+ 	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,   "X+X", glbl_rslt_str), "XX");
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,   "X-I", glbl_rslt_str), "IX");
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv, "X - I", glbl_rslt_str), "IX");
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,  "X -I", glbl_rslt_str), "IX");
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,  "X- I", glbl_rslt_str), "IX");
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,  "X++X", glbl_rslt_str), err_multi_ops  );
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv,   "XX)", glbl_rslt_str), err_inval_exp  );
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv, "X*X+X", glbl_rslt_str), err_inval_left );
+	ck_assert_str_eq(lcm_client(lcl_lcm, lcm_glbls.ch_to_srv, "X+X X", glbl_rslt_str), err_inval_right);
+
+//	(void)exlcm_rn_packet_t_unsubscribe(lcl_lcm, lcm_cli_sub);
+	pyenv_teardown();										// shut down python interprater
+	if(lcl_lcm != NULL)
+		lcm_destroy(lcl_lcm);
 }
 END_TEST
 
@@ -2339,15 +2387,15 @@ Suite *
 romancalc_suite_rn_test_server_coms_from_checker(void)
 {
 	Suite *s = suite_create ("\nRoman Calc Suite Test Server Coms From C");
-
+	
 	TCase *tc_check_rn_test_server_coms_from_checker =
 				tcase_create ("TestPython_Test_Server_coms_from_checker\n");
 	// give extended test time to allow python interperter to respond
 	// python interperter ontop of VMware virtual machine may have have caching issue
-	tcase_set_timeout(tc_check_rn_test_server_coms_from_checker, 75);
+	tcase_set_timeout(tc_check_rn_test_server_coms_from_checker, 25);
 	tcase_add_test (tc_check_rn_test_server_coms_from_checker, test_rn_test_server_coms_from_checker);
 	suite_add_tcase (s, tc_check_rn_test_server_coms_from_checker);
-
+	
 	return s;
 }
 
